@@ -1,0 +1,6 @@
+framework module SwiftSimplify {
+  umbrella header "SwiftSimplify-umbrella.h"
+
+  export *
+  module * { export * }
+}

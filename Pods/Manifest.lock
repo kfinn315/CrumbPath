@@ -1,0 +1,44 @@
+PODS:
+  - Differentiator (3.0.2)
+  - Eureka (4.0.1)
+  - Nimble (7.0.3)
+  - Quick (1.2.0)
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
+  - RxCoreData (0.4.0):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.0.2):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.2)
+  - SwiftSimplify (0.2.0)
+  - SwiftyBeaver (1.5.1)
+
+DEPENDENCIES:
+  - Eureka (~> 4.0)
+  - Nimble
+  - Quick
+  - RxCocoa (~> 4.0)
+  - RxCoreData (~> 0.4.0)
+  - RxDataSources (~> 3.0)
+  - RxSwift (~> 4.0)
+  - SwiftSimplify
+  - SwiftyBeaver
+
+SPEC CHECKSUMS:
+  Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
+  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
+  RxCoreData: 3717ff29afb7261f8cff4b893ffb0650367d0fe6
+  RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  SwiftSimplify: 374ead1c360c6e236539543d6ce5b3abda011080
+  SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
+
+PODFILE CHECKSUM: 03107dfd68d71b40d9e13fa60e5e9018d4edb27d
+
+COCOAPODS: 1.4.0
