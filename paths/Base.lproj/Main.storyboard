@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcI-4X-3b8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-630" y="-922.5"/>
+            <point key="canvasLocation" x="-800" y="-1714"/>
         </scene>
         <!--Edit Path View Controller-->
         <scene sceneID="T3H-QI-izq">
@@ -277,7 +277,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kOb-hT-2pC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="-3914"/>
+            <point key="canvasLocation" x="93" y="-3979"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IUC-ZN-IBG">
@@ -293,7 +293,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QA2-lg-sLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-637.5" y="-3913.75"/>
+            <point key="canvasLocation" x="-648" y="-3981"/>
         </scene>
         <!--Split-->
         <scene sceneID="4vZ-eV-5at">
@@ -405,31 +405,6 @@
                                             <outlet property="imageView" destination="lRO-Za-N0O" id="GFC-Yw-e2l"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addPhoto" id="tg6-Ub-EET" userLabel="addPhotoCell" customClass="AddPhotoCell" customModule="paths" customModuleProvider="target">
-                                        <rect key="frame" x="66" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus-icon" translatesAutoresizingMaskIntoConstraints="NO" id="oCn-f4-g3Z">
-                                                    <rect key="frame" x="5" y="5" width="40" height="40"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="oCn-f4-g3Z" firstAttribute="centerX" secondItem="tg6-Ub-EET" secondAttribute="centerX" id="8TD-qf-NEq"/>
-                                            <constraint firstItem="oCn-f4-g3Z" firstAttribute="top" secondItem="tg6-Ub-EET" secondAttribute="top" constant="5" id="YPA-wP-kux"/>
-                                            <constraint firstItem="oCn-f4-g3Z" firstAttribute="centerY" secondItem="tg6-Ub-EET" secondAttribute="centerY" id="jMy-vR-kQR"/>
-                                            <constraint firstAttribute="trailing" secondItem="oCn-f4-g3Z" secondAttribute="trailing" constant="5" id="p1n-Ud-W94"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
@@ -486,7 +461,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3k-yq-UlI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-638" y="-2381"/>
+            <point key="canvasLocation" x="-800" y="-2462"/>
         </scene>
         <!--Path Detail View Controller-->
         <scene sceneID="I6L-Ry-7SD">
@@ -844,7 +819,4 @@
             <point key="canvasLocation" x="94" y="-2380"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="plus-icon" width="459" height="459"/>
-    </resources>
 </document>

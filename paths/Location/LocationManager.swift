@@ -29,7 +29,6 @@ public enum LocationAccuracy : Int {
 
 class LocationManager: NSObject, LocationManagerInterface, CLLocationManagerDelegate {
     static let sharedInstance = LocationManager()
-    //weak var delegate : CoreLocationDelegate?
     public var authorized : Driver<Bool>
     public var location : Driver<CLLocation>
     public var accuracy : LocationAccuracy = .walking
@@ -118,6 +117,5 @@ class LocationManager: NSObject, LocationManagerInterface, CLLocationManagerDele
 
         log.debug("Stop location updates")
         updating = false
-        //delegate?.didStopLocationUpdates?()
     }
 }

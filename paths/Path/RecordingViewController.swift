@@ -79,10 +79,14 @@ public class RecordingViewController : BaseRecordingController {
     }
     
     func buttonSaveClicked() {
+        //show spinner
+        
         save { [weak self] path, error in
             DispatchQueue.main.async {
+                //hide spinner
                 log.debug("saving path")
                 if error == nil, path != nil {
+                    self?.pathManager?.hasNewPath = true
                     let editVC = EditPathViewController()
                     self?.navigationController?.pushViewController(editVC, animated: true)
                 } else {

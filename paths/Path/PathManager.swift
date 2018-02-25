@@ -194,9 +194,9 @@ class PathManager {
             CLGeocoder().reverseGeocodeLocation(CLLocation(point1.coordinates), completionHandler: { (placemarks, error) in
                 var locationData : [String] = []
                 
-                if let subarea = placemarks?[0].subAdministrativeArea {
-                    locationData.append(subarea)
-                }
+//                if let subarea = placemarks?[0].subAdministrativeArea {
+//                    locationData.append(subarea)
+//                }
 
                 if let locality = placemarks?[0].locality {
                     locationData.append(locality)

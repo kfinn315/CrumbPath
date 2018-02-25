@@ -87,7 +87,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        (self.parent as? PageViewController)?.resetNavigationItem()
+        (self.parent as? PageViewController)?.resetNavigationItems()
     }
     
     @objc func presentAddAlbumView(){

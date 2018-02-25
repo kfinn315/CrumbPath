@@ -29,11 +29,6 @@ class NavTableViewController: UITableViewController {
         return nil
     }()
     
-    //    convenience init(_ pathManager: PathManagerInterface) {
-    //        self.init()
-    //
-    //        self.pathManager = pathManager
-    //    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,11 +48,6 @@ class NavTableViewController: UITableViewController {
         } else {
             // Fallback on earlier versions
         }
-        
-        //        if pathManager?.hasNewPath ?? false {
-        //            let editVC = EditPathViewController()
-        //            self.navigationController?.pushViewController(editVC, animated: true)
-        //        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,6 +75,7 @@ class NavTableViewController: UITableViewController {
         
         AppDelegate.managedObjectContext!.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
             .map({ (paths) -> [AnimatableSectionModel<String, Path>] in
+                //group paths by date, sort by date descending
                 var dates : [Date : [Path]] = [:]
                 for path in paths {
                     if let startdate = path.startdate {
@@ -114,7 +105,7 @@ class NavTableViewController: UITableViewController {
                     
                     guard let pager = self.pager else{ return }
                     
-                    pager.goToPage(index: 0)
+                    pager.goToPage(index: 0) //reset page index
                     self.showDetailViewController(pager, sender: self)
                 }
             }).disposed(by: disposeBag)
@@ -135,6 +126,5 @@ class NavTableViewController: UITableViewController {
   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
 }

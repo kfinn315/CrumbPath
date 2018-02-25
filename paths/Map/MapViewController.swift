@@ -15,30 +15,29 @@ import SwiftSimplify
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     public static let storyboardID = "MapVC"
+
+    @IBOutlet weak var mapView: MKMapView!
     
     static let lineTolerance : Float = 0.000005
     static let annotationLatDelta : CLLocationDistance = 0.010
     static let strokeColor = UIColor.red
     static let lineWidth = CGFloat(2.0)
     static let pinAnnotationImageView = UIImage.circle(diameter: CGFloat(10), color: UIColor.orange)
-    private var disposeBag = DisposeBag()
+    static let thumbnailSize = CGSize(width: 50, height: 50)
+
     private var polyline : MKPolyline?
     private var pathAnnotations : [MKPointAnnotation]?
-    fileprivate var imageManager : PHCachingImageManager?
-    
-    @IBOutlet weak var mapView: MKMapView!
-    
-    //private weak var path : Path?
+    private var annotations : [MKAnnotation] = []
+
     private weak var pathManager = PathManager.shared
     private weak var photosManager = PhotoManager.shared
     
-    // var assetCollection : PHAssetCollection?
+    fileprivate var imageManager : PHCachingImageManager?
     var fetchResults : PHFetchResult<PHAsset>?
-    let thumbnailSize = CGSize(width: 50, height: 50)
     
-    var annotations : [MKAnnotation] = []
     private var refreshOnAppear = false
-    
+    private var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         log.debug("mapview did load")
@@ -54,9 +53,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             log.debug("mapview current album driver - on next")
             if collection != nil {
                 self.fetchResults = PHAsset.fetchAssets(in: collection!, options: nil)
-                self.refreshAnnotations()
-                self.needsRefresh()
+            } else{
+                self.fetchResults = nil
             }
+            
+            self.refreshAnnotations()
+            self.needsRefresh()
             
         }).disposed(by: disposeBag)
         
@@ -74,9 +76,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         if refreshOnAppear {
             needsRefresh()
+            zoomToContent()
         }
-        
-        zoomToContent()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -136,10 +137,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     public func loadPath(path: Path?) {
         log.debug("mapview loadcrumb")
-        addLines(coordinates: path?.getPoints() ?? [])
+        addPolyline(coordinates: path?.getPoints() ?? [])
     }
     
-    func addLines(coordinates: [CLLocationCoordinate2D]) {
+    func addPolyline(coordinates: [CLLocationCoordinate2D]) {
         // let points = points.getPoints()
         var simpleCoords : [CLLocationCoordinate2D] = []
         
@@ -234,23 +235,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         log.debug("mapview add annotation")
         
         if annotation is ImageAnnotation, let imgAnnotation = annotation as? ImageAnnotation {
-            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "imagePin") as? ImageAnnotationView
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ImageAnnotationView.reuseIdentifier) as? ImageAnnotationView
             
-            if pin == nil{
-                pin = ImageAnnotationView(annotation: imgAnnotation, reuseIdentifier: "imagePin")
+            if annotationView == nil{
+                annotationView = ImageAnnotationView(annotation: imgAnnotation, reuseIdentifier: ImageAnnotationView.reuseIdentifier)
             } else{
-                pin!.annotation = annotation
+                annotationView!.annotation = annotation
             }
             if photosManager?.isAuthorized ?? false, let imgAsset = imgAnnotation.asset {
-                pin!.assetId = imageManager?.requestImage(for: imgAsset, targetSize: self.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
+                annotationView!.assetId = imageManager?.requestImage(for: imgAsset, targetSize: MapViewController.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
                     image, data in
-                    if pin!.assetId == data?[PHImageResultRequestIDKey] as? Int32 {
-                        let iv = UIImageView(image: image)
-                        pin!.leftCalloutAccessoryView = iv
+                    if annotationView!.assetId == data?[PHImageResultRequestIDKey] as? Int32 {
+ //                       let iv = UIImageView(image: image)
+                        annotationView!.image = image
                     }
                 })
             }
-            return pin
+            return annotationView
         } else {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "normalAnnotation")
             
@@ -290,29 +291,3 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //    }
 }
 
-class ImageAnnotation : MKPointAnnotation {
-    var image : UIImage?
-    var asset : PHAsset?
-}
-
-class ImageAnnotationView : MKPinAnnotationView {
-    var assetId : Int32?
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        self.pinTintColor = UIColor.darkGray
-        self.canShowCallout = true
-        self.animatesDrop = true
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        self.image = nil
-        self.assetId = nil
-    }
-}

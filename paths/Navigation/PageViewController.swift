@@ -20,7 +20,7 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
         }
         
         return []
-        }()
+    }()
     
     required init?(coder: NSCoder) {
         pageControl = UIPageControl()
@@ -69,7 +69,7 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
         }
     }
     
-    public func resetNavigationItem() {
+    public func resetNavigationItems() {
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(editPath)), animated: true)
     }
     
