@@ -34,14 +34,8 @@ public class BaseRecordingController : UIViewController,CLLocationManagerDelegat
                 self.pathManager?.addPointToData(LocalPoint.from(cllocation))
             }).disposed(by: disposeBag)       
     }
-    public func save(callback: @escaping (Path?,Error?) -> Void) {
-        let path = LocalPath()
-        path.startdate = startTime ?? Date()
-        path.enddate = stopTime ?? Date()
-        path.title = ""
-        path.notes = ""
-        
-        pathManager?.savePath(local: path, callback: callback)
+    public func save(callback: @escaping (Path?,Error?) -> Void) {        
+        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
     }
     
     public func reset() {

@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class LocalPath : PathInterface, Equatable {
+public class LocalPath : Equatable {
     var localid: String?
     
     var title: String?
     
     var notes: String?
     
-    var startdate: Date?
+    var startdate: Date
     
-    var enddate: Date?
+    var enddate: Date
     
     var duration: NSNumber?
     
@@ -32,9 +32,12 @@ public class LocalPath : PathInterface, Equatable {
     var coverimg: Data?
     
     var locations: String?
-    
+    init() {
+        startdate = Date()
+        enddate = Date()
+    }
     convenience init(title: String, notes: String? = nil, albumId: String? = nil) {
-        self.init()
+        self.init(title: title)
         
         self.title = title
         self.notes = notes

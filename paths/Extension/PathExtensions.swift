@@ -1,4 +1,6 @@
 import CoreLocation
+import UIKit
+import CoreMotion
 
 extension Path {
     var dateSpan : String {
@@ -47,13 +49,68 @@ extension Path {
     
     public var displayTitle : String {
         let title = self.title?.trimmingCharacters(in: .whitespacesAndNewlines)
-        return title?.isEmpty ?? false ? (locations ?? "-") : title!
+        if title == nil || title!.isEmpty {
+            return locations ?? "-"
+        }
+        
+        return title ?? "?"
     }
     
-   public func updatePhotoAlbum(collectionid: String) {
-            self.albumId = collectionid
+    public func updatePhotoAlbum(collectionid: String) {
+        self.albumId = collectionid
+    }
+    
+    public func getSnapshot(_ callback: @escaping (UIImage?) -> Void){
+        MapViewController().getSnapshot(from: self) { snapshot, error in
+            log.debug("getting map snapshot")
+            guard error == nil else {
+                log.error(error!.localizedDescription)
+                callback(nil)
+                return
+            }
+            
+            callback(snapshot?.image)
+        }
+    }
+    
+    
+    public func getSteps(_ callback: @escaping (NSNumber?) -> Void){
+        guard let startdate = startdate, let enddate = enddate else{
+            log.debug("getSteps: start or end dates are nil")
+            callback(nil)
+            return
+        }
+        
+        log.debug("get steps for range \(startdate.string) - \(enddate.string)")
+        
+        if #available(iOS 11.0, *) {
+            let authStatus = CMMotionActivityManager.authorizationStatus()
+            
+            if authStatus == .authorized || authStatus == .notDetermined, CMPedometer.isStepCountingAvailable() {
+                PathManager.pedometer.queryPedometerData(from: startdate, to: enddate) {(data, error) -> Void in
+                    var stepcount : NSNumber?
+                    log.debug("get steps callback")
+                    
+                    if error == nil, let stepdata = data {
+                        log.verbose("steps: \(stepdata.numberOfSteps)")
+                        log.verbose("est distance: \(stepdata.distance ?? 0)")
+                        stepcount = stepdata.numberOfSteps
+                    } else {
+                        log.error("error: \(error?.localizedDescription ?? "error") or step data was nil")
+                    }
+                    
+                    callback(stepcount)
+                }
+            } else {
+                log.error("Core motion is not authorized or step counting is not available")
+                callback(nil)
+            }
+        } else {
+            // Fallback on earlier versions
+            log.debug("core motion skipped due to iOS version")
+            callback(nil)
+        }
+        
+        return
     }
 }
-
-
-

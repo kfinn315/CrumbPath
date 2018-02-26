@@ -13,28 +13,14 @@ import RxCoreData
 import Photos
 import CoreLocation
 
-protocol PathInterface {
-    var localid : String? {get set}
-    var title : String? {get set}
-    var notes : String? {get set}
-    var startdate : Date? {get set}
-    var enddate : Date? {get set}
-    var duration : NSNumber? {get set}
-    var distance : NSNumber? {get set}
-    var stepcount : NSNumber? {get set}
-    var pointsJSON : String? {get set}
-    var albumId : String? {get set}
-    var coverimg : Data? {get set}
-    var locations : String? {get set}
-}
 @objc(Path)
-public class Path: NSManagedObject, PathInterface, Persistable, IdentifiableType {
+public class Path: NSManagedObject, Persistable, IdentifiableType {
     let decoder = JSONDecoder()
     
     public typealias Identity = String
-
+    
     public typealias T = NSManagedObject
-
+    
     public static var entityName: String = "Path"
     
     public var identity: Identity {
@@ -51,10 +37,10 @@ public class Path: NSManagedObject, PathInterface, Persistable, IdentifiableType
     public required init() {
         super.init(entity: entitydescription, insertInto: nil)
     }
-
+    
     public required init(entity: T) {
         super.init(entity: entitydescription, insertInto: nil)
-
+        
         localid = entity.value(forKey: "localid") as? String
         title = entity.value(forKey: "title") as? String
         notes = entity.value(forKey: "notes") as? String
@@ -69,18 +55,18 @@ public class Path: NSManagedObject, PathInterface, Persistable, IdentifiableType
         locations = entity.value(forKey: "locations") as? String
     }
     
-    public required init(_ context: NSManagedObjectContext, _ local: LocalPath) {
+    public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
         super.init(entity: entitydescription, insertInto: context)
         
-        title = local.title
-        notes = local.notes
-        startdate = local.startdate
-        enddate = local.enddate
-        duration = local.duration
-        distance = local.distance
-        stepcount = local.stepcount
-        pointsJSON = local.pointsJSON
-        locations = local.locations
+        self.localid = UUID().uuidString
+        self.title = title
+        self.notes = notes
+    }
+    
+    public func setTimes(start: Date, end: Date){
+        self.startdate = start
+        self.enddate = end
+        self.duration = DateInterval(start: startdate!, end: enddate!).duration as NSNumber
     }
     
     var entitydescription : NSEntityDescription {
@@ -92,12 +78,11 @@ public class Path: NSManagedObject, PathInterface, Persistable, IdentifiableType
     }
     
     public func update(_ entity: T) {
-       // entity.setValue(id, forKey: "id")
         entity.setValue(notes, forKey: "notes")
         entity.setValue(title, forKey: "title")
         entity.setValue(albumId, forKey: "albumId")
         entity.setValue(locations, forKey: "locations")
-                
+        
         do {
             try entity.managedObjectContext?.save()
         } catch {            
@@ -105,5 +90,24 @@ public class Path: NSManagedObject, PathInterface, Persistable, IdentifiableType
         }
     }
     
+    public func setPoints(_ points: Points){
+        do{
+            self.pointsJSON = try points.getJSON()
+        } catch{
+            
+        }
+        points.getDistance() { distance in
+            self.distance = distance as NSNumber
+        }
+        points.getLocationDescription() { locality in
+            self.locations = locality
+        }
+        
+        getSnapshot() { coverimage in
+            if let coverImg = coverimage {
+                log.info("Set cover image")
+                self.coverimg = UIImagePNGRepresentation(coverImg)
+            }
+        }
+    }
 }
-

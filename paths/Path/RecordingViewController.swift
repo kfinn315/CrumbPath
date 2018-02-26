@@ -20,7 +20,19 @@ public class RecordingViewController : BaseRecordingController {
     private var timePast : TimeInterval = 0.0
     private var timer : Timer?
     private let timeFormatter : DateComponentsFormatter
-    
+    private lazy var loadingActivityAlert : UIAlertController = {
+        let pending = UIAlertController(title: "Creating New Path", message: nil, preferredStyle: .alert)
+        
+        let indicator =  UIActivityIndicatorView(frame: pending.view.bounds)
+        indicator.translatesAutoresizingMaskIntoConstraints = true
+        indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        pending.view.addSubview(indicator)
+        indicator.isUserInteractionEnabled = false // required otherwise if there buttons in the UIAlertController you will not be able to press them
+        indicator.startAnimating()
+        
+        return pending
+    }()
     lazy var saveAlert : UIAlertController = {
         let alert = UIAlertController(title: "Save?", message: "Would you like to save this path or reset?", preferredStyle: UIAlertControllerStyle.alert)
         let actionSave = UIAlertAction.init(title: "Save", style: UIAlertActionStyle.default) {[unowned self] _ in self.buttonSaveClicked()}
@@ -80,15 +92,27 @@ public class RecordingViewController : BaseRecordingController {
     
     func buttonSaveClicked() {
         //show spinner
+        self.present(loadingActivityAlert, animated: true, completion: nil)
         
-        save { [weak self] path, error in
-            DispatchQueue.main.async {
-                //hide spinner
-                log.debug("saving path")
+        log.debug("saving path")
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            self.save(callback: self.onSaveComplete)
+        }
+    }
+    
+    func onSaveComplete(path: Path?, error: Error?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dismiss(animated: false) { //hide spinner
                 if error == nil, path != nil {
                     self?.pathManager?.hasNewPath = true
-                    let editVC = EditPathViewController()
-                    self?.navigationController?.pushViewController(editVC, animated: true)
+                    var newvcs : [UIViewController] = []
+                    if let first = self?.navigationController?.viewControllers.first {
+                        newvcs.append(first)
+                    }
+                    
+                    newvcs.append(EditPathViewController())
+                    
+                    self?.navigationController?.setViewControllers(newvcs, animated: true)
                 } else {
                     log.error(error?.localizedDescription ?? "no error message")
                 }
@@ -100,5 +124,4 @@ public class RecordingViewController : BaseRecordingController {
         //go to new path vc
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
