@@ -148,5 +148,19 @@ class PathManager {
             currentPathSubject.onNext(currentpath) //necessary?
         }
     }
+
+    public func getPathsToOverlay() -> [Path]?{
+        let request: NSFetchRequest<Path> = Path.fetchRequest()
+//        let predicate = NSPredicate(format: "distance > %d", 5)
+//        request.predicate = predicate
+        do{
+            let result = try context!.fetch(request) as! [Path]
+            return result
+        } catch{
+            //error
+        }
+        
+        return nil
+    }
 }
 

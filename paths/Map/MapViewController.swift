@@ -11,7 +11,6 @@ import MapKit
 import Photos
 import RxSwift
 import RxCocoa
-import SwiftSimplify
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     public static let storyboardID = "MapVC"
@@ -137,21 +136,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     public func loadPath(path: Path?) {
         log.debug("mapview loadcrumb")
-        addPolyline(coordinates: path?.getPoints() ?? [])
+        addPolyline(coordinates: path?.getSimplifiedCoordinates() ?? [])
     }
     
     func addPolyline(coordinates: [CLLocationCoordinate2D]) {
-        // let points = points.getPoints()
-        var simpleCoords : [CLLocationCoordinate2D] = []
         
-        if coordinates.count > 5 {
-            //simplify coordinates
-            simpleCoords = SwiftSimplify.simplify(coordinates, tolerance: MapViewController.lineTolerance)
-        } else{
-            simpleCoords = coordinates
-        }
-        
-        polyline = MKPolyline(coordinates: &simpleCoords, count: simpleCoords.count)
+        let coordinates = coordinates
+        polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+
         if let polyline = polyline {
             self.mapView?.add(polyline)
         }

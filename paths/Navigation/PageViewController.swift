@@ -27,12 +27,18 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
         
         super.init(coder: coder)
     }
-    
+   
     override func viewDidLoad() {
         self.title = ""
         
         self.dataSource = self
         self.delegate = self
+        
+        if #available(iOS 11.0, *) {
+            self.navigationController?.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
         
         showFirstPage()
         

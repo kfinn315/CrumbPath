@@ -103,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZz-vL-ZE2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-609" y="-3127"/>
+            <point key="canvasLocation" x="-649" y="-3248"/>
         </scene>
         <!--New Path-->
         <scene sceneID="Xw5-5c-QhG">
@@ -265,6 +265,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Crumb Paths" id="ZKy-Ee-lIM">
+                        <barButtonItem key="leftBarButtonItem" title="Map" id="MyR-AD-XqW">
+                            <connections>
+                                <segue destination="PxY-KB-FzT" kind="show" id="wsi-V3-fwi"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="h2D-hY-URG">
                             <connections>
                                 <segue destination="fjo-9m-Xn3" kind="show" id="LAY-A8-X8f"/>
@@ -321,7 +326,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-8f-qD4">
-                                <rect key="frame" x="50" y="40" width="380" height="250"/>
+                                <rect key="frame" x="50" y="40" width="380" height="240"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="5"/>
@@ -334,9 +339,7 @@
                             <constraint firstItem="6bU-8f-qD4" firstAttribute="leading" secondItem="bOb-0P-qpb" secondAttribute="leading" constant="50" id="7aZ-nm-S7g"/>
                             <constraint firstItem="6bU-8f-qD4" firstAttribute="top" secondItem="3im-sC-u4S" secondAttribute="bottom" constant="40" id="Oeo-9q-FmL"/>
                             <constraint firstItem="6bU-8f-qD4" firstAttribute="centerX" secondItem="bOb-0P-qpb" secondAttribute="centerX" id="p3f-OD-AwT"/>
-                            <constraint firstItem="wj3-eD-iKN" firstAttribute="top" secondItem="6bU-8f-qD4" secondAttribute="bottom" priority="998" constant="15" id="r19-N7-JR5">
-                                <variation key="heightClass=compact-widthClass=compact" constant="30"/>
-                            </constraint>
+                            <constraint firstItem="wj3-eD-iKN" firstAttribute="top" secondItem="6bU-8f-qD4" secondAttribute="bottom" priority="998" constant="40" id="r19-N7-JR5"/>
                         </constraints>
                     </view>
                     <connections>
@@ -666,6 +669,38 @@
                 </pageControl>
             </objects>
             <point key="canvasLocation" x="-1975" y="-3300"/>
+        </scene>
+        <!--All Paths-->
+        <scene sceneID="mJD-dA-nYD">
+            <objects>
+                <viewController storyboardIdentifier="All Paths" title="All Paths" id="PxY-KB-FzT" customClass="AllMapViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VPO-nl-fxf"/>
+                        <viewControllerLayoutGuide type="bottom" id="WMG-MH-FL6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ih7-Is-32J">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oFb-SM-EBk">
+                                <rect key="frame" x="20" y="40" width="440" height="240"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oFb-SM-EBk" firstAttribute="top" secondItem="VPO-nl-fxf" secondAttribute="bottom" constant="8" symbolic="YES" id="0W4-HL-M3J"/>
+                            <constraint firstItem="oFb-SM-EBk" firstAttribute="centerY" secondItem="ih7-Is-32J" secondAttribute="centerY" id="JqT-YV-OAZ"/>
+                            <constraint firstItem="oFb-SM-EBk" firstAttribute="centerX" secondItem="ih7-Is-32J" secondAttribute="centerX" id="Pki-gf-geB"/>
+                            <constraint firstItem="oFb-SM-EBk" firstAttribute="leading" secondItem="ih7-Is-32J" secondAttribute="leading" constant="20" symbolic="YES" id="YWM-fr-YsI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="oFb-SM-EBk" id="isE-kf-BbR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="91h-8A-u5p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="794" y="-3964"/>
         </scene>
         <!--Recording-->
         <scene sceneID="ORf-bo-8P9">

@@ -1,6 +1,7 @@
 import CoreLocation
 import UIKit
 import CoreMotion
+import SwiftSimplify
 
 extension Path {
     var dateSpan : String {
@@ -112,5 +113,20 @@ extension Path {
         }
         
         return
+    }
+    
+    func getSimplifiedCoordinates() -> [CLLocationCoordinate2D]{
+        // let points = points.getPoints()
+        var simpleCoords : [CLLocationCoordinate2D] = []
+        
+        let coordinates = self.getPoints()
+        if coordinates.count > 5 {
+            //simplify coordinates
+            simpleCoords = SwiftSimplify.simplify(coordinates, tolerance: MapViewController.lineTolerance)
+        } else{
+            simpleCoords = coordinates
+        }
+        
+        return simpleCoords
     }
 }
