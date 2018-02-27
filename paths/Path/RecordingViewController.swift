@@ -12,6 +12,7 @@ import CoreMotion
 
 public class RecordingViewController : BaseRecordingController {
     public static let storyboardID = "recording"
+    
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var lblTime: UILabel!
     
@@ -34,11 +35,13 @@ public class RecordingViewController : BaseRecordingController {
         return pending
     }()
     lazy var saveAlert : UIAlertController = {
-        let alert = UIAlertController(title: "Save?", message: "Would you like to save this path or reset?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Save?", message: "What would you like to do with your Path?", preferredStyle: UIAlertControllerStyle.alert)
         let actionSave = UIAlertAction.init(title: "Save", style: UIAlertActionStyle.default) {[unowned self] _ in self.buttonSaveClicked()}
-        let actionReset = UIAlertAction.init(title: "Reset", style: UIAlertActionStyle.default) {[unowned self] _ in self.buttonResetClicked()}
+        let actionReset = UIAlertAction.init(title: "Reset", style: UIAlertActionStyle.destructive) {[unowned self] _ in self.buttonResetClicked()}
+        let actionCancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.default) {[unowned self] _ in self.buttonCancelClicked()}
         alert.addAction(actionSave)
         alert.addAction(actionReset)
+        alert.addAction(actionCancel)
         
         return alert
     }()
@@ -59,47 +62,68 @@ public class RecordingViewController : BaseRecordingController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateView()
+        updateTimer()
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (_) in
             self?.timePast += 1
-            self?.updateView()
+            self?.updateTimer()
         })
-//
-//        if !isRecording {
-//            startUpdating(accuracy: recordingAccuracy)
-//            isRecording = true
-//        } else{
-//            log.error("recording vc is already recording")
-//        }
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
         timer?.invalidate()
     }
     
-    @objc
-    func buttonStopClicked() {
-        stopUpdating()
-        timer?.invalidate()
-        log.debug("show save alert")
-        self.present(saveAlert, animated: true, completion: nil)
-    }
-    
-    private func updateView(){
+    private func updateTimer(){
         lblTime.text = timeFormatter.string(from: self.timePast)
     }
     
+    @objc
+    func buttonStopClicked() {
+        log.debug("show save alert")
+        self.present(saveAlert, animated: true, completion: nil)
+    }
+    func buttonCancelClicked() {
+        log.debug("dismiss save alert")
+        self.dismiss(animated: true, completion: nil)
+    }
     func buttonSaveClicked() {
-        //show spinner
-        self.present(loadingActivityAlert, animated: true, completion: nil)
-        
         log.debug("saving path")
+        stopUpdating()
+        timer?.invalidate()
+        self.present(loadingActivityAlert, animated: true, completion: nil)
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             self.save(callback: self.onSaveComplete)
         }
     }
     
+    //MARK:- PathManager, LocationManager interaction
+    func buttonResetClicked() {
+        stopUpdating()
+        timer?.invalidate()
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    public func reset() {
+        pathManager?.clearPoints()
+    }
+    
+    func startUpdating(accuracy: LocationAccuracy) {
+        pathManager?.clearPoints()
+        
+        locationManager?.startLocationUpdates(with: accuracy)
+        
+        startTime = Date()
+        stopTime = nil
+    }
+    
+    public func stopUpdating() {
+        stopTime = Date()
+        locationManager?.stopLocationUpdates()
+    }
+    func save(callback: @escaping (Path?,Error?) -> Void) {
+        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
+    }
     func onSaveComplete(path: Path?, error: Error?) {
         DispatchQueue.main.async { [weak self] in
             self?.dismiss(animated: false) { //hide spinner
@@ -118,33 +142,5 @@ public class RecordingViewController : BaseRecordingController {
                 }
             }
         }
-    }
-    
-    //MARK:- PathManager, LocationManager interaction
-    func buttonResetClicked() {
-        //go to new path vc
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    public func save(callback: @escaping (Path?,Error?) -> Void) {
-        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
-    }
-    
-    public func reset() {
-        pathManager?.clearPoints()
-    }
-    
-    func startUpdating(accuracy: LocationAccuracy) {
-        pathManager?.clearPoints()
-        
-        locationManager?.startLocationUpdates(with: accuracy)
-        
-        startTime = Date()
-        stopTime = nil
-    }
-    
-    public func stopUpdating() {
-        stopTime = Date()
-        locationManager?.stopLocationUpdates()
     }
 }

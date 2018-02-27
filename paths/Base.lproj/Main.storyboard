@@ -117,85 +117,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2JN-Vr-e8U">
-                                <rect key="frame" x="143" y="87" width="194" height="46"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="Fx0-7d-nq7"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="J2I-f2-hlj"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="UaX-5t-FGf"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Walking"/>
-                                    <segment title="Running"/>
-                                    <segment title="Biking"/>
-                                </segments>
-                            </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Bf-1l-oSq">
-                                <rect key="frame" x="15" y="58.5" width="450" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAe-PF-q0g">
-                                <rect key="frame" x="20" y="200" width="440" height="45"/>
-                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="0cJ-cO-8ZZ"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="250" constant="500" id="5wO-2R-weX"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="n6r-OA-hTj"/>
-                                </constraints>
-                                <state key="normal" title="START">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your path accuracy will be set based on the activity type you select." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U12-8F-zd3">
-                                <rect key="frame" x="48" y="132" width="384.5" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="aIb-NZ-bJy"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="fAU-wr-pOb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-0R-ixj">
+                                <rect key="frame" x="20" y="51.5" width="440" height="217"/>
+                                <subviews>
+                                    <stackView hidden="YES" opaque="NO" tag="-1" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-Ad-sgm">
+                                        <rect key="frame" x="57" y="0.0" width="326.5" height="0.0"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Location Settings are disabled for this app." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1G-ZP-qBI">
+                                                <rect key="frame" x="0.0" y="0.0" width="326.5" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvo-gV-lZg">
+                                                <rect key="frame" x="0.0" y="0.0" width="326.5" height="0.0"/>
+                                                <state key="normal" title="Go to Location Settings"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="lvo-gV-lZg" firstAttribute="centerX" secondItem="V5B-Ad-sgm" secondAttribute="centerX" id="0mu-n4-Uc6"/>
+                                        </constraints>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Your Activity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Bf-1l-oSq">
+                                        <rect key="frame" x="157" y="0.0" width="126" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your path accuracy will be set based on the activity type you select." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U12-8F-zd3">
+                                        <rect key="frame" x="28" y="64.5" width="384.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2JN-Vr-e8U">
+                                        <rect key="frame" x="123" y="119" width="194" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="Fx0-7d-nq7"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="UaX-5t-FGf"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Walking"/>
+                                            <segment title="Running"/>
+                                            <segment title="Biking"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAe-PF-q0g">
+                                        <rect key="frame" x="0.0" y="172" width="440" height="45"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="0cJ-cO-8ZZ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="250" constant="500" id="5wO-2R-weX"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="n6r-OA-hTj"/>
+                                        </constraints>
+                                        <state key="normal" title="START">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Bf-1l-oSq" firstAttribute="centerX" secondItem="veg-01-mrx" secondAttribute="centerX" id="2qe-Sm-b3g"/>
-                            <constraint firstItem="hAe-PF-q0g" firstAttribute="centerX" secondItem="veg-01-mrx" secondAttribute="centerX" id="82Y-81-EQm"/>
-                            <constraint firstItem="6Bf-1l-oSq" firstAttribute="top" secondItem="HNE-N8-yf9" secondAttribute="bottom" priority="750" constant="99" id="AvG-75-lhx"/>
-                            <constraint firstItem="2JN-Vr-e8U" firstAttribute="centerX" secondItem="veg-01-mrx" secondAttribute="centerX" id="G03-Hs-Y3l"/>
-                            <constraint firstItem="hAe-PF-q0g" firstAttribute="top" relation="greaterThanOrEqual" secondItem="U12-8F-zd3" secondAttribute="bottom" constant="8" symbolic="YES" id="GJp-jk-rl2"/>
-                            <constraint firstItem="U12-8F-zd3" firstAttribute="leading" secondItem="veg-01-mrx" secondAttribute="leading" constant="20" id="K1V-Cx-wmi"/>
-                            <constraint firstItem="U12-8F-zd3" firstAttribute="centerX" secondItem="veg-01-mrx" secondAttribute="centerX" id="LXs-it-R7d"/>
-                            <constraint firstItem="2JN-Vr-e8U" firstAttribute="top" secondItem="6Bf-1l-oSq" secondAttribute="bottom" constant="8" symbolic="YES" id="MTo-ai-MhG"/>
-                            <constraint firstItem="U12-8F-zd3" firstAttribute="top" secondItem="2JN-Vr-e8U" secondAttribute="bottom" id="TiX-fe-P8i"/>
-                            <constraint firstItem="6Bf-1l-oSq" firstAttribute="leading" secondItem="veg-01-mrx" secondAttribute="leading" constant="15" id="YOm-aJ-lRW"/>
-                            <constraint firstItem="9aD-qL-8Ry" firstAttribute="top" secondItem="hAe-PF-q0g" secondAttribute="bottom" constant="75" id="eOT-WS-Fhp"/>
-                            <constraint firstItem="hAe-PF-q0g" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="veg-01-mrx" secondAttribute="leading" constant="20" symbolic="YES" id="fvk-th-YKU"/>
-                            <constraint firstItem="2JN-Vr-e8U" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="veg-01-mrx" secondAttribute="leading" priority="750" constant="20" symbolic="YES" id="ixx-3a-1CY"/>
+                            <constraint firstItem="dt3-0R-ixj" firstAttribute="centerX" secondItem="veg-01-mrx" secondAttribute="centerX" id="LAa-rc-vys"/>
+                            <constraint firstItem="dt3-0R-ixj" firstAttribute="centerY" secondItem="veg-01-mrx" secondAttribute="centerY" id="NaW-jw-JAF"/>
+                            <constraint firstItem="dt3-0R-ixj" firstAttribute="leading" secondItem="veg-01-mrx" secondAttribute="leading" constant="20" symbolic="YES" id="jTH-LW-sA3"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="K1V-Cx-wmi"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="K1V-Cx-wmi"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="New Path" id="E3I-5l-yma"/>
                     <connections>
+                        <outlet property="btnLocationSettings" destination="lvo-gV-lZg" id="mE0-Of-PLr"/>
                         <outlet property="btnStart" destination="hAe-PF-q0g" id="mK9-dm-uYb"/>
                         <outlet property="lblInstructions" destination="U12-8F-zd3" id="jQ4-TX-nPY"/>
+                        <outlet property="lblTitle" destination="6Bf-1l-oSq" id="TXg-pw-2D3"/>
                         <outlet property="segAction" destination="2JN-Vr-e8U" id="jAr-nH-Zoo"/>
+                        <outlet property="stackvwContent" destination="dt3-0R-ixj" id="yZ7-fX-8qR"/>
+                        <outlet property="stackvwEnableLocation" destination="V5B-Ad-sgm" id="fZT-DP-hAS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtC-5V-7f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
