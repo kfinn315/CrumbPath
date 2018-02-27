@@ -3,7 +3,7 @@
 //  paths
 //
 //  Created by Kevin Finn on 2/26/18.
-//  Copyright © 2018 bingcrowsby. All rights reserved.
+//  Copyright © 2018 Kevin Finn. All rights reserved.
 //
 
 import UIKit

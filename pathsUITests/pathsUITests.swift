@@ -3,7 +3,7 @@
 //  pathsUITests
 //
 //  Created by kfinn on 2/19/18.
-//  Copyright © 2018 bingcrowsby. All rights reserved.
+//  Copyright © 2018 Kevin Finn. All rights reserved.
 //
 
 import XCTest

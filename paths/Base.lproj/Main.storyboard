@@ -108,7 +108,7 @@
         <!--New Path-->
         <scene sceneID="Xw5-5c-QhG">
             <objects>
-                <viewController id="fjo-9m-Xn3" customClass="NewPathViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="New Path" id="fjo-9m-Xn3" customClass="NewPathViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HNE-N8-yf9"/>
                         <viewControllerLayoutGuide type="bottom" id="9aD-qL-8Ry"/>

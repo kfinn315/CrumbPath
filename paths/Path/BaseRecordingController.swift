@@ -15,13 +15,17 @@ import RxCocoa
 import RxSwift
 
 public class BaseRecordingController : UIViewController,CLLocationManagerDelegate {
-    weak var pathManager = PathManager.shared
-    var locationManager : LocationManager?
+    weak var pathManager : IPathManager? = PathManager.shared
+    var locationManager : ILocationManager?
     var startTime : Date?
     var stopTime : Date?
-    var isRecording : Bool = false
-    
     var disposeBag = DisposeBag()
+    
+    convenience init(nibName: String?, bundle: Bundle?, locationManager: ILocationManager, pathManager: IPathManager){
+        self.init(nibName: nibName, bundle: bundle)
+        //self.pathManager = pathManager
+        self.locationManager = locationManager
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,26 +37,5 @@ public class BaseRecordingController : UIViewController,CLLocationManagerDelegat
                 
                 self.pathManager?.addPointToData(LocalPoint.from(cllocation))
             }).disposed(by: disposeBag)       
-    }
-    public func save(callback: @escaping (Path?,Error?) -> Void) {        
-        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
-    }
-    
-    public func reset() {
-        pathManager?.clearPoints()
-    }
-    
-    func startUpdating(accuracy: LocationAccuracy) {
-        pathManager?.clearPoints()
-        
-        locationManager?.startLocationUpdates(with: accuracy)
-        
-        startTime = Date()
-        stopTime = nil
-    }
-    
-    public func stopUpdating() {
-        stopTime = Date()
-        locationManager?.stopLocationUpdates()
-    }
+    }  
 }

@@ -3,7 +3,7 @@
 //  paths
 //
 //  Created by Kevin Finn on 2/26/18.
-//  Copyright © 2018 bingcrowsby. All rights reserved.
+//  Copyright © 2018 Kevin Finn. All rights reserved.
 //
 
 import CoreLocation
@@ -12,14 +12,14 @@ public typealias Points = [Point]
 
 extension Array where Element:Point {
     public func getDistance(_ callback: @escaping (CLLocationDistance) -> Void){
+        
         var pointDistance : (endPoint: CLLocation?, distance: CLLocationDistance) = (nil, 0.0)
         pointDistance = self.reduce(into: pointDistance, { (pointDistance, point) in
-            if(pointDistance.endPoint == nil){ //first
-                pointDistance.endPoint = CLLocation(point.coordinates)
-            } else{
+            if(pointDistance.endPoint != nil){ //first
                 pointDistance.distance += pointDistance.endPoint!.distance(from: CLLocation(point.coordinates))
                 log.verbose("distance \(pointDistance.distance)")
             }
+            pointDistance.endPoint = CLLocation(point.coordinates)
         })
         callback(pointDistance.distance)
     }

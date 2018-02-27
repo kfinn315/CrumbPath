@@ -15,6 +15,7 @@ import RxCocoa
 import RxSwift
 
 public class NewPathViewController : BaseRecordingController {
+    public static let storyboardID = "New Path"
     @IBOutlet weak var lblInstructions: UILabel!
     @IBOutlet weak var btnStart: UIButton!
     @IBOutlet weak var segAction: UISegmentedControl!

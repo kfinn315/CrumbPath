@@ -18,9 +18,9 @@ public class RecordingViewController : BaseRecordingController {
     public var recordingAccuracy : LocationAccuracy = LocationAccuracy.walking
     
     private var timePast : TimeInterval = 0.0
-    private var timer : Timer?
+    var timer : Timer?
     private let timeFormatter : DateComponentsFormatter
-    private lazy var loadingActivityAlert : UIAlertController = {
+    lazy var loadingActivityAlert : UIAlertController = {
         let pending = UIAlertController(title: "Creating New Path", message: nil, preferredStyle: .alert)
         
         let indicator =  UIActivityIndicatorView(frame: pending.view.bounds)
@@ -65,13 +65,13 @@ public class RecordingViewController : BaseRecordingController {
             self?.timePast += 1
             self?.updateView()
         })
-        
-        if !isRecording {
-            startUpdating(accuracy: recordingAccuracy)
-            isRecording = true
-        } else{
-            log.error("recording vc is already recording")
-        }
+//
+//        if !isRecording {
+//            startUpdating(accuracy: recordingAccuracy)
+//            isRecording = true
+//        } else{
+//            log.error("recording vc is already recording")
+//        }
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
@@ -105,11 +105,11 @@ public class RecordingViewController : BaseRecordingController {
             self?.dismiss(animated: false) { //hide spinner
                 if error == nil, path != nil {
                     self?.pathManager?.hasNewPath = true
+                    
                     var newvcs : [UIViewController] = []
                     if let first = self?.navigationController?.viewControllers.first {
                         newvcs.append(first)
                     }
-                    
                     newvcs.append(EditPathViewController())
                     
                     self?.navigationController?.setViewControllers(newvcs, animated: true)
@@ -120,8 +120,31 @@ public class RecordingViewController : BaseRecordingController {
         }
     }
     
+    //MARK:- PathManager, LocationManager interaction
     func buttonResetClicked() {
         //go to new path vc
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    public func save(callback: @escaping (Path?,Error?) -> Void) {
+        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
+    }
+    
+    public func reset() {
+        pathManager?.clearPoints()
+    }
+    
+    func startUpdating(accuracy: LocationAccuracy) {
+        pathManager?.clearPoints()
+        
+        locationManager?.startLocationUpdates(with: accuracy)
+        
+        startTime = Date()
+        stopTime = nil
+    }
+    
+    public func stopUpdating() {
+        stopTime = Date()
+        locationManager?.stopLocationUpdates()
     }
 }

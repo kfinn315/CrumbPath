@@ -10,7 +10,7 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
-protocol LocationManagerInterface {
+protocol ILocationManager {
     var authorized : Driver<Bool> {get}
     var location : Driver<CLLocation> {get}
     var isUpdating : Bool { get }
@@ -27,7 +27,7 @@ public enum LocationAccuracy : Int {
     case custom
 }
 
-class LocationManager: NSObject, LocationManagerInterface, CLLocationManagerDelegate {
+class LocationManager: NSObject, ILocationManager, CLLocationManagerDelegate {
     static let sharedInstance = LocationManager()
     public var authorized : Driver<Bool>
     public var location : Driver<CLLocation>

@@ -12,7 +12,6 @@ import RxCocoa
 import RxSwift
 
 class EditPathViewController : FormViewController {
-    
     static var dateformatter : DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -22,9 +21,14 @@ class EditPathViewController : FormViewController {
     
     public var isNewPath : Bool = false
     
-    private weak var pathManager : PathManager? = PathManager.shared
-    private weak var path : Path?
+    private weak var pathManager : IPathManager? = PathManager.shared
+    fileprivate weak var path : Path?
     private var disposeBag = DisposeBag()
+
+    convenience init(pathManager: IPathManager?) {
+        self.init()
+        self.pathManager = pathManager
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +132,7 @@ class EditPathViewController : FormViewController {
         }
         
         do {
-            try pathManager?.updateCurrentPathInCoreData()
+            try pathManager?.updateCurrentPathInCoreData(notify: false)
         } catch {
             log.error(error.localizedDescription)
         }

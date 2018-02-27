@@ -15,10 +15,10 @@ target 'paths' do
     # Pods for paths
 
   target 'pathsTests' do
-   inherit! :search_paths
+   inherit! :complete
     # Pods for testing
-#     pod 'RxBlocking', '~> 4.0'
-#     pod 'RxTest',     '~> 4.0'
+    pod 'RxBlocking', '~> 4.0'
+    pod 'RxTest',     '~> 4.0'
     pod 'Quick'
     pod 'Nimble'
   end

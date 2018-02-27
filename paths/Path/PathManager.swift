@@ -16,14 +16,27 @@ import RxSwift
 import RxCoreData
 import Photos
 
-class PathManager {
+protocol IPathManager : AnyObject {
+    var currentPathDriver : Driver<Path?>? {get}
+    var hasNewPath : Bool {get set}
+    var currentAlbumId : String? {get}
+    func updateCurrentAlbum(collectionid: String)
+    func setCurrentPath(_ path: Path?)
+    func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void)
+    func updateCurrentPathInCoreData(notify: Bool) throws
+    func addPointToData(_ point: LocalPoint)
+    func clearPoints()
+    func getPathsToOverlay() -> [Path]?
+}
+
+class PathManager : IPathManager {
     public var currentPathDriver : Driver<Path?>?
     public var hasNewPath : Bool = false
     
     private var pointsManager : PointsManagerInterface = PointsManager()
     public static var pedometer = CMPedometer()
     private var disposeBag = DisposeBag()
-    private var _currentPath : Variable<Path?> = Variable(nil)
+    fileprivate var _currentPath : Variable<Path?> = Variable(nil)
     private let currentPathSubject = BehaviorSubject<Path?>(value: nil)
     
     private weak var context : NSManagedObjectContext?
@@ -122,7 +135,6 @@ class PathManager {
         return points
     }
     
-    
     public func addPointToData(_ point: LocalPoint) {
         log.info("append point")
         pointsManager.savePoint(point)
@@ -154,7 +166,7 @@ class PathManager {
 //        let predicate = NSPredicate(format: "distance > %d", 5)
 //        request.predicate = predicate
         do{
-            let result = try context!.fetch(request) as! [Path]
+            let result = try context!.fetch(request)
             return result
         } catch{
             //error

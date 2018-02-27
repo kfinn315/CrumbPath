@@ -3,7 +3,7 @@
 //  pathsTests
 //
 //  Created by kfinn on 2/20/18.
-//  Copyright © 2018 bingcrowsby. All rights reserved.
+//  Copyright © 2018 Kevin Finn. All rights reserved.
 //
 
 
@@ -11,6 +11,7 @@ import XCTest
 import Quick
 import Nimble
 import RxSwift
+import CoreData
 
 @testable import paths
 
