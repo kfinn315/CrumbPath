@@ -12,6 +12,8 @@ import RxCocoa
 import RxDataSources
 import CoreLocation
 import CoreData
+import AssetsPickerViewController
+import Photos
 
 extension UIImage {
     class func circle(diameter: CGFloat, color: UIColor) -> UIImage {

@@ -1,7 +1,22 @@
 PODS:
+  - AssetsPickerViewController (2.4.0):
+    - Device (~> 3.0.3)
+    - Dimmer (~> 2.0)
+    - FadeView (~> 2.0)
+    - PureLayout
+    - SwiftARGB (~> 2.0)
+    - TinyLog (~> 2.0)
+  - Device (3.0.3)
   - Differentiator (3.0.2)
+  - Dimmer (2.0.3):
+    - FadeView (~> 2.0)
+    - PureLayout
+    - TinyLog (~> 2.0)
+    - UIViewKVO (~> 2.0)
   - Eureka (4.0.1)
+  - FadeView (2.0.0)
   - Nimble (7.0.3)
+  - PureLayout (3.0.2)
   - Quick (1.2.0)
   - RxBlocking (4.1.2):
     - RxSwift (~> 4.0)
@@ -17,10 +32,14 @@ PODS:
   - RxSwift (4.1.2)
   - RxTest (4.1.2):
     - RxSwift (~> 4.0)
+  - SwiftARGB (2.0.0)
   - SwiftSimplify (0.2.0)
   - SwiftyBeaver (1.5.1)
+  - TinyLog (2.0.7)
+  - UIViewKVO (2.0.0)
 
 DEPENDENCIES:
+  - AssetsPickerViewController (~> 2.0)
   - Eureka (~> 4.0)
   - Nimble
   - Quick
@@ -34,9 +53,14 @@ DEPENDENCIES:
   - SwiftyBeaver
 
 SPEC CHECKSUMS:
+  AssetsPickerViewController: b1e397b5a0e2dc0bc6f82f3ca6bb74bc84ff388a
+  Device: 9a5264ee4e0f392e7153d2c46b10c8df46b7aad2
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
+  Dimmer: 9908a0003f4882eca1b2e318e11f82d32280794e
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  FadeView: 80197da2fbee5382b178127e8c5f988a35eef018
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   RxBlocking: f6054985901412fc8c02daa84e92d4ba68c61389
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
@@ -44,9 +68,12 @@ SPEC CHECKSUMS:
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   RxTest: e634f15fd2c2cd0e0120132ef7a4f7be69ad0393
+  SwiftARGB: 8727cfcdcfe8709e707a2391f1d5802a7c40dcad
   SwiftSimplify: 374ead1c360c6e236539543d6ce5b3abda011080
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
+  TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
+  UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
 
-PODFILE CHECKSUM: 58d10c1fe29cb11e30c905dc90a1a7104f629de0
+PODFILE CHECKSUM: 4b62d3119d9c7dccc26675cc00158b32bdee0a89
 
 COCOAPODS: 1.4.0

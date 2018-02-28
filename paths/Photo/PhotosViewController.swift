@@ -3,10 +3,12 @@ import UIKit
 import Photos
 import RxSwift
 import RxCocoa
+import AssetsPickerViewController
 
-class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource, UICollectionViewDelegate, AssetsPickerViewControllerDelegate, AssetsAlbumViewControllerDelegate {
+  
     public static let storyboardID = "Photos Table"
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var fetchResult: PHFetchResult<PHAsset>?
@@ -26,34 +28,37 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     
     lazy var albumAlert : UIAlertController = {
         let alert = UIAlertController(title: "Import Photo Album", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        let actionExisting = UIAlertAction.init(title: "Choose an Existing Album", style: UIAlertActionStyle.default, handler: { [weak self] _ in
+        let actionExisting = UIAlertAction.init(title: "Pick an Album", style: UIAlertActionStyle.default, handler: { [weak self] _ in
             self?.showAlbumsLibrary()
         })
+        let actionCreate = UIAlertAction.init(title: "Select Photos", style: UIAlertActionStyle.default, handler: createAlbum
+        )
+        
         alert.addAction(actionExisting)
+        alert.addAction(actionCreate)
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         
         return alert
     }()
-    
     override func viewDidLoad() {
         super.baseCollectionView = collectionView
-
+        
         super.viewDidLoad()
         
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
-       
+        
         photosManager?.currentAlbumObservable?.subscribe(onNext: { [unowned self] assetcollection in
             guard self.photosManager?.isAuthorized ?? false else{
                 return
             }
-
+            
             if assetcollection == nil {
                 self.fetchResult = nil
             } else {
                 self.fetchResult = self.photosManager?.fetchAssets(in: assetcollection!, options: nil)
             }
-           
+            
             DispatchQueue.main.async {
                 if self.fetchResult?.count ?? 0 == 0{
                     self.showEmptyMessage()
@@ -67,7 +72,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         }).disposed(by: disposeBag)
     }
     func showEmptyMessage(){
-         self.collectionView.backgroundView = self.emptyLabel
+        self.collectionView.backgroundView = self.emptyLabel
     }
     
     func hideEmptyMessage(){
@@ -82,7 +87,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
             let cellSize = layout.itemSize
             self.thumbnailSize = CGSize(width: cellSize.width, height: cellSize.height)
         }
-
+        
         super.viewWillAppear(animated)
         
         self.parent?.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(presentAddAlbumView)), animated: true)
@@ -159,7 +164,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
             showFull(asset!)
         }
     }
-
+    
     private func showFull(_ asset: PHAsset) {
         if let imageViewController = imageViewController{
             imageViewController.asset = asset
@@ -169,9 +174,79 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     }
     
     private func showAlbumsLibrary() {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: AlbumsTableViewController.storyboardID) {
-            self.navigationController?.pushViewController(vc, animated: true)
+        let pickerConfig = AssetsPickerConfig()
+//        pickerConfig.albumIsShowEmptyAlbum = false
+//        pickerConfig.albumIsShowHiddenAlbum = false
+        
+        let picker = AssetsPickerViewController(pickerConfig: pickerConfig)
+        picker.pickerDelegate = self
+        
+        let albumVC = AssetsAlbumViewController(pickerConfig: pickerConfig)
+        albumVC.delegate = self
+        let albumNavi = UINavigationController(rootViewController: albumVC)
+        albumNavi.modalPresentationStyle = .overCurrentContext
+        
+        if #available(iOS 11.0, *) {
+            albumNavi.navigationBar.prefersLargeTitles = true
+        }
+        
+        picker.modalPresentationStyle = .overCurrentContext
+        present(picker, animated: false, completion: nil)
+        picker.view.isHidden = true
+        picker.present(albumNavi, animated: true, completion: {
+            picker.view.isHidden = false
+        })
+
+//
+//        let photoConfig = AssetsPickerConfig()
+//        photoConfig.albumIsShowEmptyAlbum = false
+//
+//        let albumPicker = AssetsAlbumViewController(pickerConfig: photoConfig)
+//        albumPicker.delegate = self
+//        present(albumPicker, animated: true, completion: nil)
+    }
+    
+    private func createAlbum(_ action: UIAlertAction){
+        let photoConfig = AssetsPickerConfig()
+        photoConfig.albumIsShowEmptyAlbum = false
+        photoConfig.selectedAssets = []
+        fetchResult?.enumerateObjects({ (asset, count, finish) in
+            photoConfig.selectedAssets!.append(asset)
+        })
+        
+        let photoPicker = AssetsPickerViewController(pickerConfig: photoConfig)
+        photoPicker.pickerDelegate = self
+        present(photoPicker, animated: true, completion: nil)
+    }
+    
+    //MARK:- AssetsPickerViewControllerDelegate Implementation
+    public func assetsPickerCannotAccessPhotoLibrary(controller: AssetsPickerViewController) {
+        showEmptyMessage()
+    }
+    public func assetsPickerDidCancel(controller: AssetsPickerViewController) {}
+    public func assetsPicker(controller: AssetsPickerViewController, selected assets: [PHAsset]) {
+        // do your job with selected assets
+        //create album with assets, update Path object
+        photosManager?.addToCurrent(assets) { (success,error) in
         }
     }
+    public func assetsPicker(controller: AssetsPickerViewController, shouldSelect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        return true
+    }
+    public func assetsPicker(controller: AssetsPickerViewController, didSelect asset: PHAsset, at indexPath: IndexPath) {}
+    public func assetsPicker(controller: AssetsPickerViewController, shouldDeselect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        return true
+    }
+    public func assetsPicker(controller: AssetsPickerViewController, didDeselect asset: PHAsset, at indexPath: IndexPath) {}
+    
+    //MARK:= AssetsAlbumPickerViewControllerDelegate implementation
+    func assetsAlbumViewControllerCancelled(controller: AssetsAlbumViewController) {
+    }
+    
+    func assetsAlbumViewController(controller: AssetsAlbumViewController, selected album: PHAssetCollection) {
+        photosManager?.updateCurrentAlbum(collectionid: album.localIdentifier)
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 

@@ -3,6 +3,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'paths' do
+    # Pods for paths
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
     pod 'RxDataSources', '~> 3.0'
@@ -10,7 +11,7 @@ target 'paths' do
     pod 'Eureka', '~> 4.0'
     pod 'SwiftyBeaver'
     pod 'SwiftSimplify'
-    # Pods for paths
+    pod 'AssetsPickerViewController', '~> 2.0'
 
   target 'pathsTests' do
    inherit! :complete

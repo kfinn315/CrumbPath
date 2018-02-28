@@ -39,12 +39,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         log.debug("mapview did load")
         mapView.delegate = self
-
         pathManager?.currentPathObservable?.subscribeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] path in
-                log.debug("mapview current path driver - on next")
-                self.loadPath(path: path)
+            log.debug("mapview current path driver - on next")
+            self.loadPath(path: path)
         }).disposed(by: disposeBag)
-        
         photosManager?.currentAlbumObservable?.subscribe(onNext: {[unowned self] collection in
             log.debug("mapview current album observer - on next")
             if collection == nil {
@@ -55,10 +53,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             self.reloadImageAnnotations()
         }).disposed(by: disposeBag)
         
-        photosManager?.permissionStatusDriver?.drive(onNext: { [unowned self] auth in
-            if self.photosManager?.isAuthorized ?? false {
-                self.imageManager = PHCachingImageManager()
-                self.reloadImageAnnotations()
+        photosManager?.permissionStatusDriver?.drive(onNext: { [weak self] auth in
+            if self?.photosManager?.isAuthorized ?? false {
+                self?.imageManager = PHCachingImageManager()
+                self?.reloadImageAnnotations()
             }
         }).disposed(by: disposeBag)
     }    
@@ -76,7 +74,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     func reloadImageAnnotations() {
         log.debug("IMG reload")
-
+        
         let group = DispatchGroup()
         DispatchQueue.main.async {
             group.enter()
@@ -85,7 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         group.wait()
-
+        
         imageAnnotations = []
         
         if fetchResults != nil {
@@ -173,12 +171,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             zoomToPathAnnotations()
         }
     }
-//    func clearMap() {
-//        log.debug("mapview clear map")
-////        removeAllAnnotations()
-//        removeOverlay()
-//        removePathAnnotations()
-//    }
     
     func zoomToPoint(_ point: CLLocation, animated: Bool) {
         log.debug("mapview zoom to point")

@@ -19,7 +19,7 @@ protocol PhotoManagerInterface {
 class PhotoManager {
     private static var _shared : PhotoManager?
     
-    public var currentAlbumId : String?
+    //public var currentAlbumId : String?
     public var currentAlbumObservable : Observable<PHAssetCollection?>?
     public var permissionStatusDriver : Driver<PHAuthorizationStatus>?
     public var authorizationStatus = PHPhotoLibrary.authorizationStatus()
@@ -125,6 +125,37 @@ class PhotoManager {
         })
         return data
     }()
+    
+    public func addToCurrent(_ assets: [PHAsset], completion: ((Bool, Error?) -> ())?){
+        PhotosHelper.getAlbum(named: (pathManager?.currentPath?.localid)!){ [weak self]
+            (album) in
+            
+            if album == nil {
+                PhotosHelper.createAlbum(named: (self?.pathManager?.currentPath?.localid)!) {assetCollection in
+                    if assetCollection != nil {
+                        PhotosHelper.save(assets: assets, to: assetCollection!) {
+                            (success, error) in
+                            self?.updateCurrentAlbum(collectionid: assetCollection!.localIdentifier)
+                            
+                            completion?(success,error)
+                        }
+                    }
+                    else{
+                        completion?(false, nil) //create error
+                    }
+                }
+            } else{
+                PhotosHelper.removeAll(from: album!, completion: { (success, error) in
+                    PhotosHelper.save(assets: assets, to: album!) {
+                        (success, error) in
+                        self?.currentAlbumSubject.onNext(album)
+                        completion?(success,error)
+                    }
+                })
+            }
+            
+        }
+    }
 }
 
 extension PHImageManager {

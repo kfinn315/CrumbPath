@@ -134,24 +134,40 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AssetsPickerViewController/AssetsPickerViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Device/Device.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Dimmer/Dimmer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/FadeView/FadeView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCoreData/RxCoreData.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftARGB/SwiftARGB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftSimplify/SwiftSimplify.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TinyLog/TinyLog.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/UIViewKVO/UIViewKVO.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AssetsPickerViewController/AssetsPickerViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Device/Device.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Dimmer/Dimmer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/FadeView/FadeView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCoreData/RxCoreData.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftARGB/SwiftARGB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftSimplify/SwiftSimplify.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TinyLog/TinyLog.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/UIViewKVO/UIViewKVO.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
