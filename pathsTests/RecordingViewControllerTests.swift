@@ -10,32 +10,49 @@ import XCTest
 import Quick
 import Nimble
 import RxSwift
+import RxCocoa
 import CoreLocation
 import CoreData
 
 @testable import paths
 
+class MockLocationManager : ILocationManager {
+    var authorized: Driver<Bool>
+    var location: Driver<CLLocation>
+    var isUpdating: Bool = false
+    var accuracy: LocationAccuracy = .walking
+    init() {
+        authorized = BehaviorSubject<Bool>(value: false).asDriver(onErrorJustReturn: false)
+        location = BehaviorSubject<CLLocation>(value: CLLocation()).asDriver(onErrorJustReturn: CLLocation())
+    }
+    func startLocationUpdates(with accuracy: LocationAccuracy) {
+    }
+    func stopLocationUpdates() {
+    }
+}
 class RecordingViewControllerTests: QuickSpec {
     override func spec(){
         var subject: RecordingViewController!
         var window : UIWindow!
-        
+        var mockLM : MockLocationManager!
         describe("RecordingViewController"){            
             beforeEach {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let storyboard = UIStoryboard(name: "main", bundle: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 subject = storyboard.instantiateViewController(withIdentifier: RecordingViewController.storyboardID) as! RecordingViewController
                 
                 window.makeKeyAndVisible()
                 window.rootViewController = subject
                 
                 // Act:
-                subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
             }
             
             describe(".viewWillAppear"){
+                beforeEach {
+                    subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
+                }
                 it("is recording"){
-                    //?
+                    expect(subject.locationManager?.isUpdating).to(equal(true))
                 }
                 it("sets the start time") {
                     expect(subject.startTime).toNot(beNil())
@@ -47,48 +64,45 @@ class RecordingViewControllerTests: QuickSpec {
             }
             context("after view did appear"){
                 beforeEach {
+                    subject.beginAppearanceTransition(true, animated: false) // Triggers  viewWillAppear
                     subject.endAppearanceTransition() // Triggers viewDidAppear
                 }
                 
-                describe("button stop clicked") {
+                context("stop button was clicked") {
                     beforeEach {
                         subject.btnStop.sendActions(for: .touchUpInside)
                     }
-                    it("shows save alert") {
-                        expect(subject?.saveAlert.isBeingPresented).toEventually(equal(true))
+                    it("shows save alert"){
+                        expect(subject.presentedViewController).to(equal(subject.saveAlert))
                     }
-                    it("stops the timer"){
-                        expect(subject.timer?.isValid).to(equal(false))
-                    }
-                    it("sets the stop time") {
-                        expect(subject.stopTime).toNot(beNil())
+                    
+                    it("doesn't stop the timer"){
+                        expect(subject.timer?.isValid).to(equal(true))
                     }
                 }
-                
-                context("button stop was clicked, save alert is visible") {
-                    beforeEach {
-                        subject.btnStop.sendActions(for: .touchUpInside)
-                    }
-                    
+                context("save alert view is displayed") {
                     describe("save button is pressed") {
-                        it("dismisses the save alert"){
-                            expect(subject?.saveAlert.isBeingDismissed).toEventually(equal(true))
+                        it("saves new path"){
+                            waitUntil() { done in
+                                subject.save() { path, error in
+                                    expect(path).toNot(beNil())
+                                    expect(error).to(beNil())
+                                    done()
+                                }
+                            }
+                            it("goes to EditPathViewController"){
+                                expect(window.rootViewController).toEventually(beAKindOf(EditPathViewController.self))
+                            }
                         }
-                        it("shows loading alert"){
-                            expect(subject?.loadingActivityAlert.isBeingPresented).toEventually(equal(true))
+                        describe("reset button is pressed"){
+                            it("navigates back to the New Path view"){
+                                expect(window.rootViewController).toEventually(beAKindOf(NewPathViewController.self))
+                            }
                         }
-                        it("navigates to EditPath"){
-                            expect(window.rootViewController).toEventually(beAKindOf(EditPathViewController.self))
-                        }
-                    }
-                    
-                    describe("reset button is pressed"){
-                        it("dismisses the save alert"){
-                            expect(subject?.saveAlert.isBeingDismissed).toEventually(equal(true))
-                        }
-                        it("navigates back to the New Path view"){
-                            expect(window.rootViewController).toEventually(beAKindOf(NewPathViewController.self))
-                            
+                        describe("cancel button was pressed"){
+                            it("closes the alert"){
+                                expect(subject.presentedViewController).to(beNil())
+                            }
                         }
                     }
                 }

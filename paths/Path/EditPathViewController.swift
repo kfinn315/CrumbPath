@@ -33,7 +33,7 @@ class EditPathViewController : FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pathManager?.currentPathDriver?.drive(onNext: { [unowned self] path in
+        pathManager?.currentPathObservable?.subscribe(onNext: { [unowned self] path in
             self.path = path
             self.updateData()
         }).disposed(by: disposeBag)
@@ -132,7 +132,7 @@ class EditPathViewController : FormViewController {
         }
         
         do {
-            try pathManager?.updateCurrentPathInCoreData(notify: false)
+            try pathManager?.updateCurrentPathInCoreData(notify: true)
         } catch {
             log.error(error.localizedDescription)
         }

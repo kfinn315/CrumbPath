@@ -22,6 +22,10 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     public typealias T = NSManagedObject
     
     public static var entityName: String = "Path"
+        
+    var entitydescription : NSEntityDescription {
+        return NSEntityDescription.entity(forEntityName: "Path", in: AppDelegate.managedObjectContext!)!
+    }
     
     public var identity: Identity {
         if self.localid == nil {
@@ -30,12 +34,13 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         return self.localid!
     }
     
-    @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
-        super.init(entity: entity, insertInto: context)
-    }
-    
+    //insert the object into AppDelegate.managedObjectContext
     public required init() {
         super.init(entity: entitydescription, insertInto: nil)
+    }
+    
+    @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
+        super.init(entity: entity, insertInto: context)
     }
     
     public required init(entity: T) {
@@ -55,8 +60,8 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         locations = entity.value(forKey: "locations") as? String
     }
     
-    public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
-        super.init(entity: entitydescription, insertInto: context)
+    public required convenience init(title: String?, notes: String?) {
+        self.init()
         
         self.localid = UUID().uuidString
         self.title = title
@@ -67,10 +72,6 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         self.startdate = start
         self.enddate = end
         self.duration = DateInterval(start: startdate!, end: enddate!).duration as NSNumber
-    }
-    
-    var entitydescription : NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: "Path", in: AppDelegate.managedObjectContext!)!
     }
     
     public static var primaryAttributeName: String {

@@ -2,6 +2,7 @@ import CoreLocation
 import UIKit
 import CoreMotion
 import SwiftSimplify
+import MapKit
 
 extension Path {
     var dateSpan : String {
@@ -15,19 +16,24 @@ extension Path {
         return spanString
     }
     
-    public var displayDistance : String{
+    public var displayDistance : String?{
         guard self.distance != nil else {
-            return "?"
+            return nil
         }
         
-        return self.distance?.formatted ?? "?"
+        if let locationDistance = self.distance as? CLLocationDistance {
+            distanceFormatter.units = .imperial
+            distanceFormatter.unitStyle = .abbreviated
+            return distanceFormatter.string(fromDistance: locationDistance)
+        }
+        
+        return nil
     }
     
     public var displayDuration : String {
         guard duration != nil else {
             return "?"
         }
-        let dateFormatter = DateComponentsFormatter()
         dateFormatter.allowedUnits = [.hour, .minute, .second]
         dateFormatter.unitsStyle = .abbreviated
         

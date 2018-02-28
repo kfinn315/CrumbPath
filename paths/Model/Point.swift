@@ -14,7 +14,7 @@ import UIKit
 @objc(Point)
 public class Point: NSManagedObject, Codable {
     var entitydescription : NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: "Point", in: AppDelegate.managedObjectContext!)!        
+        return NSEntityDescription.entity(forEntityName: "Point", in: AppDelegate.managedObjectContext!)!
     }
     
     @objc
@@ -46,10 +46,10 @@ public class Point: NSManagedObject, Codable {
     public convenience required init(from decoder: Decoder) throws {
         self.init()
         
-        let container = try decoder.container(keyedBy: CodingKeys.self) // defining our (keyed) container
-        self.latitude = try container.decode(Double.self, forKey: .latitude) // extracting the data
-        self.id = try container.decode(String.self, forKey: .id) // extracting the data
-        self.longitude = try container.decode(Double.self, forKey: .longitude) // extracting the data
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.latitude = try container.decode(Double.self, forKey: .latitude)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.longitude = try container.decode(Double.self, forKey: .longitude)
         self.timestamp = try container.decode(Date.self, forKey: .timestamp) as Date
     }
     

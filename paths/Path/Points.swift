@@ -11,8 +11,7 @@ import CoreLocation
 public typealias Points = [Point]
 
 extension Array where Element:Point {
-    public func getDistance(_ callback: @escaping (CLLocationDistance) -> Void){
-        
+    public func getDistance(_ callback: @escaping (CLLocationDistance) -> Void){  
         var pointDistance : (endPoint: CLLocation?, distance: CLLocationDistance) = (nil, 0.0)
         pointDistance = self.reduce(into: pointDistance, { (pointDistance, point) in
             if(pointDistance.endPoint != nil){ //first

@@ -37,7 +37,7 @@ public class LocalPath : Equatable {
         enddate = Date()
     }
     convenience init(title: String, notes: String? = nil, albumId: String? = nil) {
-        self.init(title: title)
+        self.init()
         
         self.title = title
         self.notes = notes

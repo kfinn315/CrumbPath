@@ -17,13 +17,10 @@ import RxSwift
 public class BaseRecordingController : UIViewController,CLLocationManagerDelegate {
     weak var pathManager : IPathManager? = PathManager.shared
     var locationManager : ILocationManager?
-    var startTime : Date?
-    var stopTime : Date?
     var disposeBag = DisposeBag()
     
     convenience init(nibName: String?, bundle: Bundle?, locationManager: ILocationManager, pathManager: IPathManager){
         self.init(nibName: nibName, bundle: bundle)
-        //self.pathManager = pathManager
         self.locationManager = locationManager
     }
     

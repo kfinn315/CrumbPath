@@ -18,9 +18,9 @@ protocol PhotoManagerInterface {
 
 class PhotoManager {
     private static var _shared : PhotoManager?
-
+    
     public var currentAlbumId : String?
-    public var currentAlbumDriver : Driver<PHAssetCollection?>?
+    public var currentAlbumObservable : Observable<PHAssetCollection?>?
     public var permissionStatusDriver : Driver<PHAuthorizationStatus>?
     public var authorizationStatus = PHPhotoLibrary.authorizationStatus()
     public var isAuthorized : Bool {
@@ -32,7 +32,7 @@ class PhotoManager {
     private let currentAlbumSubject : BehaviorSubject<PHAssetCollection?>
     private var permissionStatusSubject : BehaviorSubject<PHAuthorizationStatus>
     private var disposeBag = DisposeBag()
-
+    
     public static var shared : PhotoManager {
         if _shared == nil {
             _shared = PhotoManager()
@@ -43,18 +43,14 @@ class PhotoManager {
     
     private init(){
         currentAlbumSubject = BehaviorSubject<PHAssetCollection?>(value: nil)
-        currentAlbumDriver = currentAlbumSubject.asDriver(onErrorJustReturn: nil)
+        currentAlbumObservable = currentAlbumSubject.asObservable().observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))//(onErrorJustReturn: nil)
         permissionStatusSubject = BehaviorSubject<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
         
         //when currentPathDriver sends a 'path', get image collection of 'path' and send it to subscribers of currentAlbumDriver
-        DispatchQueue.main.async {
-            self.pathManager?.currentPathDriver?.drive(onNext: { [weak self] path in
-                DispatchQueue.global(qos: .userInitiated).async {
-                    let collection = self?.getImageCollection(path?.albumId)
-                    self?.currentAlbumSubject.onNext(collection) //drive photoCollection for current path
-                }
-            }).disposed(by: self.disposeBag)
-        }
+        self.pathManager?.currentPathObservable?.subscribe(onNext: { [weak self] path in
+            let collection = self?.getImageCollection(path?.albumId)
+            self?.currentAlbumSubject.onNext(collection) //drive photoCollection for current path
+        }).disposed(by: self.disposeBag)
         
         permissionStatusDriver = self.permissionStatusSubject.asDriver(onErrorJustReturn: PHAuthorizationStatus.denied)
     }

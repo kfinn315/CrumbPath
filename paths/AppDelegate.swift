@@ -14,6 +14,8 @@ import SwiftyBeaver
 
 let log = SwiftyBeaver.self
 var cloud : SBPlatformDestination? = nil
+let distanceFormatter = MKDistanceFormatter()
+let dateFormatter = DateComponentsFormatter()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -111,8 +113,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     func setNavColor() {
-        let primarycolor = UIColor(rgb: 0xFFFC79) //yellow
-        let secondarycolor = UIColor(rgb: 0x3854FF) //blue
+    let primarycolor = UIColor(rgb: 0xbedcff) //yellow
+        let secondarycolor = UIColor(rgb: 0x26384B) //blue
         
         UINavigationBar.appearance().barTintColor = primarycolor
         UINavigationBar.appearance().tintColor = secondarycolor

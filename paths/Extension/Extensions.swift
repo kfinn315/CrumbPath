@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import CoreLocation
+import CoreData
 
 extension UIImage {
     class func circle(diameter: CGFloat, color: UIColor) -> UIImage {
@@ -29,15 +30,6 @@ extension UIImage {
         return img
     }
     
-}
-
-extension UIImageView {
-    
-    func setRounded() {
-        let radius = self.frame.width / 2
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
-    }
 }
 
 extension UIViewController {

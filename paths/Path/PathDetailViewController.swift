@@ -34,15 +34,15 @@ public class PathDetailViewController : UIViewController {
         log.debug("pathDetail view did load")
         title = ""
         
-        pathManager?.currentPathDriver?.drive(onNext: {[unowned self] path in
-            self.updateUI(path)
+        pathManager?.currentPathObservable?.observeOn(MainScheduler.instance).subscribe(onNext: { [weak self] path in
+                self?.updateUI(path)
         }).disposed(by: disposeBag)
+
     }
     
     func updateUI(_ path: Path?){
         if let coverimg = path?.coverimg {
             self.ivTop.image = UIImage(data: coverimg)
-            self.ivTop.setRounded()
         }
         
         self.lblTitle.text = path?.displayTitle
@@ -69,8 +69,6 @@ public class PathDetailViewController : UIViewController {
             self.stackvwDuration.isHidden = false
             self.lblDuration.text = path?.displayDuration
         }
-        
-//        self.ivTop.image = UIImage(data: coverimg)
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +81,18 @@ public class PathDetailViewController : UIViewController {
         } else {
             // Fallback on earlier versions
         }
+        
+    }
+    
+    public override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        //self.ivTop.setRounded()
+
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
@@ -90,6 +100,10 @@ public class PathDetailViewController : UIViewController {
         
         log.debug("pathDetail view will disappear")
 
+    }
+    
+    deinit {
+        log.debug("PathDetailVC deinits")
     }
     
     public override func didReceiveMemoryWarning() {

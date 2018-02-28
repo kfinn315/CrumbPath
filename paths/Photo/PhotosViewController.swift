@@ -43,7 +43,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
        
-        photosManager?.currentAlbumDriver?.drive(onNext: { [unowned self] assetcollection in
+        photosManager?.currentAlbumObservable?.subscribe(onNext: { [unowned self] assetcollection in
             guard self.photosManager?.isAuthorized ?? false else{
                 return
             }
@@ -54,13 +54,15 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
                 self.fetchResult = self.photosManager?.fetchAssets(in: assetcollection!, options: nil)
             }
            
-            if self.fetchResult?.count ?? 0 == 0{
-                self.showEmptyMessage()
-            } else{
-                self.hideEmptyMessage()
+            DispatchQueue.main.async {
+                if self.fetchResult?.count ?? 0 == 0{
+                    self.showEmptyMessage()
+                } else{
+                    self.hideEmptyMessage()
+                }
+                
+                self.collectionView?.reloadData()
             }
-            
-            self.collectionView?.reloadData()
             
         }).disposed(by: disposeBag)
     }

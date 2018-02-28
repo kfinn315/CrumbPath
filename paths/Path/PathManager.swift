@@ -17,7 +17,7 @@ import RxCoreData
 import Photos
 
 protocol IPathManager : AnyObject {
-    var currentPathDriver : Driver<Path?>? {get}
+    var currentPathObservable : Observable<Path?>? {get}
     var hasNewPath : Bool {get set}
     var currentAlbumId : String? {get}
     func updateCurrentAlbum(collectionid: String)
@@ -30,7 +30,7 @@ protocol IPathManager : AnyObject {
 }
 
 class PathManager : IPathManager {
-    public var currentPathDriver : Driver<Path?>?
+    public var currentPathObservable : Observable<Path?>?
     public var hasNewPath : Bool = false
     
     private var pointsManager : PointsManagerInterface = PointsManager()
@@ -69,9 +69,9 @@ class PathManager : IPathManager {
     }
     
     private func setup(){
-        currentPathDriver = currentPathSubject.flatMap{ _ in
-            self._currentPath.asObservable()            
-            }.asDriver(onErrorJustReturn: nil)
+        currentPathObservable = currentPathSubject.flatMap{ _ in
+                self._currentPath.asObservable()
+            }.observeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
     }
     
     public var currentAlbumId : String? {
@@ -106,7 +106,7 @@ class PathManager : IPathManager {
     public func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void) {
         log.info("saveNewPath")
         
-        let path = Path(self.context!, title: nil, notes: nil)
+        let path = Path(title: nil, notes: nil)
         
         path.setTimes(start: start, end: end)
         let points = self.getCurrentPoints()

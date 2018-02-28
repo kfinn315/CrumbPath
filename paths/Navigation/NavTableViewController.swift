@@ -16,11 +16,14 @@ import RxDataSources
 import SwiftyBeaver
 
 class NavTableViewController: UITableViewController {
+    public static let storyboardID = "table view"
+    
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     let disposeBag = DisposeBag()
     
     weak var pathManager = PathManager.shared
+    weak var managedObjectContext : NSManagedObjectContext! = AppDelegate.managedObjectContext!
     
     lazy var pager : PageViewController? = {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Pager") as? PageViewController {
@@ -33,7 +36,6 @@ class NavTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.dataSource = nil
-        
         configureTableView()
     }
     
@@ -73,7 +75,7 @@ class NavTableViewController: UITableViewController {
         }
         datasource.titleForHeaderInSection = { ds, index in return ds.sectionModels[index].identity }
         
-        AppDelegate.managedObjectContext!.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
+        managedObjectContext.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
             .map({ (paths) -> [AnimatableSectionModel<String, Path>] in
                 //group paths by date, sort by date descending
                 var dates : [Date : [Path]] = [:]
@@ -116,7 +118,7 @@ class NavTableViewController: UITableViewController {
                 log.info("delete \(path.localid ?? "nil")")
                 //add delete confirmation alert
                 do {
-                    try AppDelegate.managedObjectContext!.rx.delete(path)
+                    try self.managedObjectContext!.rx.delete(path)
                 } catch {
                     log.error(error.localizedDescription)
                 }

@@ -12,15 +12,23 @@ import CoreMotion
 
 public class RecordingViewController : BaseRecordingController {
     public static let storyboardID = "recording"
+    private static let timeFormatter : DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }()
     
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var lblTime: UILabel!
     
+    var startTime : Date?
+    var stopTime : Date?
+
     public var recordingAccuracy : LocationAccuracy = LocationAccuracy.walking
     
     private var timePast : TimeInterval = 0.0
     var timer : Timer?
-    private let timeFormatter : DateComponentsFormatter
     lazy var loadingActivityAlert : UIAlertController = {
         let pending = UIAlertController(title: "Creating New Path", message: nil, preferredStyle: .alert)
         
@@ -46,14 +54,6 @@ public class RecordingViewController : BaseRecordingController {
         return alert
     }()
     
-    required public init?(coder aDecoder: NSCoder) {
-        timeFormatter = DateComponentsFormatter()
-        timeFormatter.allowedUnits = [.hour, .minute, .second]
-        timeFormatter.unitsStyle = .abbreviated
-        
-        super.init(coder: aDecoder)
-    }
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         btnStop.addTarget(self, action: #selector(buttonStopClicked), for: .touchUpInside)
@@ -62,7 +62,7 @@ public class RecordingViewController : BaseRecordingController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateTimer()
+        lblTime.text = "0s"
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (_) in
             self?.timePast += 1
@@ -70,12 +70,18 @@ public class RecordingViewController : BaseRecordingController {
         })
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateTimer()
+        startUpdating(accuracy: recordingAccuracy)
+    }
     public override func viewWillDisappear(_ animated: Bool) {
         timer?.invalidate()
     }
     
     private func updateTimer(){
-        lblTime.text = timeFormatter.string(from: self.timePast)
+        lblTime.text = RecordingViewController.timeFormatter.string(from: self.timePast)
     }
     
     @objc
@@ -122,7 +128,12 @@ public class RecordingViewController : BaseRecordingController {
         locationManager?.stopLocationUpdates()
     }
     func save(callback: @escaping (Path?,Error?) -> Void) {
-        pathManager?.savePath(start: startTime ?? Date(), end: stopTime ?? Date(), callback: callback)
+        guard let startTime = startTime, let stopTime = stopTime else {
+            callback(nil, LocalError.failed(message: "start or stop times were not set"))
+            return
+        }
+        
+        pathManager?.savePath(start: startTime, end: stopTime, callback: callback)
     }
     func onSaveComplete(path: Path?, error: Error?) {
         DispatchQueue.main.async { [weak self] in

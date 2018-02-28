@@ -18,15 +18,34 @@ import CoreData
 class NavTableViewControllerTests: QuickSpec {
     override func spec(){
         var subject: NavTableViewController!
-        
+        var window : UIWindow!
+        var contextWrapper : ContextWrapper!
+        var datasource : UITableViewDataSource!
+        var tableview : UITableView!
+
         describe("NavTableViewController"){
             beforeEach {
-                subject = NavTableViewController()
+                window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                subject = storyboard.instantiateViewController(withIdentifier: NavTableViewController.storyboardID) as! NavTableViewController
+                window.makeKeyAndVisible()
+                window.rootViewController = subject
+                
+                contextWrapper = ContextWrapper()
+                subject.managedObjectContext = contextWrapper.context
+                
+                tableview = subject.tableView
+                datasource = subject.tableView.dataSource
+                
+                // Act:
+                subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
+                subject.endAppearanceTransition() // Triggers viewDidAppear
             }
             
-            describe("initially"){
-                it("displays the names of the paths in the database"){
-                    
+            describe("viewDidAppear"){
+                beforeEach{
+                }
+                it("displays all the paths in the table"){
                 }
                 
                 it("orders the paths by date descending"){

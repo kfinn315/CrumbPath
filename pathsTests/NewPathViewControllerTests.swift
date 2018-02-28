@@ -20,20 +20,20 @@ class NewPathViewControllerTests: QuickSpec {
         var subject: NewPathViewController!
         var window : UIWindow!
 
-        beforeEach {
-            window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard(name: "main", bundle: nil)
-            subject = storyboard.instantiateViewController(withIdentifier: NewPathViewController.storyboardID) as! NewPathViewController
-            
-            window.makeKeyAndVisible()
-            window.rootViewController = subject
-            
-            // Act:
-            subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
-            subject.endAppearanceTransition() // Triggers viewDidAppear
-
-        }
         describe("NewPathViewController"){
+            beforeEach {
+                window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                subject = storyboard.instantiateViewController(withIdentifier: NewPathViewController.storyboardID) as! NewPathViewController
+                
+                window.makeKeyAndVisible()
+                window.rootViewController = subject
+                
+                // Act:
+                subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
+                subject.endAppearanceTransition() // Triggers viewDidAppear
+                
+            }
             describe("When the app is not authorized to use location services"){
                 it("shows a message directing the user to change the settings"){
                     expect(subject.lblInstructions.text).to(contain("settings"))
@@ -65,7 +65,9 @@ class NewPathViewControllerTests: QuickSpec {
             }
             
             describe("When the 'start' button is pressed"){
-                subject.btnStart.sendActions(for: .touchUpInside)
+                beforeEach {
+                    subject.btnStart.sendActions(for: .touchUpInside)
+                }
                 it("shows the Recording view controller"){
                     expect(window.rootViewController).toEventually(beAKindOf(RecordingViewController.self))
                 }

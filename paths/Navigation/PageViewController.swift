@@ -1,4 +1,4 @@
-//
+ //
 //  PageViewController.swift
 //  BreadcrumbsSwift
 //
@@ -39,8 +39,6 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
         } else {
             // Fallback on earlier versions
         }
-        
-        showFirstPage()
         
         pageControl.transform = pageControl.transform.rotated(by: .pi/2)
         self.view.addSubview(pageControl)
@@ -107,12 +105,10 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        // this will get you currently presented view controller
         guard let selectedVC = pageViewController.viewControllers?.first else { return }
-        
-        // and its index in the dataSource's controllers (I'm using force unwrap, since in my case pageViewController contains only view controllers from my dataSource)
+
         let selectedIndex = selectedVC.view.tag
-        // and we update the current page in pageControl
+        
         self.pageControl.currentPage = selectedIndex
     }
     func goToPage(index: Int) {
@@ -124,7 +120,6 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
     public func showFirstPage(){
         if let firstController = orderedViewControllers.first {
             self.setViewControllers([firstController], direction: .forward, animated: true, completion: nil)
-            //self.pageControl.currentPage = 0
         }
     }
     

@@ -18,11 +18,13 @@ import CoreData
 class PathDetailViewControllerTests: QuickSpec {
     override func spec(){
         var subject: PathDetailViewController!
+        let contextWrapper = ContextWrapper()
+        Path.managedObjectContext = contextWrapper.context
         
+
         describe("NewPathViewController"){
-            
             beforeEach {
-                let storyboard = UIStoryboard(name: "main", bundle: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 subject = storyboard.instantiateViewController(withIdentifier: PathDetailViewController.storyboardID) as! PathDetailViewController
                 
                 let window = UIWindow(frame: UIScreen.main.bounds)
@@ -32,40 +34,46 @@ class PathDetailViewControllerTests: QuickSpec {
                 // Act:
                 subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
                 subject.endAppearanceTransition() // Triggers viewDidAppear
-
+                
             }
-                        
-            describe("updateUI") {
-                context("path is not nil"){
-                    let path = Path()
+            
+            describe("path is not nil") {
+                var path : Path!
+                beforeEach{
+                    path = Path()
                     subject.updateUI(path)
-                    
-                    it("shows the path data"){
-                        expect(subject.lblTitle.text).to(equal(path.displayTitle))
-                        expect(subject.lblDate.text).to(equal(path.startdate?.string))
-                        expect(subject.lblSteps.text).to(equal(path.stepcount?.formatted))
-                        expect(subject.lblDistance.text).to(equal(path.displayDistance))
-                        expect(subject.lblDuration.text).to(equal(path.displayDuration))
-                        expect(subject.tvNotes.text).to(equal(path.notes))
-                        expect(subject.ivTop.image).toNot(beNil())
-                    }
                 }
                 
-                context("path is nil") {
-                    let path : Path? = nil
+                it("shows the path data"){
+                    expect(subject.lblTitle.text).to(equal(path.displayTitle))
+                    expect(subject.lblDate.text).to(equal(path.startdate?.string))
+                    expect(subject.lblSteps.text).to(equal(path.stepcount?.formatted))
+                    expect(subject.lblDistance.text).to(equal(path.displayDistance))
+                    expect(subject.lblDuration.text).to(equal(path.displayDuration))
+                    expect(subject.tvNotes.text).to(equal(path.notes))
+                    expect(subject.ivTop.image).toNot(beNil())
+                }
+                
+            }
+            
+            describe("path is nil") {
+                var path : Path!
+                beforeEach{
+                    path = Path()
                     subject.updateUI(path)
-                    
-                    it("shows empty labels"){
-                        expect(subject.lblTitle.text).to(equal(""))
-                        expect(subject.lblDate.text).to(equal(""))
-                        expect(subject.lblSteps.text).to(equal(""))
-                        expect(subject.lblDistance.text).to(equal(""))
-                        expect(subject.lblDuration.text).to(equal(""))
-                        expect(subject.tvNotes.text).to(equal(""))
-                        expect(subject.ivTop.image).to(beNil())
-                    }
+                }
+                
+                it("shows empty labels"){
+                    expect(subject.lblTitle.text).to(equal(""))
+                    expect(subject.lblDate.text).to(equal(""))
+                    expect(subject.lblSteps.text).to(equal(""))
+                    expect(subject.lblDistance.text).to(equal(""))
+                    expect(subject.lblDuration.text).to(equal(""))
+                    expect(subject.tvNotes.text).to(equal(""))
+                    expect(subject.ivTop.image).to(beNil())
                 }
             }
+            
         }
     }
 }

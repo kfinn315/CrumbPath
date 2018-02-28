@@ -14,30 +14,30 @@ import CoreLocation
 @testable import paths
 
 class PointsTest: QuickSpec {
-    
+    let mocWrapper = ContextWrapper()
     override func spec() {
         var subject : Points!
-        
+        Path.managedObjectContext = mocWrapper.context
+
         describe("Points") {
-            beforeEach {
-                subject = Points()
-            }
-            
-            context("after being initialized") {
-                describe("it gets a description of location"){
-                    context("at limerick, ireland"){
-                        subject.append(Point(from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012)))
+            describe("after initialized") {
+                beforeEach {
+                    subject = Points()
+                }
+                describe("a description for a point in limerick ireland"){
+                    beforeEach {
+                        subject.append(Point(insertInto: self.mocWrapper.context!, from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012)))
+                    }
+                    it("contains 'limerick'"){
+                        var location : String?
                         
-                        it("contains 'limerick'"){
-                            var location : String?
-                            
-                            subject.getLocationDescription({ (description) in
-                                location = description
-                            })
-                            expect(location).toEventually(contain("Limerick"))
-                        }
+                        subject.getLocationDescription({ (description) in
+                            location = description
+                        })
+                        expect(location).toEventually(contain("Limerick"))
                     }
                 }
+                
                 describe("it calculate distance") {
                     var expectedDistance : CLLocationDistance!
                     context("2 points") {
@@ -47,7 +47,7 @@ class PointsTest: QuickSpec {
                             expectedDistance = self.getDistance(locations)
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
                             }
                         }
                         
@@ -77,7 +77,7 @@ class PointsTest: QuickSpec {
                             let locations = [CLLocation(latitude: 32.9697, longitude: -96.80322)]
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
                             }
                         }
                         
@@ -102,7 +102,7 @@ class PointsTest: QuickSpec {
                             ]
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
                             }
                         }
                         it("returns 0"){
@@ -131,7 +131,7 @@ class PointsTest: QuickSpec {
                                 expected = self.getDistance(locations)
                                 
                                 for var location in locations {
-                                    subject.append(Point(from: location))
+                                    subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
                                 }
                             }
                             
@@ -196,5 +196,4 @@ class PointsTest: QuickSpec {
             return CLLocationCoordinate2D(latitude: currentLat - metersCordN, longitude: currentLong)
         }
     }
-    
 }
