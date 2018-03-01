@@ -69,4 +69,3 @@ fastlane/test_output
 ##custom
 Docs/
 .DS_Store
-Pods
