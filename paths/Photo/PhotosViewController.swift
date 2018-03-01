@@ -31,7 +31,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         let actionExisting = UIAlertAction.init(title: "Pick an Album", style: UIAlertActionStyle.default, handler: { [weak self] _ in
             self?.showAlbumsLibrary()
         })
-        let actionCreate = UIAlertAction.init(title: "Select Photos", style: UIAlertActionStyle.default, handler: createAlbum
+        let actionCreate = UIAlertAction.init(title: "Select Photos", style: UIAlertActionStyle.default, handler: { _ in self.showPhotosLibrary() }
         )
         
         alert.addAction(actionExisting)
@@ -98,7 +98,8 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     }
     
     @objc func presentAddAlbumView(){
-        present(albumAlert, animated: true, completion: nil)
+        //present(albumAlert, animated: true, completion: nil)
+        showPhotosLibrary()
     }
     
     override func assetAt(_ index: Int) -> PHAsset?{
@@ -175,8 +176,8 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     
     private func showAlbumsLibrary() {
         let pickerConfig = AssetsPickerConfig()
-//        pickerConfig.albumIsShowEmptyAlbum = false
-//        pickerConfig.albumIsShowHiddenAlbum = false
+        pickerConfig.albumIsShowEmptyAlbum = false
+        pickerConfig.albumIsShowHiddenAlbum = false
         
         let picker = AssetsPickerViewController(pickerConfig: pickerConfig)
         picker.pickerDelegate = self
@@ -196,29 +197,26 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         picker.present(albumNavi, animated: true, completion: {
             picker.view.isHidden = false
         })
-
-//
-//        let photoConfig = AssetsPickerConfig()
-//        photoConfig.albumIsShowEmptyAlbum = false
-//
-//        let albumPicker = AssetsAlbumViewController(pickerConfig: photoConfig)
-//        albumPicker.delegate = self
-//        present(albumPicker, animated: true, completion: nil)
     }
     
-    private func createAlbum(_ action: UIAlertAction){
+    private func showPhotosLibrary(){
         let photoConfig = AssetsPickerConfig()
         photoConfig.albumIsShowEmptyAlbum = false
+        photoConfig.albumIsShowHiddenAlbum = false
+        photoConfig.assetsMinimumSelectionCount = 0
         photoConfig.selectedAssets = []
         fetchResult?.enumerateObjects({ (asset, count, finish) in
             photoConfig.selectedAssets!.append(asset)
         })
         
         let photoPicker = AssetsPickerViewController(pickerConfig: photoConfig)
+        photoPicker.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(erasePhotos)), animated: true)
         photoPicker.pickerDelegate = self
         present(photoPicker, animated: true, completion: nil)
     }
-    
+    @objc func erasePhotos() {
+        
+    }
     //MARK:- AssetsPickerViewControllerDelegate Implementation
     public func assetsPickerCannotAccessPhotoLibrary(controller: AssetsPickerViewController) {
         showEmptyMessage()

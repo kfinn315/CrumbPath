@@ -48,8 +48,11 @@ class PhotoManager {
         
         //when currentPathDriver sends a 'path', get image collection of 'path' and send it to subscribers of currentAlbumDriver
         self.pathManager?.currentPathObservable?.subscribe(onNext: { [weak self] path in
-            let collection = self?.getImageCollection(path?.albumId)
-            self?.currentAlbumSubject.onNext(collection) //drive photoCollection for current path
+            //let collection = self?.getImageCollection(path?.albumId)
+            guard let localid = path?.localid else {return}
+            PhotosHelper.getAlbum(named: localid, completion: { (collection) in
+                self?.currentAlbumSubject.onNext(collection) //drive photoCollection for current path
+            })
         }).disposed(by: self.disposeBag)
         
         permissionStatusDriver = self.permissionStatusSubject.asDriver(onErrorJustReturn: PHAuthorizationStatus.denied)

@@ -43,14 +43,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             log.debug("mapview current path driver - on next")
             self.loadPath(path: path)
         }).disposed(by: disposeBag)
-        photosManager?.currentAlbumObservable?.subscribe(onNext: {[unowned self] collection in
+        photosManager?.currentAlbumObservable?.subscribe(onNext: {[weak self] collection in
             log.debug("mapview current album observer - on next")
             if collection == nil {
-                self.fetchResults = nil
+                self?.fetchResults = nil
             } else{
-                self.fetchResults = PHAsset.fetchAssets(in: collection!, options: nil)
+                self?.fetchResults = PHAsset.fetchAssets(in: collection!, options: nil)
             }
-            self.reloadImageAnnotations()
+            self?.reloadImageAnnotations()
         }).disposed(by: disposeBag)
         
         photosManager?.permissionStatusDriver?.drive(onNext: { [weak self] auth in
