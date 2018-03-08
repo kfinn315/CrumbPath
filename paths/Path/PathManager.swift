@@ -106,7 +106,7 @@ class PathManager : IPathManager {
     public func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void) {
         log.info("saveNewPath")
         
-        let path = Path(title: nil, notes: nil)
+        let path = Path(context!, title: nil, notes: nil)
         
         path.setTimes(start: start, end: end)
         let points = self.getCurrentPoints()

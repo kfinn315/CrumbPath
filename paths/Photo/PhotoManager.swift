@@ -20,8 +20,8 @@ class PhotoManager {
     private static var _shared : PhotoManager?
     
     //public var currentAlbumId : String?
-    public var currentAlbumObservable : Observable<PHAssetCollection?>?
-    public var permissionStatusDriver : Driver<PHAuthorizationStatus>?
+    public var currentAlbum : Observable<PHAssetCollection?>?
+    public var permissionStatus : Driver<PHAuthorizationStatus>?
     public var authorizationStatus = PHPhotoLibrary.authorizationStatus()
     public var isAuthorized : Bool {
         return authorizationStatus == .authorized || authorizationStatus == .restricted
@@ -43,7 +43,7 @@ class PhotoManager {
     
     private init(){
         currentAlbumSubject = BehaviorSubject<PHAssetCollection?>(value: nil)
-        currentAlbumObservable = currentAlbumSubject.asObservable().observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))//(onErrorJustReturn: nil)
+        currentAlbum = currentAlbumSubject.asObservable().observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))//(onErrorJustReturn: nil)
         permissionStatusSubject = BehaviorSubject<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
         
         //when currentPathDriver sends a 'path', get image collection of 'path' and send it to subscribers of currentAlbumDriver
@@ -55,7 +55,7 @@ class PhotoManager {
             })
         }).disposed(by: self.disposeBag)
         
-        permissionStatusDriver = self.permissionStatusSubject.asDriver(onErrorJustReturn: PHAuthorizationStatus.denied)
+        permissionStatus = self.permissionStatusSubject.asDriver(onErrorJustReturn: PHAuthorizationStatus.denied)
     }
     
     public func updateCurrentAlbum(collectionid: String) {
