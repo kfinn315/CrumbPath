@@ -60,9 +60,9 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         locations = entity.value(forKey: "locations") as? String
     }
     
-    public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
-        super.init(entity: entitydescription, insertInto: context)
-
+    public required convenience init(title: String?, notes: String?) {
+        self.init()
+        
         self.localid = UUID().uuidString
         self.title = title
         self.notes = notes

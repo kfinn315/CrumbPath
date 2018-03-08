@@ -18,7 +18,7 @@ public class BasePhotoViewController : UIViewController {
     weak var photosManager = PhotoManager.shared
     
     var imageManager : PHCachingImageManager?
-    var collectionViewLayout = UICollectionViewFlowLayout()
+    var collectionViewLayout : UICollectionViewLayout?
     var imgPadding : CGFloat = 0.0
 
     var disposeBag = DisposeBag()
@@ -38,13 +38,9 @@ public class BasePhotoViewController : UIViewController {
         
         resetCachedAssets()
        
-        photosManager?.permissionStatus?.drive(onNext: { [weak self] auth in
+        photosManager?.permissionStatusDriver?.drive(onNext: { [weak self] auth in
             self?.onPermissionChanged(to: auth)
         }).disposed(by: disposeBag)
-        
-        baseCollectionView.collectionViewLayout = collectionViewLayout
-        collectionViewLayout.scrollDirection = .horizontal
-        
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -147,14 +143,14 @@ public class BasePhotoViewController : UIViewController {
         }
     }
     
-    func updateItemSize() {
+    private func updateItemSize() {
         let viewWidth = view.bounds.size.width
         
-        let desiredItemWidth: CGFloat = viewWidth
+        let desiredItemWidth: CGFloat = 100
         let columns: CGFloat = max(floor(viewWidth / desiredItemWidth), 4)
-        let padding: CGFloat = 0
+        let padding: CGFloat = 1
         let itemWidth = floor((viewWidth - (columns - 1) * padding) / columns)
-        let itemSize = view.bounds.size
+        let itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.itemSize = itemSize
@@ -164,7 +160,6 @@ public class BasePhotoViewController : UIViewController {
         
         // Determine the size of the thumbnails to request from the PHCachingImageManager
         let scale = UIScreen.main.scale
-        
         thumbnailSize = CGSize(width: itemSize.width * scale - imgPadding, height: itemSize.height * scale - imgPadding)
     }
     fileprivate var previousPreheatRect = CGRect.zero

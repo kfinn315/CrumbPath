@@ -107,12 +107,8 @@ class NavTableViewController: UITableViewController {
                     
                     guard let pager = self.pager else{ return }
                     
-//                    pager.goToPage(index: 0) //reset page index
-//                    self.showDetailViewController(pager, sender: self)
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: PathViewController.storyboardID)
-                    if vc != nil {
-                        self.navigationController?.pushViewController(vc!, animated: true)
-                    }
+                    pager.goToPage(index: 0) //reset page index
+                    self.showDetailViewController(pager, sender: self)
                 }
             }).disposed(by: disposeBag)
         

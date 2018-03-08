@@ -6,11 +6,9 @@ import RxCocoa
 import AssetsPickerViewController
 
 class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource, UICollectionViewDelegate, AssetsPickerViewControllerDelegate, AssetsAlbumViewControllerDelegate {
-
+  
     public static let storyboardID = "Photos Table"
-
-    @IBOutlet weak var doneButton: UIBarButtonItem!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var fetchResult: PHFetchResult<PHAsset>?
@@ -47,12 +45,10 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         
         super.viewDidLoad()
         
-        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .done, target: nil, action: nil), animated: true)
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
-        doneButton.action = #selector(closeModal)
-        editButton.action = #selector(editPhotos)
-        photosManager?.currentAlbum?.subscribe(onNext: { [unowned self] assetcollection in
+        
+        photosManager?.currentAlbumObservable?.subscribe(onNext: { [unowned self] assetcollection in
             guard self.photosManager?.isAuthorized ?? false else{
                 return
             }
@@ -74,12 +70,6 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
             }
             
         }).disposed(by: disposeBag)
-    }
-    @objc func closeModal(){
-        self.dismiss(animated: true, completion: nil)
-    }
-    @objc func editPhotos(){
-        showPhotosLibrary()
     }
     func showEmptyMessage(){
         self.collectionView.backgroundView = self.emptyLabel
@@ -176,8 +166,6 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         }
     }
     
-    
-    
     private func showFull(_ asset: PHAsset) {
         if let imageViewController = imageViewController{
             imageViewController.asset = asset
@@ -256,23 +244,6 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
     func assetsAlbumViewController(controller: AssetsAlbumViewController, selected album: PHAssetCollection) {
         photosManager?.updateCurrentAlbum(collectionid: album.localIdentifier)
         dismiss(animated: true, completion: nil)
-    }
-    override func updateItemSize() {
-        let viewWidth = view.bounds.size.width
-        
-        let desiredItemWidth: CGFloat = 100
-        let columns: CGFloat = max(floor(viewWidth / desiredItemWidth), 4)
-        let padding: CGFloat = 1
-        let itemWidth = floor((viewWidth - (columns - 1) * padding) / columns)
-        let itemSize = CGSize(width: itemWidth, height: itemWidth)
-        
-        collectionViewLayout.itemSize = itemSize
-        collectionViewLayout.minimumInteritemSpacing = padding
-        collectionViewLayout.minimumLineSpacing = padding
-        
-        // Determine the size of the thumbnails to request from the PHCachingImageManager
-        let scale = UIScreen.main.scale
-        thumbnailSize = CGSize(width: itemSize.width * scale - imgPadding, height: itemSize.height * scale - imgPadding)
     }
     
 }
