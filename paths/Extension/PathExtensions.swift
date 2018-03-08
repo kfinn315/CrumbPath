@@ -57,10 +57,10 @@ extension Path {
     public var displayTitle : String {
         let title = self.title?.trimmingCharacters(in: .whitespacesAndNewlines)
         if title == nil || title!.isEmpty {
-            return locations ?? "-"
+            return locations ?? ""
         }
         
-        return title ?? "?"
+        return title ?? ""
     }
     
     public func updatePhotoAlbum(collectionid: String) {
@@ -68,7 +68,7 @@ extension Path {
     }
     
     public func getSnapshot(_ callback: @escaping (UIImage?) -> Void){
-        MapViewController().getSnapshot(from: self) { snapshot, error in
+        MapViewController().getSnapshot(from: self) { image, error in
             log.debug("getting map snapshot")
             guard error == nil else {
                 log.error(error!.localizedDescription)
@@ -76,7 +76,7 @@ extension Path {
                 return
             }
             
-            callback(snapshot?.image)
+            callback(image)
         }
     }
     

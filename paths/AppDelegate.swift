@@ -113,8 +113,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     func setNavColor() {
-    let primarycolor = UIColor(rgb: 0xbedcff) //yellow
-        let secondarycolor = UIColor(rgb: 0x26384B) //blue
+    let primarycolor = UIColor(rgb: 0x47CABB) //yellow
+        let secondarycolor = UIColor(rgb: 0xffffff) //blue
         
         UINavigationBar.appearance().barTintColor = primarycolor
         UINavigationBar.appearance().tintColor = secondarycolor

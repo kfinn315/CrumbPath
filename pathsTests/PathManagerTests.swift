@@ -36,31 +36,54 @@ class PathManagerTests: QuickSpec {
                 }
             }
             
-            describe("changing the CurrentPath"){
-                let disposeBag = DisposeBag()
-                var path0 : Path?
+            describe("subscribing to currentPathObservable"){
+                let disposeBag : DisposeBag!
+                
                 var onNextPath : Path?
                 //var onNextAlbum : PHAssetCollection?
                 
+                var onNextWasCalled : Bool!
                 beforeEach {
-                    path0 = self.mockcontext.insertPath(local: LocalPath(title:"0", albumId:"250"))
-                    subject.currentPathDriver?.drive(onNext: {
-                        path in
-                        onNextPath = path
-                    }).disposed(by: disposeBag)
+                    disposeBag = DisposeBag()
+                    onNextWasCalled = false
+                    subject.currentPath = nil
                     
-                    subject.setCurrentPath(path0)
+                    subject.currentPathObservable?.subscribe(onNext: {
+                        path in
+                        onNextWasCalled = true
+                        onNextPath = path
+                        
+                    }).disposed(by: disposeBag)
                 }
                 
-                it("sends new current path to subscribers"){
-                    //expect onNext was called w/ updated path
-                    expect(path0).toNot(beNil())
-                    expect(onNextPath).toEventually(equal(path0))
+                it("calls the closure immediately with currentPath"){
+                    expect(onNextWasCalled).to(equal(true))
+                    expect(onNextPath).to(beNil())
                 }
                 
-                it("sends current album to subscriber"){
-                    expect(path0).toNot(beNil())
-                    //expect(onNextAlbum?.localIdentifier).toEventually(equal(path0?.albumId))
+                describe("when the currentPath is updated"){
+                    var path0 : Path!
+                    var expectedAlbumId : String!
+                    var expectedTitle: String!
+                    var expectedNotes: String!
+                    
+                    beforeEach{
+                        
+                        expectedAlbumId = "Expected album id"
+                        expectedTitle = "title1"
+                        expectedNotes = "notes1"
+                        
+                        path0 = Path(mockcontext, expectedTitle, expectedNotes)
+                        path0.albumId = expectedAlbumId
+                        
+                        //action
+                        subject.setCurrentPath(path0)
+                    }
+                    it("sends new path to subscribers"){
+                        //expect onNext was called w/ new path
+                        expect(onNextWasCalled).to(equal(true))
+                        expect(onNextPath!).to(equal(path0))
+                    }
                 }
                 
                 afterEach {
@@ -69,11 +92,10 @@ class PathManagerTests: QuickSpec {
             }
             
             describe("saving a new path"){
-                var path0 : LocalPath?
+                var path0 : Path!
                 let disposeBag = DisposeBag()
                 var onNextPath : Path?
-                //                var onNextAlbum : PHAssetCollection?
-                var initialPathCount = 0
+                var initialPathCount : Int!
                 
                 beforeEach {
                     initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
@@ -86,13 +108,12 @@ class PathManagerTests: QuickSpec {
                     
                 }
                 
-                it("adds the new path to context"){
+                it("adds the new path to managedObjectContext"){
                     waitUntil { done in
                         subject.savePath(start: path0!.startdate, end: path0!.enddate, callback: {(path,error) in
                             expect(path!.title).to(equal(path0!.title))
                             done()
                         })
-                        
                     }
                     expect(self.mockcontext.numberOfPathsInPersistentStore()).to(equal(initialPathCount + 1))
                     
@@ -222,30 +243,7 @@ class ContextWrapper {
         
         return managedObjectContext
     }
-    //
-    //    lazy var managedObjectModel: NSManagedObjectModel = {
-    //        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self) as AnyClass)] )!
-    //        return managedObjectModel
-    //    }()
-    //
-    //    lazy var mockPersistantContainer: NSPersistentContainer = {
-    //        let container = NSPersistentContainer(name: "pathsTest", managedObjectModel: self.managedObjectModel)
-    //        let description = NSPersistentStoreDescription()
-    //        description.type = NSInMemoryStoreType
-    //        description.shouldAddStoreAsynchronously = false // Make it simpler in test env
-    //
-    //        container.persistentStoreDescriptions = [description]
-    //        container.loadPersistentStores { (description, error) in
-    //            // Check if the data store is in memory
-    //            precondition( description.type == NSInMemoryStoreType )
-    //
-    //            // Check if creating container wrong
-    //            if let error = error {
-    //                fatalError("Create an in-mem coordinator failed \(error)")
-    //            }
-    //        }
-    //        return container
-    //    }()
+    
     func saveData(){
         do {
             try context!.save()
