@@ -9,7 +9,6 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -322,11 +321,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wj3-eD-iKN"/>
                     </layoutGuides>
                     <view key="view" tag="1" contentMode="scaleToFill" id="bOb-0P-qpb">
-                        <rect key="frame" x="0.0" y="0.0" width="280" height="386"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="142.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-8f-qD4">
-                                <rect key="frame" x="0.0" y="0.0" width="280" height="386"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="142.5"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="5"/>
@@ -348,7 +347,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLi-lS-Ypd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2286" y="-3166"/>
+            <point key="canvasLocation" x="-2091" y="-3091"/>
         </scene>
         <!--Photos View Controller-->
         <scene sceneID="zp5-SV-RYC">
@@ -413,10 +412,8 @@
                                         </view>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="lRO-Za-N0O" secondAttribute="bottom" id="V7c-BD-dB7"/>
-                                            <constraint firstItem="lRO-Za-N0O" firstAttribute="centerY" secondItem="QeV-aL-JhN" secondAttribute="centerY" id="att-Nw-gCB"/>
                                             <constraint firstItem="lRO-Za-N0O" firstAttribute="top" secondItem="QeV-aL-JhN" secondAttribute="top" id="oBc-Xr-1DG"/>
                                             <constraint firstItem="lRO-Za-N0O" firstAttribute="leading" secondItem="QeV-aL-JhN" secondAttribute="leading" id="u8T-JW-TZ1"/>
-                                            <constraint firstItem="lRO-Za-N0O" firstAttribute="centerX" secondItem="QeV-aL-JhN" secondAttribute="centerX" id="uEG-w0-BFK"/>
                                             <constraint firstAttribute="trailing" secondItem="lRO-Za-N0O" secondAttribute="trailing" id="wOw-zT-X0O"/>
                                         </constraints>
                                         <size key="customSize" width="50" height="50"/>
@@ -509,7 +506,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3c1-vI-alp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2979.375" y="-1956.25"/>
+            <point key="canvasLocation" x="-3069" y="-1863"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="KPh-gp-fBh">
@@ -534,10 +531,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.61568627450980395" green="0.74509803921568629" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="sLd-Ep-mEd" firstAttribute="centerY" secondItem="qEO-bf-2mK" secondAttribute="centerY" id="1A6-hB-aKm"/>
                             <constraint firstItem="sLd-Ep-mEd" firstAttribute="top" secondItem="qEO-bf-2mK" secondAttribute="top" id="epx-3q-Wgf"/>
                             <constraint firstItem="sLd-Ep-mEd" firstAttribute="leading" secondItem="qEO-bf-2mK" secondAttribute="leading" id="lSt-lS-SU5"/>
                             <constraint firstItem="sLd-Ep-mEd" firstAttribute="centerX" secondItem="qEO-bf-2mK" secondAttribute="centerX" id="okH-Sa-5ex"/>
+                            <constraint firstItem="bXi-aN-Q9D" firstAttribute="top" secondItem="sLd-Ep-mEd" secondAttribute="bottom" id="p8S-re-xJk"/>
                         </constraints>
                     </view>
                     <connections>
@@ -554,7 +551,7 @@
                 <pageViewController storyboardIdentifier="ImagePage" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Maj-T6-jfC" customClass="ImagePageViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZu-95-k6A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2979" y="-2520"/>
+            <point key="canvasLocation" x="-3639" y="-2596"/>
         </scene>
         <!--Page-->
         <scene sceneID="w1N-qc-8TI">
@@ -788,7 +785,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="62G-J6-5g6">
                                 <rect key="frame" x="0.0" y="40" width="320" height="142.5"/>
                                 <connections>
-                                    <segue destination="2Sg-Pj-d2H" kind="embed" id="xlI-Ub-MO1"/>
+                                    <segue destination="2Sg-Pj-d2H" kind="embed" id="ZSe-fc-QGC"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhM-CO-PSr" userLabel="Center View">
@@ -820,17 +817,14 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-7Y-ibp">
                                 <rect key="frame" x="0.0" y="245" width="320" height="190"/>
                                 <connections>
-                                    <segue destination="Maj-T6-jfC" kind="embed" id="mkG-HC-FgF"/>
+                                    <segue destination="Maj-T6-jfC" kind="embed" id="GO0-rH-5xx"/>
                                 </connections>
                             </containerView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-ei-fiz" userLabel="Stats">
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-ei-fiz" userLabel="Stats">
                                 <rect key="frame" x="20" y="245" width="280" height="88"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTA-TL-axQ" customClass="CircleLabelView" customModule="paths" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="rTA-TL-axQ" secondAttribute="height" id="6ui-3v-SMv"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="88"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
                                                 <color key="value" red="0.2784313725" green="0.79215686269999996" blue="0.73333333329999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -839,10 +833,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uyr-gi-3j9" customClass="CircleLabelView" customModule="paths" customModuleProvider="target">
-                                        <rect key="frame" x="96" y="0.0" width="88" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Uyr-gi-3j9" secondAttribute="height" multiplier="1:1" id="cBv-dV-tEH"/>
-                                        </constraints>
+                                        <rect key="frame" x="103.5" y="0.0" width="73" height="88"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
                                                 <color key="value" red="0.2784313725" green="0.79215686269999996" blue="0.73333333329999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -851,10 +842,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSv-ce-nGh" customClass="CircleLabelView" customModule="paths" customModuleProvider="target">
-                                        <rect key="frame" x="192" y="0.0" width="88" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="GSv-ce-nGh" secondAttribute="height" multiplier="1:1" id="vT5-xA-MsA"/>
-                                        </constraints>
+                                        <rect key="frame" x="206.5" y="0.0" width="73.5" height="88"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
                                                 <color key="value" red="0.2784313725" green="0.79215686269999996" blue="0.73333333329999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -951,6 +939,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GpG-o6-bdF"/>
+        <segue reference="ZSe-fc-QGC"/>
     </inferredMetricsTieBreakers>
 </document>

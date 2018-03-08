@@ -28,29 +28,34 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="523" height="523"/>
+            <rect key="frame" x="0.0" y="0.0" width="1096" height="463"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ch2-nH-Qwr" userLabel="Outer Circle" customClass="CircleImageView" customModule="paths" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="10" width="523" height="523"/>
+                    <rect key="frame" x="316.5" y="0.0" width="463" height="463"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Ch2-nH-Qwr" secondAttribute="height" id="EVR-ou-RKk"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KIX-cL-xdd" userLabel="Inner Circle" customClass="CircleImageView" customModule="paths" customModuleProvider="target">
-                    <rect key="frame" x="10" y="20" width="503" height="503"/>
+                    <rect key="frame" x="328" y="11.5" width="440" height="440"/>
+                    <color key="backgroundColor" red="0.2784313725" green="0.79215686269999996" blue="0.73333333329999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="KIX-cL-xdd" secondAttribute="height" multiplier="1:1" id="VkD-C1-99M"/>
+                    </constraints>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bWx-Eg-nHr">
-                    <rect key="frame" x="50" y="70" width="423" height="403"/>
+                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bWx-Eg-nHr">
+                    <rect key="frame" x="50" y="50" width="996" height="363"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMF-f8-Uy4" customClass="BottomAlignedLabel" customModule="paths" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="423" height="201.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jMF-f8-Uy4" customClass="BottomAlignedLabel" customModule="paths" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="996" height="181.5"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Bottom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXg-aH-Aw8" customClass="TopAlignedLabel" customModule="paths" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="201.5" width="423" height="201.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Label Bottom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TXg-aH-Aw8" customClass="TopAlignedLabel" customModule="paths" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="181.5" width="996" height="181.5"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -62,19 +67,18 @@
                 <constraint firstItem="bWx-Eg-nHr" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="11G-oA-ASy"/>
                 <constraint firstItem="bWx-Eg-nHr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="50" id="4fc-ss-m2T"/>
                 <constraint firstItem="bWx-Eg-nHr" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="AM3-04-d3H"/>
-                <constraint firstItem="Ch2-nH-Qwr" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="IHM-gf-10M"/>
-                <constraint firstItem="KIX-cL-xdd" firstAttribute="leading" secondItem="Ch2-nH-Qwr" secondAttribute="leading" constant="10" id="Ki7-Y1-dY0"/>
-                <constraint firstItem="Ch2-nH-Qwr" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="QJW-3G-wP9"/>
+                <constraint firstItem="Ch2-nH-Qwr" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" priority="99" id="IHM-gf-10M"/>
+                <constraint firstItem="Ch2-nH-Qwr" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" priority="98" id="QJW-3G-wP9"/>
                 <constraint firstItem="Ch2-nH-Qwr" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="RtT-fD-ERm"/>
                 <constraint firstItem="KIX-cL-xdd" firstAttribute="centerY" secondItem="Ch2-nH-Qwr" secondAttribute="centerY" id="XUu-u1-KqR"/>
                 <constraint firstItem="Ch2-nH-Qwr" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="g5z-bA-ZWs"/>
-                <constraint firstItem="KIX-cL-xdd" firstAttribute="top" secondItem="Ch2-nH-Qwr" secondAttribute="top" constant="10" id="htX-ko-SDc"/>
                 <constraint firstItem="KIX-cL-xdd" firstAttribute="centerX" secondItem="Ch2-nH-Qwr" secondAttribute="centerX" id="lxP-0r-acM"/>
+                <constraint firstItem="KIX-cL-xdd" firstAttribute="width" secondItem="Ch2-nH-Qwr" secondAttribute="height" multiplier="9.5:10" id="n56-EW-POU"/>
                 <constraint firstItem="bWx-Eg-nHr" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="sJu-ze-QFB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="34" y="-226"/>
+            <point key="canvasLocation" x="139" y="-288.5"/>
         </view>
     </objects>
 </document>

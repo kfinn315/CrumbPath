@@ -32,27 +32,26 @@ class PathViewController : UIViewController {
     
     private var disposeBag = DisposeBag()
     
-    private lazy var topViewController : UIViewController = {
-        let viewController = self.storyboard?.instantiateViewController(withIdentifier: MapViewController.storyboardID) as! MapViewController
-        
-        add(asChildViewController: viewController)
-        
-        return viewController
-    }()
-    
-    private lazy var bottomViewController : UIViewController = {
-        let viewController = self.storyboard?.instantiateViewController(withIdentifier: ImagePageViewController.storyboardID) as! ImagePageViewController
-        add(asChildViewController: viewController)
-        
-        return viewController
-    }()
+    private weak var maps : MapViewController?
+    private weak var photos : ImagePageViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //set the height of the top bar to 0
         constraintTopBarHeight.constant = 0
+        
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(showEdit)), animated: true)
+        
+        for var childViewController in self.childViewControllers {
+            if childViewController is MapViewController {
+                maps = childViewController as? MapViewController
+                maps?.isUserInteractionEnabled = false
+            } else if childViewController is ImagePageViewController {
+                photos = childViewController as? ImagePageViewController
+            }
+        }
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -61,34 +60,17 @@ class PathViewController : UIViewController {
         }).disposed(by: disposeBag)
         
     }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        //ensure the StackView is split horizontally above the Title view and the ImagePageViewController
         constraintStatsTopMargin.constant = -1*stackStats.frame.height/2.0
-        
     }
     
-    private func updateView() {
-        add(asChildViewController: topViewController)
-        add(asChildViewController: bottomViewController)
+    @objc func showEdit(){
+        self.navigationController?.pushViewController(EditPathViewController(), animated: true)
     }
-    
-    private func add(asChildViewController viewController: UIViewController) {
-        // Add Child View Controller
-        addChildViewController(viewController)
-        
-        // Add Child View as Subview
-        view.addSubview(viewController.view)
-        
-        // Configure Child View
-        viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Notify Child View Controller
-        viewController.didMove(toParentViewController: self)
-    }
-    
+
     func updateUI(_ path: Path?){
         self.lblTitle.text = path?.displayTitle
         self.lblLocation.text = path?.locations
@@ -114,4 +96,5 @@ class PathViewController : UIViewController {
             self.circle2.lblTop.text = path?.displayDuration
         }
     }
+    
 }

@@ -43,8 +43,7 @@ public class BasePhotoViewController : UIViewController {
         }).disposed(by: disposeBag)
         
         baseCollectionView.collectionViewLayout = collectionViewLayout
-        collectionViewLayout.scrollDirection = .horizontal
-        
+        collectionViewLayout.scrollDirection = .vertical
     }
     
     override public func viewWillAppear(_ animated: Bool) {

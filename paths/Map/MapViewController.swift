@@ -132,6 +132,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         addPolyline(coordinates: path?.getSimplifiedCoordinates() ?? [])
     }
     
+    public var isUserInteractionEnabled : Bool {
+        set {
+            mapView.isUserInteractionEnabled = newValue
+        }
+        get {
+            return mapView.isUserInteractionEnabled
+        }
+    }
+    
     func addPolyline(coordinates: [CLLocationCoordinate2D]) {
         DispatchQueue.global(qos: .userInitiated).sync {
             log.debug("PATH create polyline from coordinates")

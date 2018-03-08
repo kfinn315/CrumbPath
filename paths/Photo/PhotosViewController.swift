@@ -23,31 +23,30 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         let label = UILabel(frame: CGRect(x:0, y:0, width: self.baseCollectionView.bounds.size.width, height: self.view.bounds.size.height))
         label.textAlignment = NSTextAlignment.center
         label.numberOfLines = 0
-        label.text          = "Add a photo album to this Path by clicking the '+' button at the top"
+        label.text          = "Add a photo album to this Path by clicking the 'Edit' button at the top"
         label.font          = label.font.withSize(20)
         return label
     }()
     
-    lazy var albumAlert : UIAlertController = {
-        let alert = UIAlertController(title: "Import Photo Album", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        let actionExisting = UIAlertAction.init(title: "Pick an Album", style: UIAlertActionStyle.default, handler: { [weak self] _ in
-            self?.showAlbumsLibrary()
-        })
-        let actionCreate = UIAlertAction.init(title: "Select Photos", style: UIAlertActionStyle.default, handler: { _ in self.showPhotosLibrary() }
-        )
-        
-        alert.addAction(actionExisting)
-        alert.addAction(actionCreate)
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        return alert
-    }()
+//    lazy var albumAlert : UIAlertController = {
+//        let alert = UIAlertController(title: "Import Photo Album", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//        let actionExisting = UIAlertAction.init(title: "Pick an Album", style: UIAlertActionStyle.default, handler: { [weak self] _ in
+//            self?.showAlbumsLibrary()
+//        })
+//        let actionCreate = UIAlertAction.init(title: "Select Photos", style: UIAlertActionStyle.default, handler: { _ in self.showPhotosLibrary() }
+//        )
+//
+//        alert.addAction(actionExisting)
+//        alert.addAction(actionCreate)
+//        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+//
+//        return alert
+//    }()
     override func viewDidLoad() {
         super.baseCollectionView = collectionView
         
         super.viewDidLoad()
-        
-        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .done, target: nil, action: nil), animated: true)
+                self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .done, target: nil, action: nil), animated: true)
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
         doneButton.action = #selector(closeModal)
@@ -99,17 +98,11 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         }
         
         super.viewWillAppear(animated)
-        
-        self.parent?.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(presentAddAlbumView)), animated: true)
+        self.parent?.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(showPhotosLibrary)), animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         (self.parent as? PageViewController)?.resetNavigationItems()
-    }
-    
-    @objc func presentAddAlbumView(){
-        //present(albumAlert, animated: true, completion: nil)
-        showPhotosLibrary()
     }
     
     override func assetAt(_ index: Int) -> PHAsset?{
@@ -211,7 +204,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         })
     }
     
-    private func showPhotosLibrary(){
+    @objc private func showPhotosLibrary(){
         let photoConfig = AssetsPickerConfig()
         photoConfig.albumIsShowEmptyAlbum = false
         photoConfig.albumIsShowHiddenAlbum = false
@@ -262,7 +255,7 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         
         let desiredItemWidth: CGFloat = 100
         let columns: CGFloat = max(floor(viewWidth / desiredItemWidth), 4)
-        let padding: CGFloat = 1
+        let padding: CGFloat = 15
         let itemWidth = floor((viewWidth - (columns - 1) * padding) / columns)
         let itemSize = CGSize(width: itemWidth, height: itemWidth)
         

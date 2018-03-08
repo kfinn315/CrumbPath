@@ -113,4 +113,9 @@ public class ImageViewController : UIViewController {
         
         updateUI()
     }
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        photoHelper.assetSize = view.frame.size
+    }
 }

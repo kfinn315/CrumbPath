@@ -14,7 +14,6 @@
  class ImagePageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     public static let storyboardID = "ImagePage"
     
-    weak var pathManager = PathManager.shared
     weak var photoManager = PhotoManager.shared
     
     var disposeBag = DisposeBag()
@@ -38,6 +37,10 @@
                 viewI.assetIndex = i
                 viewI.asset = assetAt(i)
                 i = i+1
+                
+                if self != nil {
+                    viewI.view.frame = self!.view.frame
+                }
             }
             
             return views
@@ -72,21 +75,32 @@
                 
                 if let fetchResult = self.fetchResult, let firstPage = self.orderedViewControllers.first {
                     firstPage.photoHelper.startCaching(fetchResult)
+                    
+                    //disable scrolling and paging controller if there is 1 or 0 images
+                    if fetchResult.count <= 1 {
+                        self.dataSource = nil
+                    }
+                    else {
+                        self.dataSource = self
+                    }
+
                     DispatchQueue.main.async {
                         firstPage.setAsset(asset: fetchResult.firstObject, assetIndex: 0)
                         
                     }
+                    
                 }
             }
                 
             }).disposed(by: disposeBag)
             
         }
+    
         override func viewDidLayoutSubviews() {
             super.viewDidLayoutSubviews()
             for view in self.view.subviews {
                 if view is UIScrollView {
-                    view.frame = UIScreen.main.bounds
+                    view.frame = self.view.frame
                 } else if view is UIPageControl {
                     view.backgroundColor = UIColor.clear
                 }
