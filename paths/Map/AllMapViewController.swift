@@ -11,16 +11,18 @@ import MapKit
 import CoreData
 
 //display all paths on the same mapview
-class AllMapViewController : UIViewController, MKMapViewDelegate {
+class AllMapViewController : UIViewController {
     static let storyboardIdentifier : String = "All Paths"
     
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: MapView!
     
     public var overlays : [MKOverlay] = []
     public var boundingRect : MKMapRect? = nil
+    private let mapViewDelegate = MapViewDelegate()
+    
     override func viewDidLoad() {
         
-        let paths = PathManager.shared.getPathsToOverlay()
+        let paths = PathManager.shared.getRecentPaths()
 
         for var path in paths! {
             let coords = path.getSimplifiedCoordinates()
@@ -35,10 +37,9 @@ class AllMapViewController : UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        mapView.delegate = self
+        mapView.delegate = mapViewDelegate
         
         mapView.addOverlays(overlays)
-      
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,11 +61,11 @@ class AllMapViewController : UIViewController, MKMapViewDelegate {
         mapView.delegate = nil
     }
  
-    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = MapViewController.strokeColor
-        renderer.lineWidth = MapViewController.lineWidth
-        
-        return renderer
-    }
+//    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let renderer = MKPolylineRenderer(overlay: overlay)
+//        renderer.strokeColor = MapViewController.strokeColor
+//        renderer.lineWidth = MapViewController.lineWidth
+//
+//        return renderer
+//    }
 }

@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // add the destinations to SwiftyBeaver
         log.addDestination(console)
         log.addDestination(file)
-        //log.addDestination(cloud!)
+       // log.addDestination(cloud!)
     }
 }
 

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreGraphics
 
-//view with a circle background
+//circular label with 2 lines: top and bottom
  class CircleLabelView : UIView {
     @IBInspectable var bottomText : String? {
         didSet{

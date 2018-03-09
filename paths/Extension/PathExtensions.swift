@@ -68,7 +68,7 @@ extension Path {
     }
     
     public func getSnapshot(_ callback: @escaping (UIImage?) -> Void){
-        MapViewController().getSnapshot(from: self) { image, error in
+        MapView().getSnapshot(from: self) { image, error in
             log.debug("getting map snapshot")
             guard error == nil else {
                 log.error(error!.localizedDescription)
@@ -128,7 +128,7 @@ extension Path {
         let coordinates = self.getPoints()
         if coordinates.count > 5 {
             //simplify coordinates
-            simpleCoords = SwiftSimplify.simplify(coordinates, tolerance: MapViewController.lineTolerance)
+            simpleCoords = SwiftSimplify.simplify(coordinates, tolerance: MapViewDelegate.lineTolerance)
         } else{
             simpleCoords = coordinates
         }

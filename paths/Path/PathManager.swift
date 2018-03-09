@@ -26,7 +26,7 @@ protocol IPathManager : AnyObject {
     func updateCurrentPathInCoreData(notify: Bool) throws
     func addPointToData(_ point: LocalPoint)
     func clearPoints()
-    func getPathsToOverlay() -> [Path]?
+    func getRecentPaths() -> [Path]?
 }
 
 class PathManager : IPathManager {
@@ -161,7 +161,8 @@ class PathManager : IPathManager {
         }
     }
 
-    public func getPathsToOverlay() -> [Path]?{
+    
+    public func getRecentPaths() -> [Path]?{
         let request: NSFetchRequest<Path> = Path.fetchRequest()
 //        let predicate = NSPredicate(format: "distance > %d", 5)
 //        request.predicate = predicate

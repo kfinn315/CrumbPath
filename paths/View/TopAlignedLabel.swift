@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Top aligned label
 @IBDesignable class TopAlignedLabel: UILabel {
     
     override func drawText(in rect:CGRect) {
@@ -21,6 +22,5 @@ import UIKit
         }
         
         super.drawText(in: newRect)
-    }
-    
+    }    
 }

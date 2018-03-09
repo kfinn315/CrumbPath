@@ -12,37 +12,27 @@ import Photos
 import RxSwift
 import RxCocoa
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
     public static let storyboardID = "MapVC"
     
-    @IBOutlet weak var mapView: MKMapView!
-    
-    static let lineTolerance : Float = 0.000005
-    static let annotationLatDelta : CLLocationDistance = 0.010
-    static let strokeColor = UIColor.red
-    static let lineWidth = CGFloat(2.0)
-    static let pinAnnotationImageView = UIImage.circle(diameter: CGFloat(10), color: UIColor.orange)
-    static let thumbnailSize = CGSize(width: 50, height: 50)
-    
-    private var polyline : MKPolyline?
-    private var pathAnnotations : [MKPointAnnotation] = []
-    private var imageAnnotations : [MKAnnotation] = []
+    @IBOutlet weak var mapView: MapView!
     
     private weak var pathManager = PathManager.shared
     private weak var photosManager = PhotoManager.shared
     
-    fileprivate var imageManager : PHCachingImageManager?
+    //fileprivate var imageManager : PHCachingImageManager?
     var fetchResults : PHFetchResult<PHAsset>?
     private var disposeBag = DisposeBag()
+    let delegate : MapViewDelegate = MapViewDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         log.debug("mapview did load")
-        mapView.delegate = self
+        mapView.delegate = delegate
         pathManager?.currentPathObservable?.subscribe(onNext: { [unowned self] path in            
             DispatchQueue.main.async {
                 log.debug("mapview current path driver - on next")
-                self.loadPath(path: path)
+                self.mapView.loadPath(path: path)
             }
         }).disposed(by: disposeBag)
         photosManager?.currentAlbum?.subscribe(onNext: {[weak self] collection in
@@ -57,7 +47,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         photosManager?.permissionStatus?.drive(onNext: { [weak self] auth in
             if self?.photosManager?.isAuthorized ?? false {
-                self?.imageManager = PHCachingImageManager()
+                //self?.imageManager = PHCachingImageManager()
                 self?.reloadImageAnnotations()
             }
         }).disposed(by: disposeBag)
@@ -77,59 +67,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func reloadImageAnnotations() {
         log.debug("IMG reload")
         
-        let group = DispatchGroup()
-        DispatchQueue.main.async {
-            group.enter()
-            self.removeImageAnnotations()
-            group.leave()
-        }
-        
-        group.wait()
-        
-        imageAnnotations = []
-        
         if fetchResults != nil {
+            var imageAnnotations : [ImageAnnotation] = []
+            
             fetchResults!.enumerateObjects({ (asset, startindex, end) in
                 if let loc = asset.location {
                     let annotation = ImageAnnotation()
                     annotation.coordinate = loc.coordinate
                     annotation.asset = asset
                     annotation.title = "!"
-                    self.imageAnnotations.append(annotation)
+                    imageAnnotations.append(annotation)
                 }
             })
+            
+            mapView.setPathAnnotations(imageAnnotations)
         }
-        
-        DispatchQueue.main.async {
-            log.debug("add image annotations to map")
-            self.mapView.addAnnotations(self.imageAnnotations)
-        }
-    }
-    
-    private func removePathAnnotations(){
-        log.debug("PATH remove annotations")
-        mapView?.removeAnnotations((mapView?.annotations.filter() {
-            !($0 is ImageAnnotation)
-            }) ?? [])
-    }
-    
-    private func removeImageAnnotations(){
-        log.debug("IMG remove annotations")
-        mapView?.removeAnnotations((mapView?.annotations.filter() {
-            $0 is ImageAnnotation
-            }) ?? [])
-    }
-    
-    private func removeOverlay(){
-        log.debug("PATH remove overlays")
-        mapView?.removeOverlays((mapView?.overlays)!)
-    }
-    
-    public func loadPath(path: Path?) {
-        log.debug("PATH loadPath")
-        self.removePathAnnotations()
-        self.removeOverlay()
-        addPolyline(coordinates: path?.getSimplifiedCoordinates() ?? [])
     }
     
     public var isUserInteractionEnabled : Bool {
@@ -139,192 +91,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         get {
             return mapView.isUserInteractionEnabled
         }
-    }
-    
-    private func addPolyline(coordinates: [CLLocationCoordinate2D]) {
-        DispatchQueue.global(qos: .userInitiated).sync {
-            log.debug("PATH create polyline from coordinates")
-            
-            let coordinates = coordinates
-            self.polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-            
-            self.pathAnnotations = []
-            
-            //add annotation to first and last coords
-            if let firstcoord = coordinates.first {
-                let firstpin = MKPointAnnotation()
-                firstpin.coordinate = firstcoord
-                self.pathAnnotations.append(firstpin)
-            }
-            if coordinates.count > 1, let lastcoord = coordinates.last {
-                let lastpin = MKPointAnnotation()
-                lastpin.coordinate = lastcoord
-                self.pathAnnotations.append(lastpin)
-            }
-        }
-        if let polyline = self.polyline {
-            DispatchQueue.main.async {
-                log.debug("PATH draw polyline on map")
-                self.mapView?.add(polyline)
-                self.mapView?.addAnnotations(self.pathAnnotations)
-                self.zoomToContent()
-            }
-        }
-    }
-    private func zoomToContent(){
-        if let polyline = polyline {
-            let boundingRect = polyline.boundingMapRect
-            mapView.setVisibleMapRect(boundingRect, edgePadding:  UIEdgeInsetsMake(25.0,25.0,25.0,25.0), animated: false)
-            if mapView.camera.altitude < 200 {
-                mapView.camera.altitude = 1000
-            }
-        } else{
-            zoomToPathAnnotations()
-        }
-    }
-    
-    private func zoomToPoint(_ point: CLLocation, animated: Bool) {
-        log.debug("mapview zoom to point")
-        var zoomRect = MKMapRectNull
-        let mappoint = MKMapPointForCoordinate(point.coordinate)
-        let pointRect = MKMapRectMake(mappoint.x, mappoint.y, 0.1, 0.1)
-        zoomRect = MKMapRectUnion(zoomRect, pointRect)
-        mapView?.setVisibleMapRect(zoomRect, animated: true)
-    }
-    
-    private func zoomToFit() {
-        log.debug("mapview zoom to fit")
-        mapView?.setVisibleMapRect(getZoomRect(from: mapView.annotations), animated: true)
-    }
-    private func zoomToPathAnnotations() {
-        mapView?.setVisibleMapRect(getZoomRect(from: pathAnnotations), animated: false)
-    }
-    private func getZoomRect(from annotations: [MKAnnotation]) -> MKMapRect {
-        var zoomRect = MKMapRectNull
-        for annotation in annotations {
-            let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
-            let pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1)
-            zoomRect = MKMapRectUnion(zoomRect, pointRect)
-        }
-        return zoomRect
-    }
-    private func getZoomRect(from coords: [CLLocationCoordinate2D]) -> MKMapRect {
-        var zoomRect = MKMapRectNull
-        
-        for coord in coords {
-            let point = MKMapPointForCoordinate(coord)
-            let pointRect = MKMapRectMake(point.x, point.y, 0.1, 0.1)
-            zoomRect = MKMapRectUnion(zoomRect, pointRect)
-        }
-        
-        return MKMapRectInset(zoomRect, -5.0, -5.0)
-    }
-    
-    // MARK: - MapViewDelegate implementation
-    
-    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = MapViewController.strokeColor
-        renderer.lineWidth = MapViewController.lineWidth
-        
-        return renderer
-    }
-    
-    public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        log.debug("mapview add annotation")
-        
-        if annotation is ImageAnnotation, let imgAnnotation = annotation as? ImageAnnotation {
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ImageAnnotationView.reuseIdentifier) as? ImageAnnotationView
-            
-            if annotationView == nil{
-                annotationView = ImageAnnotationView(annotation: imgAnnotation, reuseIdentifier: ImageAnnotationView.reuseIdentifier)
-            } else{
-                annotationView!.annotation = annotation
-            }
-            if photosManager?.isAuthorized ?? false, let imgAsset = imgAnnotation.asset {
-                annotationView!.assetId = imageManager?.requestImage(for: imgAsset, targetSize: MapViewController.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
-                    image, data in
-                    if annotationView!.assetId == data?[PHImageResultRequestIDKey] as? Int32 {
-                        annotationView!.image = image
-                    }
-                })
-            }
-            return annotationView
-        } else {
-            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "normalAnnotation")
-            
-            if view == nil {
-                view = MKAnnotationView.init(annotation: annotation, reuseIdentifier: "normalAnnotation")
-            } else {
-                view!.annotation = annotation
-            }
-            
-            view!.image = MapViewController.pinAnnotationImageView
-            
-            return view
-        }
-    }
-    
-    public func getSnapshot(from path: Path, _ callback: @escaping (UIImage?, Error?)->()) {
-        let options = MKMapSnapshotOptions()
-        options.mapRect = getZoomRect(from: path.getPoints())
-        if #available(iOS 11.0, *) {
-            options.mapType = MKMapType.mutedStandard
-        }
-        
-        let snapshotter = MKMapSnapshotter(options: options)
-        snapshotter.start { (snapshot, error) in
-            guard let snapshot = snapshot else{
-                callback(nil, LocalError.failed(message: "snapshot was nil")) //create error
-                return
-            }
-            
-            //draw on img here
-            let image = self.drawLineOnImage(size: snapshot.image.size, coords: path.getPoints(), snapshot: snapshot)
-            
-            callback(image, nil)
-        }
-    }
-    
-    func drawLineOnImage(size: CGSize, coords: [CLLocationCoordinate2D], snapshot: MKMapSnapshot) -> UIImage {
-        let image = snapshot.image
-        
-        // for Retina screen
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        
-        // draw original image into the context
-        image.draw(at: .zero)
-        
-        // get the context for CoreGraphics
-        let context = UIGraphicsGetCurrentContext()
-       
-        // remove map from image by adding a clear rectangle
-        let rect = CGRect(origin: .zero, size: image.size)
-        UIColor.clear.setFill()
-        UIRectFill(rect)
-
-        UIColor.orange.setStroke()
-        
-        // set stroking width and color of the context
-        context!.setLineWidth(8.0)
-        context!.setStrokeColor(UIColor.orange.cgColor)
-        
-        context!.move(to: snapshot.point(for: coords[0]))
-        for i in 0...coords.count-1 {
-            context!.addLine(to: snapshot.point(for: coords[i]))
-            context!.move(to: snapshot.point(for: coords[i]))
-        }
-        
-        // apply the stroke to the context
-        context!.strokePath()
-        
-        // get the image from the graphics context
-        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        // end the graphics context
-        UIGraphicsEndImageContext()
-        
-        return resultImage!
     }
 }
 

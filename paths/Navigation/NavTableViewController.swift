@@ -44,7 +44,6 @@ class NavTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         log.info("NavTable will appear")
-        // self.navigationController?.hideTransparentNavigationBar()
         
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -109,14 +108,8 @@ class NavTableViewController: UITableViewController {
             return try self.tableView.rx.model(at: indexPath)
             }.subscribe(onNext: { [unowned self] (path) in
                 do {
-                    //self.navigationItem.title = ""
-
                     self.pathManager?.setCurrentPath(path)
                     
-                    //guard let pager = self.pager else{ return }
-                    
-//                    pager.goToPage(index: 0) //reset page index
-//                    self.showDetailViewController(pager, sender: self)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: PathViewController.storyboardID)
                     if vc != nil {
                         self.navigationController?.pushViewController(vc!, animated: true)
@@ -138,8 +131,6 @@ class NavTableViewController: UITableViewController {
             .disposed(by: disposeBag)
     }
     
-    
-  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

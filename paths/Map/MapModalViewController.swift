@@ -23,10 +23,10 @@ class MapModalViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func setMapView(_ mapview : MKMapView){
-        if childViewControllers.count > 0, let mapViewController = childViewControllers[0] as? MapViewController {
-            mapViewController.mapView = mapview
-        }
+    func setMapView(_ mapview : MapView){
+//        if childViewControllers.count > 0, let mapViewController = childViewControllers[0] as? MapViewController {
+//            mapViewController.mapView = mapview
+//        }
     }
 }
 

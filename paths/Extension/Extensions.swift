@@ -47,6 +47,10 @@ extension UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
+    
+    func isViewVisible() -> Bool {
+        return self.viewIfLoaded?.window != nil
+    }
 }
 
 extension UIColor {

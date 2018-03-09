@@ -33,7 +33,7 @@ class MockPathManager : IPathManager {
     }
     func clearPoints() {
     }
-    func getPathsToOverlay() -> [Path]? {
+    func getRecentPaths() -> [Path]? {
         return nil
     }
 }
