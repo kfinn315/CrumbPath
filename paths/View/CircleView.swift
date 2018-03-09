@@ -11,7 +11,7 @@ import UIKit
 import CoreGraphics
 
 //view with a circle background
-@IBDesignable class CircleLabelView : UIView {
+ class CircleLabelView : UIView {
     @IBInspectable var bottomText : String? {
         didSet{
             lblBottom.text = bottomText
@@ -50,9 +50,10 @@ import CoreGraphics
     }
     
     func setMarginConstraints(){
-        let radius = frame.width/2.0
+        let width = ivCircle.frame.width
+        let radius = width/2.0
         let innerWidth = 2.0*radius/sqrt(2.0)
-        let margin = (frame.width - innerWidth)/2
+        let margin = (width - innerWidth)/2
         constraintTopMargin.constant = margin
         constraintLeftMargin.constant = margin
     }

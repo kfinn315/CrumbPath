@@ -51,6 +51,9 @@ class PathViewController : UIViewController {
                 photos = childViewController as? ImagePageViewController
             }
         }
+        
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(showMap))
+        vwTop?.addGestureRecognizer(tapGesture)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,7 +73,17 @@ class PathViewController : UIViewController {
     @objc func showEdit(){
         self.navigationController?.pushViewController(EditPathViewController(), animated: true)
     }
-
+    
+    @objc func showMap(){
+        if let mapModalViewController = storyboard?.instantiateViewController(withIdentifier: MapModalViewController.storyboardID) as? MapModalViewController
+        {
+            //try to reuse the map view
+            if maps != nil {
+            mapModalViewController.setMapView(maps!.mapView)
+            }
+            self.present(mapModalViewController, animated: true, completion: nil)
+        }
+    }
     func updateUI(_ path: Path?){
         self.lblTitle.text = path?.displayTitle
         self.lblLocation.text = path?.locations

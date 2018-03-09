@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  MapModalViewController.swift
 //  BreadcrumbsSwift
 //
 //  Created by Kevin Finn on 4/10/17.
@@ -7,18 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
+//wraps MapViewController with a nav bar and done button for display as a modal
 class MapModalViewController: UIViewController {
     public static let storyboardID = "MapModal"
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
-    private lazy var contentViewController : UIViewController = {
-        let viewController = self.storyboard?.instantiateViewController(withIdentifier: MapViewController.storyboardID) as! MapViewController
-        add(asChildViewController: viewController)
-        
-        return viewController
-    }()
-    
+ 
     override func viewDidLoad() {
         doneButton.action = #selector(closeModal)
     }
@@ -27,27 +23,10 @@ class MapModalViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    private func updateView() {
-        add(asChildViewController: contentViewController)
+    func setMapView(_ mapview : MKMapView){
+        if childViewControllers.count > 0, let mapViewController = childViewControllers[0] as? MapViewController {
+            mapViewController.mapView = mapview
+        }
     }
-    
-    private func add(asChildViewController viewController: UIViewController) {
-       
-        // Add Child View Controller
-        addChildViewController(viewController)
-        
-        // Add Child View as Subview
-        view.addSubview(viewController.view)
-        
-        // Configure Child View
-        viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Notify Child View Controller
-        viewController.didMove(toParentViewController: self)
-    }
-    
-    
-    
 }
 

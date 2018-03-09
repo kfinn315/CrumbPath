@@ -141,7 +141,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func addPolyline(coordinates: [CLLocationCoordinate2D]) {
+    private func addPolyline(coordinates: [CLLocationCoordinate2D]) {
         DispatchQueue.global(qos: .userInitiated).sync {
             log.debug("PATH create polyline from coordinates")
             
@@ -183,7 +183,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func zoomToPoint(_ point: CLLocation, animated: Bool) {
+    private func zoomToPoint(_ point: CLLocation, animated: Bool) {
         log.debug("mapview zoom to point")
         var zoomRect = MKMapRectNull
         let mappoint = MKMapPointForCoordinate(point.coordinate)
@@ -192,11 +192,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView?.setVisibleMapRect(zoomRect, animated: true)
     }
     
-    func zoomToFit() {
+    private func zoomToFit() {
         log.debug("mapview zoom to fit")
         mapView?.setVisibleMapRect(getZoomRect(from: mapView.annotations), animated: true)
     }
-    func zoomToPathAnnotations() {
+    private func zoomToPathAnnotations() {
         mapView?.setVisibleMapRect(getZoomRect(from: pathAnnotations), animated: false)
     }
     private func getZoomRect(from annotations: [MKAnnotation]) -> MKMapRect {
@@ -267,14 +267,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     public func getSnapshot(from path: Path, _ callback: @escaping (UIImage?, Error?)->()) {
         let options = MKMapSnapshotOptions()
+        options.mapRect = getZoomRect(from: path.getPoints())
         if #available(iOS 11.0, *) {
             options.mapType = MKMapType.mutedStandard
-        } else {
-            // Fallback on earlier versions
         }
-        
-        options.mapRect = getZoomRect(from: path.getPoints())
-        options.camera.altitude = 12500
         
         let snapshotter = MKMapSnapshotter(options: options)
         snapshotter.start { (snapshot, error) in
@@ -285,51 +281,50 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             //draw on img here
             let image = self.drawLineOnImage(size: snapshot.image.size, coords: path.getPoints(), snapshot: snapshot)
+            
             callback(image, nil)
         }
     }
-
+    
     func drawLineOnImage(size: CGSize, coords: [CLLocationCoordinate2D], snapshot: MKMapSnapshot) -> UIImage {
-    let image = snapshot.image
-
+        let image = snapshot.image
+        
         // for Retina screen
-    UIGraphicsBeginImageContextWithOptions(size, true, 0)
-    
-    // draw original image into the context
-    image.draw(at: CGPoint.zero)
-    
-    // get the context for CoreGraphics
-    let context = UIGraphicsGetCurrentContext()
-    
-    // set stroking width and color of the context
-    context!.setLineWidth(2.0)
-    context!.setStrokeColor(UIColor.orange.cgColor)
-    
-    // Here is the trick :
-    // We use addLine() and move() to draw the line, this should be easy to understand.
-    // The diificult part is that they both take CGPoint as parameters, and it would be way too complex for us to calculate by ourselves
-    // Thus we use snapshot.point() to save the pain.
-    context!.move(to: snapshot.point(for: coords[0]))
-    for i in 0...coords.count-1 {
-    context!.addLine(to: snapshot.point(for: coords[i]))
-    context!.move(to: snapshot.point(for: coords[i]))
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        
+        // draw original image into the context
+        image.draw(at: .zero)
+        
+        // get the context for CoreGraphics
+        let context = UIGraphicsGetCurrentContext()
+       
+        // remove map from image by adding a clear rectangle
+        let rect = CGRect(origin: .zero, size: image.size)
+        UIColor.clear.setFill()
+        UIRectFill(rect)
+
+        UIColor.orange.setStroke()
+        
+        // set stroking width and color of the context
+        context!.setLineWidth(8.0)
+        context!.setStrokeColor(UIColor.orange.cgColor)
+        
+        context!.move(to: snapshot.point(for: coords[0]))
+        for i in 0...coords.count-1 {
+            context!.addLine(to: snapshot.point(for: coords[i]))
+            context!.move(to: snapshot.point(for: coords[i]))
+        }
+        
+        // apply the stroke to the context
+        context!.strokePath()
+        
+        // get the image from the graphics context
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // end the graphics context
+        UIGraphicsEndImageContext()
+        
+        return resultImage!
     }
-    
-    // apply the stroke to the context
-    context!.strokePath()
-    
-    // get the image from the graphics context
-    let resultImage = UIGraphicsGetImageFromCurrentImageContext()
-    
-    // end the graphics context
-    UIGraphicsEndImageContext()
-    
-    return resultImage!
-    }
-    //    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-    //        if let imgAnnotation = view as? ImageAnnotation {
-    //
-    //        }
-    //    }
 }
 

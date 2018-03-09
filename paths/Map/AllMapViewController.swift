@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
+//display all paths on the same mapview
 class AllMapViewController : UIViewController, MKMapViewDelegate {
     static let storyboardIdentifier : String = "All Paths"
     

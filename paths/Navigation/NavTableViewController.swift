@@ -34,9 +34,10 @@ class NavTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.title = "Paths"
+
         tableView.dataSource = nil
-        configureTableView()
+        configureTableView()        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,9 +48,11 @@ class NavTableViewController: UITableViewController {
         
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         } else {
             // Fallback on earlier versions
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,16 +68,19 @@ class NavTableViewController: UITableViewController {
         log.info("configure nav table")
         
         let datasource = RxTableViewSectionedReloadDataSource<AnimatableSectionModel<String,Path>>(configureCell: { (_, _, indexPath:IndexPath, item:Path) in
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "crumbcell", for: indexPath)
-            cell.textLabel?.text = item.displayTitle
-            cell.detailTextLabel?.text = item.startdate?.timestring
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "crumbcell", for: indexPath) as! CrumbCell
+            cell.lblTitle?.text = item.displayTitle
+            cell.labelSubtitle?.text = item.locations
+            cell.labelSubtitle2?.text = item.startdate?.datestring
+            if let coverimg = item.coverimg {
+                cell.imageViewCircle?.image = UIImage.init(data: coverimg)
+            }
             return cell
         })
         datasource.canEditRowAtIndexPath = {_,_ in
             true
         }
         datasource.titleForHeaderInSection = { ds, index in return ds.sectionModels[index].identity }
-        
         managedObjectContext.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
             .map({ (paths) -> [AnimatableSectionModel<String, Path>] in
                 //group paths by date, sort by date descending
@@ -103,9 +109,11 @@ class NavTableViewController: UITableViewController {
             return try self.tableView.rx.model(at: indexPath)
             }.subscribe(onNext: { [unowned self] (path) in
                 do {
+                    //self.navigationItem.title = ""
+
                     self.pathManager?.setCurrentPath(path)
                     
-                    guard let pager = self.pager else{ return }
+                    //guard let pager = self.pager else{ return }
                     
 //                    pager.goToPage(index: 0) //reset page index
 //                    self.showDetailViewController(pager, sender: self)
@@ -129,6 +137,8 @@ class NavTableViewController: UITableViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    
   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -131,8 +131,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let file = FileDestination()  // log to default swiftybeaver.log file
         file.minLevel = SwiftyBeaver.Level.debug
         
-        cloud = SBPlatformDestination(appID: "g6PqpJ", appSecret: "FXg1ttoIS6a3ifdyu0mpoova3hep0bib", encryptionKey: "gkvvqyHnC4wxrpshsfixinMnbWoqwrXx") // to cloud
-        cloud?.minLevel = .verbose
+//        cloud = SBPlatformDestination(appID: "g6PqpJ", appSecret: "FXg1ttoIS6a3ifdyu0mpoova3hep0bib", encryptionKey: "gkvvqyHnC4wxrpshsfixinMnbWoqwrXx") // to cloud
+//        cloud?.minLevel = .verbose
         //
         // use custom format and set console output to short time, log level & message
         console.format = "$DHH:mm:ss$d $L $M"
@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // add the destinations to SwiftyBeaver
         log.addDestination(console)
         log.addDestination(file)
-        log.addDestination(cloud!)
+        //log.addDestination(cloud!)
     }
 }
 
