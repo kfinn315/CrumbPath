@@ -7,6 +7,9 @@
 
 import UIKit
 
+/**
+ Label that pushes its text to the bottom
+ */
 @IBDesignable class BottomAlignedLabel: UILabel {
 
     override func drawText(in rect: CGRect) {

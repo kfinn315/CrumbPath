@@ -9,7 +9,9 @@
 import UIKit
 import MapKit
 
-//wraps MapViewController with a nav bar and done button for display as a modal
+/**
+ View that wraps a MapViewController to display in a modal
+ */
 class MapModalViewController: UIViewController {
     public static let storyboardID = "MapModal"
     

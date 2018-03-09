@@ -11,6 +11,8 @@
  import RxSwift
  import RxCocoa
  
+ /** PageViewController that displays full screen images from fetchResult, a PHFetchResult<PHAsset> object  
+  */
  class ImagePageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     public static let storyboardID = "ImagePage"
     
@@ -54,14 +56,13 @@
     }
     
     override func viewDidLoad() {
+        photoManager = PhotoManager.shared
         self.title = ""
         
         self.dataSource = self
         self.delegate = self
         
         setViewControllers([orderedViewControllers.first!], direction: .forward, animated: true, completion: nil)
-        
-        photoManager = PhotoManager.shared
         
         photoManager?.currentAlbum?.subscribe(onNext: { [unowned self] assetcollection in
             guard self.photoManager?.isAuthorized ?? false else{
@@ -75,18 +76,17 @@
                 
                 if let fetchResult = self.fetchResult, let firstPage = self.orderedViewControllers.first {
                     firstPage.photoHelper.startCaching(fetchResult)
-                    
-                    //disable scrolling and paging controller if there is 1 or 0 images
-                    if fetchResult.count <= 1 {
-                        self.dataSource = nil
-                    }
-                    else {
-                        self.dataSource = self
-                    }
 
                     DispatchQueue.main.async {
+                        //disable scrolling and paging controller if there is 1 or 0 images
+                        if fetchResult.count <= 1 {
+                            self.dataSource = nil
+                        }
+                        else {
+                            self.dataSource = self
+                        }
+
                         firstPage.setAsset(asset: fetchResult.firstObject, assetIndex: 0)
-                        
                     }
                     
                 }

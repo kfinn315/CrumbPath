@@ -15,6 +15,9 @@ import RxCoreData
 import RxDataSources
 import SwiftyBeaver
 
+/**
+ UITableView showing the Paths stored in CoreData
+ */
 class NavTableViewController: UITableViewController {
     public static let storyboardID = "table view"
     

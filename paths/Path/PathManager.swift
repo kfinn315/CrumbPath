@@ -29,6 +29,9 @@ protocol IPathManager : AnyObject {
     func getRecentPaths() -> [Path]?
 }
 
+/**
+ Manages the retrieval and updating of Paths in CoreData and sets the current Path
+ */
 class PathManager : IPathManager {
     public var currentPathObservable : Observable<Path?>?
     public var hasNewPath : Bool = false

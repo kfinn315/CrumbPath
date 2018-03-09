@@ -12,8 +12,9 @@ import RxSwift
 import RxCocoa
 import Photos
 
-
-///translates data to mapview
+/**
+ Defines how a MKMapView should display annotations and overlays
+ */
 class MapViewDelegate : NSObject, MKMapViewDelegate {
     static let lineTolerance : Float = 0.000005
     static let annotationLatDelta : CLLocationDistance = 0.010

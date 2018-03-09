@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ Circular ImageView. It can also be used as a solid-colored circle.
+ */
  class CircleImageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)

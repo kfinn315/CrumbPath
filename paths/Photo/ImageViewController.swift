@@ -9,6 +9,9 @@
 import UIKit
 import Photos
 
+/**
+ Manages fetching and caching of images for ImageViewControllers.
+ */
 public class PhotoHelper {
     public let requestOptions = PHImageRequestOptions()
     public var imageManager : PHCachingImageManager?
@@ -64,9 +67,11 @@ public class PhotoHelper {
         let scale = UIScreen.main.scale
         _assetSize = CGSize(width: itemSize.width * scale, height: itemSize.height * scale)
     }
-    
 }
 
+/**
+ Presents a full-screen UIImageView with image of the 'asset' property
+ */
 public class ImageViewController : UIViewController {
     public static let storyboardID = "ImageView"
     
@@ -93,15 +98,13 @@ public class ImageViewController : UIViewController {
     public func updateUI(){
         if photoHelper.isAuthorized, let asset = asset {
             self.requestID = photoHelper.requestImage(for: asset, resultHandler: { (result, data) in
-                let isLowQuality = data?[PHImageResultIsDegradedKey] as? Bool
-                log.info("asset index \(self.assetIndex!) delivered w/ low quality \(isLowQuality ?? false)")
                 if let result = result {//}, self?.requestID == data?[PHImageResultRequestIDKey] as? PHImageRequestID {
-                    self.imageView.image = result
+                    
+                    self.imageView.image = result.crop(to: self.view.frame.size)
                 } else{
                     self.imageView.image = nil
                 }
                 self.imageView.setNeedsDisplay()
-                //self.view.setNeedsDisplay()
             })
         }
     }

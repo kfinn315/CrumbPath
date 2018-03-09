@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import CoreGraphics
 
-//circular label with 2 lines: top and bottom
+/**
+ View with a solid-colored circle and a top and bottom label that fit inside.
+ */
  class CircleLabelView : UIView {
     @IBInspectable var bottomText : String? {
         didSet{
@@ -46,7 +48,9 @@ import CoreGraphics
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        setMarginConstraints()
+        DispatchQueue.main.async{
+            self.setMarginConstraints()
+        }
     }
     
     func setMarginConstraints(){

@@ -7,7 +7,9 @@
 
 import UIKit
 
-/// Top aligned label
+/**
+ Label that pushes its text to the top
+ */
 @IBDesignable class TopAlignedLabel: UILabel {
     
     override func drawText(in rect:CGRect) {

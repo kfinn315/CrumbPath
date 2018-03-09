@@ -10,6 +10,9 @@ import CoreLocation
 
 public typealias Points = [Point]
 
+/**
+ Extension methods for a Point array which format or perform calculations
+ */
 extension Array where Element:Point {
     public func getDistance(_ callback: @escaping (CLLocationDistance) -> Void){  
         var pointDistance : (endPoint: CLLocation?, distance: CLLocationDistance) = (nil, 0.0)

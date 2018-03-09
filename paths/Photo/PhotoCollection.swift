@@ -7,6 +7,9 @@ public protocol IPhotoCollection {
     var localid : String {get}
     var thumbnailAsset : PHAsset? {get}
 }
+/**
+ Wrapper for a PHAssetCollection that provides a thumbnail and title for the photo collection
+ */
 public class PhotoCollection : IPhotoCollection {
     // private static var imageManager = PHImageManager.default()
     

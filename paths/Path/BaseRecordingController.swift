@@ -14,6 +14,9 @@ import CloudKit
 import RxCocoa
 import RxSwift
 
+/**
+ Initializes the LocationManager
+ */
 public class BaseRecordingController : UIViewController,CLLocationManagerDelegate {
     weak var pathManager : IPathManager? = PathManager.shared
     var locationManager : ILocationManager?

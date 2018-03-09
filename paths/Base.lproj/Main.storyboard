@@ -635,7 +635,7 @@
                                 <rect key="frame" x="20" y="72" width="280" height="336"/>
                             </mapView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.94901960784313721" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="oFb-SM-EBk" firstAttribute="top" secondItem="VPO-nl-fxf" secondAttribute="bottom" constant="8" symbolic="YES" id="0W4-HL-M3J"/>
                             <constraint firstItem="oFb-SM-EBk" firstAttribute="centerY" secondItem="ih7-Is-32J" secondAttribute="centerY" id="JqT-YV-OAZ"/>

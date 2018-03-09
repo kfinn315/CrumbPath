@@ -12,6 +12,9 @@ import Photos
 import RxSwift
 import RxCocoa
 
+/**
+ ViewController that displays the current Path and photo collection in a MapView object
+ */
 class MapViewController: UIViewController {
     public static let storyboardID = "MapVC"
     

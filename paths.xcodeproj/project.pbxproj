@@ -62,7 +62,6 @@
 		DC364142203C68070097EEC4 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364120203C68000097EEC4 /* PhotosViewController.swift */; };
 		DC364143203C68070097EEC4 /* BaseRecordingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364121203C68010097EEC4 /* BaseRecordingController.swift */; };
 		DC364144203C68070097EEC4 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364122203C68010097EEC4 /* Path.swift */; };
-		DC364145203C68070097EEC4 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364123203C68010097EEC4 /* PhotoAlbum.swift */; };
 		DC364146203C68070097EEC4 /* PathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364124203C68020097EEC4 /* PathManager.swift */; };
 		DC364147203C68070097EEC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364125203C68020097EEC4 /* SettingsViewController.swift */; };
 		DC364148203C68070097EEC4 /* LocalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364126203C68020097EEC4 /* LocalError.swift */; };
@@ -181,7 +180,6 @@
 		DC364120203C68000097EEC4 /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		DC364121203C68010097EEC4 /* BaseRecordingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRecordingController.swift; sourceTree = "<group>"; };
 		DC364122203C68010097EEC4 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		DC364123203C68010097EEC4 /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		DC364124203C68020097EEC4 /* PathManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathManager.swift; sourceTree = "<group>"; };
 		DC364125203C68020097EEC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DC364126203C68020097EEC4 /* LocalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalError.swift; sourceTree = "<group>"; };
@@ -383,7 +381,6 @@
 				DC36410C203C66CF0097EEC4 /* BasePhotoViewController.swift */,
 				DC36410F203C67DC0097EEC4 /* AlbumsTableViewController.swift */,
 				DC364120203C68000097EEC4 /* PhotosViewController.swift */,
-				DC364123203C68010097EEC4 /* PhotoAlbum.swift */,
 				DC36411F203C68000097EEC4 /* PhotoCollection.swift */,
 				DC364116203C67FE0097EEC4 /* PhotoManager.swift */,
 				DC36412D203C68050097EEC4 /* ImageViewController.swift */,
@@ -886,7 +883,6 @@
 				DC364148203C68070097EEC4 /* LocalError.swift in Sources */,
 				DC364141203C68070097EEC4 /* PhotoCollection.swift in Sources */,
 				DC36413F203C68070097EEC4 /* CLLocationManager+Rx.swift in Sources */,
-				DC364145203C68070097EEC4 /* PhotoAlbum.swift in Sources */,
 				DC36414A203C68070097EEC4 /* Point.swift in Sources */,
 				67B911DF204F3AF40054E6FC /* ImagePageViewController.swift in Sources */,
 				DC364146203C68070097EEC4 /* PathManager.swift in Sources */,

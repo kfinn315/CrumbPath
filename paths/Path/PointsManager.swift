@@ -18,6 +18,9 @@ protocol PointsManagerInterface {
     func fetchPoints() -> [Point]
 }
 
+/**
+ Retrieves and updates the Point objects in CoreData
+ */
 class PointsManager : PointsManagerInterface {
     weak var context : NSManagedObjectContext?
     

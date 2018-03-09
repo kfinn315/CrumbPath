@@ -12,6 +12,9 @@ import Photos
 import RxSwift
 import RxCocoa
 
+/** Base class for ViewControllers that display images in a UICollectionView.
+ Contains logic for checking permission, retrieving and caching images from Photos
+ */
 public class BasePhotoViewController : UIViewController {
     weak var baseCollectionView : UICollectionView!
     weak var pathManager = PathManager.shared

@@ -10,6 +10,9 @@ import MapKit
 import UIKit
 import Photos
 
+/**
+ MKMapView subclass that adds functions for displaying Paths
+ */
 class MapView : MKMapView {
     private var polyline : MKPolyline?
     private var pathAnnotations : [MKPointAnnotation] = []
@@ -125,7 +128,9 @@ class MapView : MKMapView {
         }
         return zoomRect
     }
-    private func getZoomRect(from coords: [CLLocationCoordinate2D]) -> MKMapRect {
+    
+    //MARK:Snapshot
+    private static func getZoomRect(from coords: [CLLocationCoordinate2D]) -> MKMapRect {
         var zoomRect = MKMapRectNull
         
         for coord in coords {
@@ -137,7 +142,7 @@ class MapView : MKMapView {
         return MKMapRectInset(zoomRect, -5.0, -5.0)
     }
     
-    public func getSnapshot(from path: Path, _ callback: @escaping (UIImage?, Error?)->()) {
+    public static func getSnapshot(from path: Path, _ callback: @escaping (UIImage?, Error?)->()) {
         let options = MKMapSnapshotOptions()
         options.mapRect = getZoomRect(from: path.getPoints())
         if #available(iOS 11.0, *) {
@@ -152,13 +157,13 @@ class MapView : MKMapView {
             }
             
             //draw on img here
-            let image = self.drawLineOnImage(size: snapshot.image.size, coords: path.getPoints(), snapshot: snapshot)
+            let image = drawLineOnImage(size: snapshot.image.size, coords: path.getPoints(), snapshot: snapshot)
             
             callback(image, nil)
         }
     }
     
-    func drawLineOnImage(size: CGSize, coords: [CLLocationCoordinate2D], snapshot: MKMapSnapshot) -> UIImage {
+    private static func drawLineOnImage(size: CGSize, coords: [CLLocationCoordinate2D], snapshot: MKMapSnapshot) -> UIImage {
         let image = snapshot.image
         
         // for Retina screen

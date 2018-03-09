@@ -8,6 +8,9 @@
 
 import UIKit
 
+ /**
+  PageViewController that displays the current Path on 3 pages.
+  */
 class PageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     var pageControl : UIPageControl
     @IBOutlet weak var btnEdit: UIBarButtonItem!

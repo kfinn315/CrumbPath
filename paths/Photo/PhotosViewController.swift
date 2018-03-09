@@ -5,6 +5,9 @@ import RxSwift
 import RxCocoa
 import AssetsPickerViewController
 
+/**
+ Displays a collection of images in a collection view.
+ */
 class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource, UICollectionViewDelegate, AssetsPickerViewControllerDelegate, AssetsAlbumViewControllerDelegate {
 
     public static let storyboardID = "Photos Table"

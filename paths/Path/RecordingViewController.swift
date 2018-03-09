@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import CoreMotion
 
+/**
+ Initializes location updates and presents options for saving the recorded data to a Path.
+ */
 public class RecordingViewController : BaseRecordingController {
     public static let storyboardID = "recording"
     private static let timeFormatter : DateComponentsFormatter = {

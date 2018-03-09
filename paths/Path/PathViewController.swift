@@ -10,6 +10,9 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+/**
+ Displays details about the current Path object including in a MapViewController and ImagePageViewController and presents Path editing options.
+ */
 class PathViewController : UIViewController {
     static let storyboardID = "pathViewController"
     
@@ -66,8 +69,10 @@ class PathViewController : UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        //ensure the StackView is split horizontally above the Title view and the ImagePageViewController
-        constraintStatsTopMargin.constant = -1*stackStats.frame.height/2.0
+        DispatchQueue.main.async {
+            //ensure the StackView is split horizontally above the Title view and the ImagePageViewController
+            self.constraintStatsTopMargin.constant = -1*self.stackStats.frame.height/2.0
+        }
     }
     
     @objc func showEdit(){

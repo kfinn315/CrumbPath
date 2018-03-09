@@ -11,6 +11,9 @@ import Eureka
 import RxCocoa
 import RxSwift
 
+/**
+ Form for editing the current Path
+ */
 class EditPathViewController : FormViewController {
     static var dateformatter : DateFormatter = {
         let formatter = DateFormatter()

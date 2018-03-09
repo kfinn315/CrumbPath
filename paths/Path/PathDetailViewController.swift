@@ -11,6 +11,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+/**
+ Displays details about the current Path
+ */
 public class PathDetailViewController : UIViewController {
     public static let storyboardID = "Detail"
     private weak var pathManager = PathManager.shared

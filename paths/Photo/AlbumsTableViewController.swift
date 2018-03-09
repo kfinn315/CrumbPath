@@ -12,6 +12,9 @@ import Photos
 import RxSwift
 import RxCocoa
 
+/**
+ Displays all the device's photo albums in a collection view
+ */
 public class AlbumsTableViewController : BasePhotoViewController,  UICollectionViewDataSource, UICollectionViewDelegate {
     public static let storyboardID = "Albums"
     

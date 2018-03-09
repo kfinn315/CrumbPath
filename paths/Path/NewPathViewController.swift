@@ -14,6 +14,9 @@ import CloudKit
 import RxCocoa
 import RxSwift
 
+/**
+ Starting point to record a new Path
+ */
 public class NewPathViewController : BaseRecordingController {
     public static let storyboardID = "New Path"
     @IBOutlet weak var stackvwContent: UIStackView!

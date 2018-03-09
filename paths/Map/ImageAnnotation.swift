@@ -10,6 +10,9 @@ import UIKit
 import MapKit
 import Photos
 
+/**
+ Map Annotation that displays an image and title
+ */
 class ImageAnnotation : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var image : UIImage?

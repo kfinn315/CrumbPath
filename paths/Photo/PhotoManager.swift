@@ -15,7 +15,9 @@ protocol PhotoManagerInterface {
     func getImageCollection(_ localid: String?) -> PHAssetCollection?
     var photoCollections : [PhotoCollection] {get}
 }
-
+/**
+ Manages the current path's photo album and Photo permission
+ */
 class PhotoManager {
     private static var _shared : PhotoManager?
     
