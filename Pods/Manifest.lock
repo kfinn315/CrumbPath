@@ -18,6 +18,9 @@ PODS:
   - Nimble (7.0.3)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
+  - RandomKit (5.2.3):
+    - ShiftOperations (~> 1.0.2)
+    - Threadly (~> 1.0)
   - RxBlocking (4.1.2):
     - RxSwift (~> 4.0)
   - RxCocoa (4.1.2):
@@ -32,9 +35,11 @@ PODS:
   - RxSwift (4.1.2)
   - RxTest (4.1.2):
     - RxSwift (~> 4.0)
+  - ShiftOperations (1.0.2)
   - SwiftARGB (2.0.0)
   - SwiftSimplify (0.2.0)
   - SwiftyBeaver (1.5.1)
+  - Threadly (1.2.0)
   - TinyLog (2.0.7)
   - UIViewKVO (2.0.0)
 
@@ -43,6 +48,7 @@ DEPENDENCIES:
   - Eureka (~> 4.0)
   - Nimble
   - Quick
+  - RandomKit (~> 5.2.3)
   - RxBlocking (~> 4.0)
   - RxCocoa (~> 4.0)
   - RxCoreData (~> 0.4.0)
@@ -62,18 +68,21 @@ SPEC CHECKSUMS:
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  RandomKit: 380745911c4f7989707489b2ce297194bfcf5031
   RxBlocking: f6054985901412fc8c02daa84e92d4ba68c61389
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxCoreData: 3717ff29afb7261f8cff4b893ffb0650367d0fe6
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   RxTest: e634f15fd2c2cd0e0120132ef7a4f7be69ad0393
+  ShiftOperations: 702c9aa98d3b20d98dceb71dd8437b562f7ab3ad
   SwiftARGB: 8727cfcdcfe8709e707a2391f1d5802a7c40dcad
   SwiftSimplify: 374ead1c360c6e236539543d6ce5b3abda011080
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
+  Threadly: b772ed7c1ff4a3f03eb4600bbc5ef83b3be5cb29
   TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
   UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
 
-PODFILE CHECKSUM: 4b62d3119d9c7dccc26675cc00158b32bdee0a89
+PODFILE CHECKSUM: 199ceb94e8ba37ed719d88005a7e6626787458df
 
 COCOAPODS: 1.4.0

@@ -26,7 +26,21 @@ class NavTableViewController: UITableViewController {
     let disposeBag = DisposeBag()
     
     weak var pathManager = PathManager.shared
-    weak var managedObjectContext : NSManagedObjectContext! = AppDelegate.managedObjectContext!
+    weak var managedObjectContext : NSManagedObjectContext! = {
+        return AppDelegate.managedObjectContext!
+    }()
+    
+    lazy var saveAlert : UIAlertController = {
+        let alert = UIAlertController(title: "Update?", message: "What would you like to do with your Path?", preferredStyle: UIAlertControllerStyle.alert)
+        let actionSave = UIAlertAction.init(title: "Save changes", style: UIAlertActionStyle.default) {[unowned self] _ in self.savePathChanges()}
+        let actionCancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.cancel) {[unowned self] _ in
+            
+        }
+        alert.addAction(actionSave)
+        alert.addAction(actionCancel)
+        
+        return alert
+    }()
     
     lazy var pager : PageViewController? = {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Pager") as? PageViewController {
@@ -53,10 +67,12 @@ class NavTableViewController: UITableViewController {
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         } else {
             // Fallback on earlier versions
-        }
-        
+        }        
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)        
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -112,8 +128,10 @@ class NavTableViewController: UITableViewController {
             }.subscribe(onNext: { [unowned self] (path) in
                 do {
                     self.pathManager?.setCurrentPath(path)
-                    
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: PathViewController.storyboardID)
+                   
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: PageViewController.storyboardID)
+
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: PathViewController.storyboardID)
                     if vc != nil {
                         self.navigationController?.pushViewController(vc!, animated: true)
                     }
@@ -136,5 +154,13 @@ class NavTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @objc func savePathChanges(){
+        do{
+            try pathManager?.commitChanges()
+        } catch{
+            log.error(error.localizedDescription)
+        }
     }
 }

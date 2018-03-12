@@ -12,17 +12,24 @@ import UIKit
   PageViewController that displays the current Path on 3 pages.
   */
 class PageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    public static let storyboardID = "PageView"
     var pageControl : UIPageControl
     @IBOutlet weak var btnEdit: UIBarButtonItem!
     
     private(set) lazy var orderedViewControllers: [UIViewController] = { [weak self] in
+        var viewcontrollers : [UIViewController] = []
         if let storyboard = self?.storyboard {
-            return [storyboard.instantiateViewController(withIdentifier: PathDetailViewController.storyboardID),
-                    storyboard.instantiateViewController(withIdentifier: MapViewController.storyboardID),
-                    storyboard.instantiateViewController(withIdentifier: PhotosViewController.storyboardID) as! PhotosViewController]
+            viewcontrollers = [storyboard.instantiateViewController(withIdentifier: PathViewController.storyboardID),
+                    EditPathViewController()]
+//                    storyboard.instantiateViewController(withIdentifier: PhotosViewController.storyboardID) as! PhotosViewController]
+            var i = 0
+            for var views in viewcontrollers {
+                views.view.tag = i
+                i += 1
+            }
         }
-        
-        return []
+
+        return viewcontrollers
     }()
     
     required init?(coder: NSCoder) {
@@ -59,6 +66,8 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
         }
         
         pageControl.numberOfPages = self.orderedViewControllers.count
+        
+        setViewControllers([orderedViewControllers[0]], direction: .forward, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

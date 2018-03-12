@@ -25,14 +25,18 @@ public class Point: NSManagedObject, Codable {
     public required init() {
         super.init(entity: entitydescription, insertInto: nil)
     }
+    
+    public convenience init(location: CLLocation) {
+        self.init(id: UUID().uuidString, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, timestamp: location.timestamp)
+    }
 
-    public convenience init(id: String?, latitude: Double, longitude: Double, timestamp: NSDate) {
+    public convenience init(id: String?, latitude: Double, longitude: Double, timestamp: Date) {
         self.init()
         
         self.id = id
         self.latitude = latitude
         self.longitude = longitude
-        self.timestamp = timestamp as Date
+        self.timestamp = timestamp
     }
     
     //MARK:- Codable implementation

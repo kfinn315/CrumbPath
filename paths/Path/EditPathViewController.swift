@@ -22,12 +22,23 @@ class EditPathViewController : FormViewController {
         return formatter
     }()
     
+    lazy var saveAlert : UIAlertController = {
+        let alert = UIAlertController(title: "Update?", message: "What would you like to do with your Path?", preferredStyle: UIAlertControllerStyle.alert)
+        let actionSave = UIAlertAction.init(title: "Save changes", style: UIAlertActionStyle.default) {[unowned self] _ in self.save()}
+        let actionCancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.cancel) {[unowned self] _ in
+            self.buttonCancelClicked()
+        }
+        alert.addAction(actionSave)
+        alert.addAction(actionCancel)
+        
+        return alert
+    }()
     public var isNewPath : Bool = false
     
     private weak var pathManager : IPathManager? = PathManager.shared
     fileprivate weak var path : Path?
     private var disposeBag = DisposeBag()
-
+    
     convenience init(pathManager: IPathManager?) {
         self.init()
         self.pathManager = pathManager
@@ -38,14 +49,14 @@ class EditPathViewController : FormViewController {
         
         pathManager?.currentPathObservable?.subscribe(onNext: { [unowned self] path in
             self.path = path
-            self.updateData()
+            self.updateForm(with: self.path)
         }).disposed(by: disposeBag)
         
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(save)), animated: false)
-
+        
         createForm()
     }
-
+    
     func createForm() {
         form +++ Section("Main") <<< TextRow { row in
             row.title = "Title"
@@ -87,63 +98,54 @@ class EditPathViewController : FormViewController {
         }        
     }
     
-    func updateData() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        for row in form.allRows {
-            if let tag = row.tag {
-                switch tag {
-                case "title": (row as? TextRow)?.value = path?.title
-                case "notes": (row as? TextRow)?.value = path?.notes
-                case "locations": (row as? TextRow)?.value = path?.locations
-                case "startdate" : (row as? DateTimeRow)?.value = path?.startdate as Date?
-                case "enddate" : (row as? DateTimeRow)?.value = path?.enddate as Date?
-                default:
-                    break
-                }
-            }
-        }
+        //show save? alert
+//        if pathManager?.hasChanges ?? false {
+//            self.present(saveAlert, animated: true, completion: nil)
+//        }
+        save()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    func updateForm(with path: Path?) {
+        form.rowBy(tag: "title")?.value = path?.title
+        form.rowBy(tag: "notes")?.value = path?.notes
+        form.rowBy(tag: "locations")?.value = path?.locations
+        form.rowBy(tag: "startdate")?.value = path?.startdate
+        form.rowBy(tag: "enddate")?.value = path?.enddate
     }
     
     @objc func save() {
-        guard path != nil else {
+        guard let path = path else {
             return
         }
         
-        for row in form.allRows {
-            if let tag = row.tag {
-                switch tag {
-                case "title":
-                    path?.title = (row as? TextRow)!.value
-                case "notes":
-                    path?.notes = (row as? TextRow)!.value
-                case "locations":
-                    if !isNewPath {
-                        path?.locations = (row as? TextRow)!.value
-                    }
-                case "startdate" :
-                    if !isNewPath {
-                        path?.startdate = (row as? DateTimeRow)!.value
-                    }
-                case "enddate" :
-                    if !isNewPath {
-                        path?.enddate = (row as? DateTimeRow)!.value
-                    }
-                default:
-                    break
-                }
-            }
-        }
+        path.title = form.rowBy(tag: "title")!.value
+        path.locations = form.rowBy(tag: "locations")!.value
+        path.startdate = form.rowBy(tag: "startdate")!.value
+        path.enddate = form.rowBy(tag: "enddate")!.value
+        path.notes = form.rowBy(tag: "notes")!.value
         
+        //save
         do {
             try pathManager?.updateCurrentPathInCoreData(notify: true)
         } catch {
             log.error(error.localizedDescription)
         }
-        
-        if pathManager?.hasNewPath ?? false {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else{
-            self.navigationController?.popViewController(animated: true)
-        }
+//
+//        if pathManager?.hasNewPath ?? false {
+//            self.navigationController?.popToRootViewController(animated: true)
+//        } else{
+//            self.navigationController?.popViewController(animated: true)
+//        }
+    }
+    func buttonCancelClicked() {
+        log.debug("dismiss save alert")
+        self.dismiss(animated: true, completion: nil)
     }
 }

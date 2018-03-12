@@ -23,11 +23,10 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
     static let pinAnnotationImageView = UIImage.circle(diameter: CGFloat(10), color: UIColor.orange)
     static let thumbnailSize = CGSize(width: 50, height: 50)
     
-    fileprivate var imageManager : PHCachingImageManager?
+    fileprivate var imageManager : PHCachingImageManager = PHCachingImageManager()
     private weak var photosManager = PhotoManager.shared
     
     // MARK: - MapViewDelegate implementation
-    
     public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = MapViewDelegate.strokeColor
@@ -48,7 +47,7 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
                 annotationView!.annotation = annotation
             }
             if photosManager?.isAuthorized ?? false, let imgAsset = imgAnnotation.asset {
-                annotationView!.assetId = imageManager?.requestImage(for: imgAsset, targetSize: MapViewDelegate.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
+                annotationView!.assetId = imageManager.requestImage(for: imgAsset, targetSize: MapViewDelegate.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
                     image, data in
                     if annotationView!.assetId == data?[PHImageResultRequestIDKey] as? Int32 {
                         annotationView!.image = image

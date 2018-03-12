@@ -22,11 +22,14 @@ protocol IPathManager : AnyObject {
     var currentAlbumId : String? {get}
     func updateCurrentAlbum(collectionid: String)
     func setCurrentPath(_ path: Path?)
-    func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void)
-    func updateCurrentPathInCoreData(notify: Bool) throws
+    func getNewPath() -> Path
+    //func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void)
+    func save(path: Path?, callback: @escaping (Path?,Error?) -> Void)
+    func updateCurrentPathInCoreData(notify: Bool) throws 
     func addPointToData(_ point: LocalPoint)
     func clearPoints()
-    func getRecentPaths() -> [Path]?
+    func getAllPaths() -> [Path]?
+    var hasChanges : Bool {get}
 }
 
 /**
@@ -42,9 +45,11 @@ class PathManager : IPathManager {
     fileprivate var _currentPath : Variable<Path?> = Variable(nil)
     private let currentPathSubject = BehaviorSubject<Path?>(value: nil)
     
-    private weak var context : NSManagedObjectContext?
-    
     private static var _shared : PathManager?
+    
+    private var context : NSManagedObjectContext! {
+            return AppDelegate.managedObjectContext
+    }
     
     class var shared : PathManager {
         if _shared == nil {
@@ -54,15 +59,8 @@ class PathManager : IPathManager {
         return _shared!
     }
     
-    required init(context: NSManagedObjectContext?) {
-        self.context = context
-        
+    required init() {
         setup()
-    }
-    
-    convenience init() {
-        let context = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext
-        self.init(context: context)
     }
     
     convenience init(_ pointsManager: PointsManagerInterface, _ photoManager: PhotoManagerInterface) {
@@ -77,6 +75,15 @@ class PathManager : IPathManager {
             }.observeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
     }
     
+    public func getNewPath() -> Path {
+        return Path()
+    }
+    public func commitChanges() throws {
+        try context?.save()
+    }
+    public var hasChanges : Bool {
+        return context?.hasChanges ?? false
+    }
     public var currentAlbumId : String? {
         return _currentPath.value?.albumId
     }
@@ -106,25 +113,41 @@ class PathManager : IPathManager {
         }
     }
     
-    public func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void) {
-        log.info("saveNewPath")
+    public func save(path: Path?, callback: @escaping (Path?,Error?) -> Void) {
+        guard let path = path else {
+            callback(nil, LocalError.failed(message: "Path was nil"))
+            return
+        }
         
-        let path = Path(context!, title: nil, notes: nil)
-        
-        path.setTimes(start: start, end: end)
         let points = self.getCurrentPoints()
         path.setPoints(points)
         
-        do{
-            try self.context!.rx.update(path)
+        self.context!.insert(path)
+        
+//            try self.context!.rx.update(path)
             self.setCurrentPath(path)
             self.hasNewPath = true
             callback(path, nil)
-        } catch {
-            log.error(error.localizedDescription)
-            callback(nil, error)
-        }
     }
+//    public func savePath(start: Date, end: Date, callback: @escaping (Path?,Error?) -> Void) {
+//        log.info("saveNewPath")
+//
+//        let path = Path(context!, title: nil, notes: nil)
+//
+//        path.setTimes(start: start, end: end)
+//        let points = self.getCurrentPoints()
+//        path.setPoints(points)
+//
+//        do{
+//            try self.context!.rx.update(path)
+//            self.setCurrentPath(path)
+//            self.hasNewPath = true
+//            callback(path, nil)
+//        } catch {
+//            log.error(error.localizedDescription)
+//            callback(nil, error)
+//        }
+//    }
     private func getCurrentPoints() -> Points{
         var points : [Point] = []
         let fetchRequest : NSFetchRequest<Point> = Point.fetchRequest()
@@ -163,9 +186,8 @@ class PathManager : IPathManager {
             currentPathSubject.onNext(currentpath) //necessary?
         }
     }
-
-    
-    public func getRecentPaths() -> [Path]?{
+ 
+    public func getAllPaths() -> [Path]?{
         let request: NSFetchRequest<Path> = Path.fetchRequest()
 //        let predicate = NSPredicate(format: "distance > %d", 5)
 //        request.predicate = predicate
@@ -174,6 +196,7 @@ class PathManager : IPathManager {
             return result
         } catch{
             //error
+            log.error(error.localizedDescription)
         }
         
         return nil

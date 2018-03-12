@@ -178,8 +178,7 @@ class PathManagerTests: QuickSpec {
                 var expectedId : String!
                 var actualId : String!
                 
-                beforeEach {
-                    
+                beforeEach {                    
                     expAlbumId = String.random(ofLength: 6, using: &Xoroshiro.default)
                     expTitle = String.random(ofLength: 8, using: &Xoroshiro.default)
                     expCoverImg = String.random(ofLength: 150, using: &Xoroshiro.default).data(using: String.Encoding.utf8)

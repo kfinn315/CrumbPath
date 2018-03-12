@@ -84,6 +84,7 @@ public class ImageViewController : UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)

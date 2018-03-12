@@ -97,7 +97,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcI-4X-3b8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-709" y="-1661"/>
+            <point key="canvasLocation" x="-1393" y="-1593"/>
         </scene>
         <!--Edit Path View Controller-->
         <scene sceneID="T3H-QI-izq">
@@ -252,13 +252,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Rpl-sc-tBQ">
                                                     <rect key="frame" x="0.0" y="20.5" width="200" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
-                                                    <color key="textColor" red="0.80784313730000001" green="0.79607843140000001" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.25098039220000001" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="GZu-fZ-XwA" userLabel="Subtitle2">
                                                     <rect key="frame" x="0.0" y="35" width="200" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
-                                                    <color key="textColor" red="0.80784313730000001" green="0.79607843140000001" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.25098039220000001" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -364,11 +364,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wj3-eD-iKN"/>
                     </layoutGuides>
                     <view key="view" tag="1" contentMode="scaleToFill" id="bOb-0P-qpb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="173.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-8f-qD4" customClass="MapView" customModule="paths" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="173.5"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="0.0"/>
@@ -390,7 +390,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLi-lS-Ypd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3032" y="-2464"/>
+            <point key="canvasLocation" x="-3034" y="-2291"/>
         </scene>
         <!--Photos View Controller-->
         <scene sceneID="zp5-SV-RYC">
@@ -490,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1a-Ra-y8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2207" y="-2339"/>
+            <point key="canvasLocation" x="-2083" y="-2380"/>
         </scene>
         <!--Map Modal View Controller-->
         <scene sceneID="KKs-mL-EeB">
@@ -549,7 +549,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3c1-vI-alp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4172" y="-2619"/>
+            <point key="canvasLocation" x="-3810" y="-2291"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="KPh-gp-fBh">
@@ -594,22 +594,13 @@
                 <pageViewController storyboardIdentifier="ImagePage" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Maj-T6-jfC" customClass="ImagePageViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZu-95-k6A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2979" y="-1966"/>
+            <point key="canvasLocation" x="-2934" y="-1806"/>
         </scene>
         <!--Page-->
         <scene sceneID="w1N-qc-8TI">
             <objects>
-                <pageViewController storyboardIdentifier="Pager" autoresizesArchivedViewToFullSize="NO" title="Page" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="D8d-Qd-oyx" customClass="PageViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="Title" id="2YY-Wf-qVd">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="4Sg-eR-Mc4">
-                            <connections>
-                                <segue destination="sUO-nR-d6g" kind="show" id="Apy-sh-MRH"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="btnEdit" destination="4Sg-eR-Mc4" id="nVX-pJ-iqa"/>
-                    </connections>
+                <pageViewController storyboardIdentifier="PageView" autoresizesArchivedViewToFullSize="NO" title="Page" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="D8d-Qd-oyx" customClass="PageViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Title" id="2YY-Wf-qVd"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gnh-fz-02q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="EmK-hc-vIb">
@@ -617,7 +608,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
             </objects>
-            <point key="canvasLocation" x="-1277" y="-3214"/>
+            <point key="canvasLocation" x="-1393" y="-3180"/>
         </scene>
         <!--All Paths-->
         <scene sceneID="mJD-dA-nYD">
@@ -632,13 +623,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oFb-SM-EBk" customClass="MapView" customModule="paths" customModuleProvider="target">
-                                <rect key="frame" x="20" y="72" width="280" height="336"/>
+                                <rect key="frame" x="20" y="72" width="280" height="400"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="oFb-SM-EBk" firstAttribute="top" secondItem="VPO-nl-fxf" secondAttribute="bottom" constant="8" symbolic="YES" id="0W4-HL-M3J"/>
-                            <constraint firstItem="oFb-SM-EBk" firstAttribute="centerY" secondItem="ih7-Is-32J" secondAttribute="centerY" id="JqT-YV-OAZ"/>
+                            <constraint firstItem="WMG-MH-FL6" firstAttribute="top" secondItem="oFb-SM-EBk" secondAttribute="bottom" constant="8" symbolic="YES" id="P9S-tD-Brn"/>
                             <constraint firstItem="oFb-SM-EBk" firstAttribute="centerX" secondItem="ih7-Is-32J" secondAttribute="centerX" id="Pki-gf-geB"/>
                             <constraint firstItem="oFb-SM-EBk" firstAttribute="leading" secondItem="ih7-Is-32J" secondAttribute="leading" constant="20" symbolic="YES" id="YWM-fr-YsI"/>
                         </constraints>
@@ -826,13 +817,13 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="62G-J6-5g6">
-                                <rect key="frame" x="0.0" y="20" width="320" height="150"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="173.5"/>
                                 <connections>
                                     <segue destination="2Sg-Pj-d2H" kind="embed" id="ZSe-fc-QGC"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhM-CO-PSr" userLabel="Center View">
-                                <rect key="frame" x="0.0" y="170" width="320" height="127.5"/>
+                                <rect key="frame" x="0.0" y="193.5" width="320" height="127.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xNQ-xL-HyE">
                                         <rect key="frame" x="25" y="25" width="180" height="52"/>
@@ -862,13 +853,13 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-7Y-ibp">
-                                <rect key="frame" x="0.0" y="297.5" width="320" height="137.5"/>
+                                <rect key="frame" x="0.0" y="321" width="320" height="159"/>
                                 <connections>
                                     <segue destination="Maj-T6-jfC" kind="embed" id="GO0-rH-5xx"/>
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-ei-fiz" userLabel="Stats">
-                                <rect key="frame" x="20" y="297.5" width="280" height="88"/>
+                                <rect key="frame" x="20" y="321" width="280" height="88"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTA-TL-axQ" customClass="CircleLabelView" customModule="paths" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="73.5" height="88"/>
@@ -908,41 +899,9 @@
                                     <constraint firstAttribute="bottom" secondItem="GSv-ce-nGh" secondAttribute="bottom" id="naY-ns-Wqu"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BmT-HC-FXS" userLabel="Bottom Buttons">
-                                <rect key="frame" x="0.0" y="435" width="320" height="45"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MD3-Q6-SEi">
-                                        <rect key="frame" x="0.0" y="0.0" width="160" height="45"/>
-                                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                        <color key="tintColor" red="0.80784313730000001" green="0.79607843140000001" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Photos"/>
-                                        <connections>
-                                            <segue destination="74l-yj-cNO" kind="presentation" id="f6E-PP-0gr"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0f-jW-LAs">
-                                        <rect key="frame" x="160" y="0.0" width="160" height="45"/>
-                                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                        <color key="tintColor" red="0.80784313730000001" green="0.79607843140000001" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Map"/>
-                                        <connections>
-                                            <segue destination="Pme-aB-u5b" kind="presentation" id="CYS-6J-knM"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="SKM-Wl-ros"/>
-                                    <constraint firstItem="j0f-jW-LAs" firstAttribute="height" secondItem="MD3-Q6-SEi" secondAttribute="height" id="WtO-WS-Hja"/>
-                                    <constraint firstItem="MD3-Q6-SEi" firstAttribute="height" secondItem="BmT-HC-FXS" secondAttribute="height" id="qv1-SV-FdS"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BmT-HC-FXS" firstAttribute="centerX" secondItem="DUH-5V-neM" secondAttribute="centerX" id="0w3-at-0Km"/>
                             <constraint firstItem="Ebg-ei-fiz" firstAttribute="top" secondItem="zhM-CO-PSr" secondAttribute="bottom" id="Azt-TO-82n"/>
                             <constraint firstItem="zhM-CO-PSr" firstAttribute="centerX" secondItem="DUH-5V-neM" secondAttribute="centerX" id="Bgn-V0-a89"/>
                             <constraint firstItem="a7c-gI-LFD" firstAttribute="leading" secondItem="DUH-5V-neM" secondAttribute="leading" id="ESY-Pb-1dz"/>
@@ -952,20 +911,17 @@
                             <constraint firstItem="62G-J6-5g6" firstAttribute="centerX" secondItem="DUH-5V-neM" secondAttribute="centerX" id="SpK-71-DSh"/>
                             <constraint firstItem="Ebg-ei-fiz" firstAttribute="leading" secondItem="DUH-5V-neM" secondAttribute="leading" constant="20" symbolic="YES" id="TRt-4f-97k"/>
                             <constraint firstItem="62G-J6-5g6" firstAttribute="leading" secondItem="DUH-5V-neM" secondAttribute="leading" id="Te1-dT-VKZ"/>
-                            <constraint firstItem="BmT-HC-FXS" firstAttribute="leading" secondItem="DUH-5V-neM" secondAttribute="leading" id="aRG-Lw-MPc"/>
                             <constraint firstItem="62G-J6-5g6" firstAttribute="top" secondItem="a7c-gI-LFD" secondAttribute="bottom" id="eeA-6E-p7e"/>
                             <constraint firstItem="zhM-CO-PSr" firstAttribute="width" secondItem="DUH-5V-neM" secondAttribute="width" id="gcN-w1-Cey"/>
                             <constraint firstItem="a7c-gI-LFD" firstAttribute="top" secondItem="dik-cM-5qZ" secondAttribute="bottom" id="jQQ-LJ-Wlp"/>
                             <constraint firstItem="2AR-7Y-ibp" firstAttribute="top" secondItem="zhM-CO-PSr" secondAttribute="bottom" id="lrn-8v-dsi"/>
-                            <constraint firstItem="BmT-HC-FXS" firstAttribute="top" secondItem="2AR-7Y-ibp" secondAttribute="bottom" id="mhw-br-w1R"/>
+                            <constraint firstItem="WZr-Z1-PRH" firstAttribute="top" secondItem="2AR-7Y-ibp" secondAttribute="bottom" id="mcO-ns-lpA"/>
                             <constraint firstItem="Ebg-ei-fiz" firstAttribute="centerX" secondItem="DUH-5V-neM" secondAttribute="centerX" id="ok9-kE-DTu"/>
-                            <constraint firstItem="WZr-Z1-PRH" firstAttribute="top" secondItem="BmT-HC-FXS" secondAttribute="bottom" id="w2X-F6-4Hf"/>
                             <constraint firstItem="2AR-7Y-ibp" firstAttribute="height" secondItem="62G-J6-5g6" secondAttribute="height" multiplier="0.91" constant="1" id="xSi-Dx-Fn5"/>
                             <constraint firstItem="2AR-7Y-ibp" firstAttribute="leading" secondItem="DUH-5V-neM" secondAttribute="leading" id="zGZ-r5-jOm"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnPhotos" destination="MD3-Q6-SEi" id="yVs-OT-fCZ"/>
                         <outlet property="circle0" destination="rTA-TL-axQ" id="SRj-BX-pkW"/>
                         <outlet property="circle1" destination="Uyr-gi-3j9" id="Iey-c9-ucQ"/>
                         <outlet property="circle2" destination="GSv-ce-nGh" id="1Ta-d4-34i"/>
@@ -975,7 +931,6 @@
                         <outlet property="lblTitle" destination="DVj-ky-Qdf" id="QsU-gX-ISV"/>
                         <outlet property="stackStats" destination="Ebg-ei-fiz" id="yld-Ar-zEh"/>
                         <outlet property="vwBottom" destination="2AR-7Y-ibp" id="jjZ-1C-tju"/>
-                        <outlet property="vwMap" destination="j0f-jW-LAs" id="2Ri-TA-8Jc"/>
                         <outlet property="vwTop" destination="62G-J6-5g6" id="vUu-kB-NF5"/>
                     </connections>
                 </viewController>

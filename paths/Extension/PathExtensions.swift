@@ -51,7 +51,6 @@ extension Path {
             log.error(error.localizedDescription)
         }
         return []
-        
     }
     
     public var displayTitle : String {
@@ -67,6 +66,9 @@ extension Path {
         self.albumId = collectionid
     }
     
+    /// Generate a map snapshot
+    ///
+    /// - Parameter callback: code block to execute when the UIImage returns
     public func getSnapshot(_ callback: @escaping (UIImage?) -> Void){
         MapView.getSnapshot(from: self) { image, error in
             log.debug("getting map snapshot")
@@ -80,7 +82,9 @@ extension Path {
         }
     }
     
-    
+    /// Get the number of steps taken between the Path's start and end times
+    ///
+    /// - Parameter callback: the block of code to execute when the step data returns
     public func getSteps(_ callback: @escaping (NSNumber?) -> Void){
         guard let startdate = startdate, let enddate = enddate else{
             log.debug("getSteps: start or end dates are nil")
@@ -121,6 +125,10 @@ extension Path {
         return
     }
     
+    
+    /// Simplify the coordinates using SwiftSimplify library
+    ///
+    /// - Returns: Simplified coordinate array
     func getSimplifiedCoordinates() -> [CLLocationCoordinate2D]{
         // let points = points.getPoints()
         var simpleCoords : [CLLocationCoordinate2D] = []

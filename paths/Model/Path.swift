@@ -41,6 +41,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     
     @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
         super.init(entity: entity, insertInto: context)
+      //  self.localid = UUID().uuidString
     }
     
     public required init(entity: T) {
@@ -61,7 +62,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     }
     
     public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
-        super.init(entity: entitydescription, insertInto: context)
+        super.init(entity: entitydescription, insertInto: AppDelegate.managedObjectContext!)
 
         self.localid = UUID().uuidString
         self.title = title

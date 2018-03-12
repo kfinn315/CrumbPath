@@ -27,8 +27,6 @@ class PathViewController : UIViewController {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var vwTop: UIView!
     @IBOutlet weak var vwBottom: UIView!
-    @IBOutlet weak var btnPhotos: UIButton!
-    @IBOutlet weak var vwMap: UIButton!
     @IBOutlet weak var stackStats: UIStackView!
     
     @IBOutlet weak var constraintTopBarHeight: NSLayoutConstraint!
@@ -74,7 +72,12 @@ class PathViewController : UIViewController {
             self.constraintStatsTopMargin.constant = -1*self.stackStats.frame.height/2.0
         }
     }
-    
+    @objc func showPhotos(){
+        if let vc = storyboard?.instantiateViewController(withIdentifier: PhotosViewController.storyboardID) {
+            self.present(vc, animated: true, completion: nil)
+//            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     @objc func showEdit(){
         self.navigationController?.pushViewController(EditPathViewController(), animated: true)
     }

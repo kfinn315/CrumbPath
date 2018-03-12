@@ -181,7 +181,7 @@ extension CLLocation {
 
 extension Point {
     convenience init(from location: CLLocation) {
-        self.init(id: UUID().uuidString, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, timestamp: location.timestamp as NSDate)
+        self.init(id: UUID().uuidString, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, timestamp: location.timestamp)
     }
     
     public var coordinates : CLLocationCoordinate2D {

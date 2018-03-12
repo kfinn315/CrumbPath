@@ -24,7 +24,7 @@ class AllMapViewController : UIViewController {
     
     override func viewDidLoad() {
         
-        let paths = PathManager.shared.getRecentPaths()
+        let paths = PathManager.shared.getAllPaths()
 
         for var path in paths! {
             let coords = path.getSimplifiedCoordinates()

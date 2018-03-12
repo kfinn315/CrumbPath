@@ -93,9 +93,15 @@
             }
                 
             }).disposed(by: disposeBag)
-            
+        
+            let tapgestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onPhotoTap))
+            view.subviews[0].addGestureRecognizer(tapgestureRecognizer)
+        
         }
-    
+        @objc public func onPhotoTap(){
+            photoWasTappedAt()
+        }
+
         override func viewDidLayoutSubviews() {
             super.viewDidLayoutSubviews()
             for view in self.view.subviews {
@@ -189,6 +195,12 @@
                 pageViewController.dataSource = self
             }
         }
+    
+    public func photoWasTappedAt(){
+        if let pathViewController = parent as? PathViewController {
+            pathViewController.showPhotos()
+        }
+    }
  }
  
  

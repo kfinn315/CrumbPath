@@ -136,7 +136,11 @@ public class RecordingViewController : BaseRecordingController {
             return
         }
         
-        pathManager?.savePath(start: startTime, end: stopTime, callback: callback)
+        let path = pathManager?.getNewPath()
+        path?.startdate = startTime
+        path?.enddate = stopTime
+        pathManager?.save(path: path, callback: callback)
+//        pathManager?.savePath(start: startTime, end: stopTime, callback: callback)
     }
     func onSaveComplete(path: Path?, error: Error?) {
         DispatchQueue.main.async { [weak self] in

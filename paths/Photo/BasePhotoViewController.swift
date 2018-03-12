@@ -155,14 +155,12 @@ public class BasePhotoViewController : UIViewController {
         let desiredItemWidth: CGFloat = viewWidth
         let columns: CGFloat = max(floor(viewWidth / desiredItemWidth), 4)
         let padding: CGFloat = 0
-        let itemWidth = floor((viewWidth - (columns - 1) * padding) / columns)
+       // let itemWidth = floor((viewWidth - (columns - 1) * padding) / columns)
         let itemSize = view.bounds.size
         
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = itemSize
-            layout.minimumInteritemSpacing = padding
-            layout.minimumLineSpacing = padding
-        }
+            collectionViewLayout.itemSize = itemSize
+            collectionViewLayout.minimumInteritemSpacing = padding
+            collectionViewLayout.minimumLineSpacing = padding
         
         // Determine the size of the thumbnails to request from the PHCachingImageManager
         let scale = UIScreen.main.scale

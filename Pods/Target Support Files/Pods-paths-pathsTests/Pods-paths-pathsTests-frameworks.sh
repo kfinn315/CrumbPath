@@ -152,8 +152,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/UIViewKVO/UIViewKVO.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RandomKit/RandomKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ShiftOperations/ShiftOperations.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Threadly/Threadly.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AssetsPickerViewController/AssetsPickerViewController.framework"
@@ -174,8 +177,11 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/UIViewKVO/UIViewKVO.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RandomKit/RandomKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ShiftOperations/ShiftOperations.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Threadly/Threadly.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
