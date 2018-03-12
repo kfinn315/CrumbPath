@@ -13,59 +13,144 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 import CoreData
+import RandomKit
+import Eureka
 
 @testable import paths
 
 class EditPathViewControllerTests: QuickSpec {
     override func spec(){
-        var subject: EditPathViewController!
-        var mockPathManager : MockPathManager!
+        var contextWrapper : ContextWrapper!
+        var editPathViewController: EditPathViewController!
+        //var mockPathManager : MockPathManager!
         var window : UIWindow!
+        var expectedPath : Path!
+        var disposeBag : DisposeBag!
+        var onNextCalled : Bool!
+        var actualPath : Path!
+        var pathManager : PathManager!
         
         describe("EditPathViewController"){
             beforeEach {
-                mockPathManager = MockPathManager()
+                expectedPath = nil
+                disposeBag = DisposeBag()
+                contextWrapper = ContextWrapper()
+                
+                pathManager = PathManager.init(context: contextWrapper.context)
+                //mockPathManager = MockPathManager()
+                
+                pathManager.currentPathObservable?.subscribe(onNext: {
+                    path in
+                    onNextCalled = true
+                    actualPath = path
+                }).disposed(by: disposeBag)
                 window = UIWindow(frame: UIScreen.main.bounds)
-               
-                subject = EditPathViewController(pathManager: mockPathManager)
+                
+                editPathViewController = EditPathViewController(pathManager: pathManager)
                 
                 window.makeKeyAndVisible()
-                window.rootViewController = subject
+                window.rootViewController = editPathViewController
                 
                 // Act:
-                subject.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
+                editPathViewController.beginAppearanceTransition(true, animated: false) // Triggers viewWillAppear
             }
-            
-            describe("when the current path is updated"){
-                var path : Path!
-
+            describe("the updateForm method"){
                 beforeEach {
-                    path = Path()
-                    //set path values here
-                    mockPathManager.setCurrentPath(path)
-                    //subject should update
+                    expectedPath = PathTools.generateRandomPath()
+                    editPathViewController.updateForm(with: expectedPath)
                 }
-                
-                it("updates the form fields"){
-                    expect(subject.form.rowBy(tag: "title")?.baseValue as! String?).to(equal(path.title))
-                    expect(subject.form.rowBy(tag: "notes")?.baseValue as! String?).to(equal(path.notes))
-                    expect(subject.form.rowBy(tag: "locations")?.baseValue as! String?).to(equal(path.locations))
-                    expect(subject.form.rowBy(tag: "startdate")?.baseValue as! Date?).to(equal(path.startdate))
-                    expect(subject.form.rowBy(tag: "enddate")?.baseValue as! Date?).to(equal(path.enddate))
+                it("updates the form to match a Path object"){
+                    expectFormDataToEqual(path: expectedPath)
                 }
             }
-            
-            describe("when the update button is pressed"){
-                it("updates the values in the current path in the path manager"){
+            context("The view appeared"){
+                describe("the form") {
+                    context("current path is nil"){
+                        beforeEach{
+                            expectedPath = nil
+                            pathManager.setCurrentPath(expectedPath)
+                        }
+                        it("displays empty fields"){
+                            expectFormDataToBeNil()
+                        }
+                    }
                     
-                }
-            }
-            
-            describe("when the back button is pressed"){
-                it("returns to previous view"){
+                    context("current path is NOT nil"){
+                        beforeEach{
+                            expectedPath = PathTools.generateRandomPath()
+                            pathManager.setCurrentPath(expectedPath)
+                        }
+                        it("displays the current path data"){
+                            expect(onNextCalled).toEventually(be(true))
+                            expectFormDataToEqual(path: actualPath)
+                        }
+                    }
                     
+                    context("the save method runs"){
+                        var pathId : String!
+                        var completions : Int!
+                        var expectedCompletions = 2 //one for nil
+                        beforeEach {
+                            completions = 0
+                            expectedPath = PathTools.generateRandomPath()
+                            waitUntil(timeout: 50, action: { done in
+                                
+                                pathManager.currentPathObservable?.subscribe(onNext: {
+                                    path in
+                                    onNextCalled = true
+                                    completions! += 1
+                                    if completions == expectedCompletions {
+                                        actualPath = path
+                                        pathId = actualPath.localid
+                                        generateRandomFormData()
+                                        editPathViewController.save()
+                                        done()
+                                    }
+                                }).disposed(by: disposeBag)
+                                pathManager.setCurrentPath(expectedPath)
+                               
+                            })
+                            
+                        }
+                        it("updates the current path  with the updated form values"){
+                            expect(onNextCalled).toEventually(equal(true))
+                            expectFormDataToEqual(path: actualPath)
+                        }
+                        it("updates the current path in the Path Manager"){
+                            let currentPath = pathManager.currentPath
+                            expect(currentPath).toNot(beNil())
+                            expectFormDataToEqual(path: currentPath!)
+                        }
+                    }
                 }
             }
+        }
+        func generateRandomFormData(){
+            let form = editPathViewController.form
+            
+            (form.rowBy(tag: "title") as? TextRow)?.value = String.random(ofLength: 10, using: &Xorshift.default)
+            (form.rowBy(tag: "notes") as? TextRow)?.value = String.random(ofLength: 10, using: &Xorshift.default)
+            (form.rowBy(tag: "locations") as? TextRow)?.value = String.random(ofLength: 10, using: &Xorshift.default)
+            (form.rowBy(tag: "startdate") as? DateRow)?.value = Date.random(using: &Xorshift.default)
+            (form.rowBy(tag: "enddate") as? DateRow)?.value = Date.random(using: &Xorshift.default)
+            
+        }
+        func expectFormDataToEqual(path: Path){
+            
+            expect(editPathViewController.form.rowBy(tag: "title")?.baseValue as! String?).toEventually(equal(path.title))
+            expect(editPathViewController.form.rowBy(tag: "notes")?.baseValue as! String?).toEventually(equal(path.notes))
+            expect(editPathViewController.form.rowBy(tag: "locations")?.baseValue as! String?).toEventually(equal(path.locations))
+            expect(editPathViewController.form.rowBy(tag: "startdate")?.baseValue as! Date?).toEventually(equal(path.startdate))
+            expect(editPathViewController.form.rowBy(tag: "enddate")?.baseValue as! Date?).toEventually(equal(path.enddate))
+            
+        }
+        
+        func expectFormDataToBeNil(){
+            expect(editPathViewController.form.rowBy(tag: "title")?.baseValue as! String?).to(beNil())
+            expect(editPathViewController.form.rowBy(tag: "notes")?.baseValue as! String?).to(beNil())
+            expect(editPathViewController.form.rowBy(tag: "locations")?.baseValue as! String?).to(beNil())
+            expect(editPathViewController.form.rowBy(tag: "startdate")?.baseValue as! Date?).to(beNil())
+            expect(editPathViewController.form.rowBy(tag: "enddate")?.baseValue as! Date?).to(beNil())
         }
     }
 }

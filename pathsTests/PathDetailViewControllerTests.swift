@@ -19,7 +19,7 @@ class PathDetailViewControllerTests: QuickSpec {
     override func spec(){
         var subject: PathDetailViewController!
         let contextWrapper = ContextWrapper()
-        Path.managedObjectContext = contextWrapper.context
+        //Path.managedObjectContext = contextWrapper.context
         
 
         describe("NewPathViewController"){

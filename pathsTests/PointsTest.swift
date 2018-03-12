@@ -17,7 +17,7 @@ class PointsTest: QuickSpec {
     let mocWrapper = ContextWrapper()
     override func spec() {
         var subject : Points!
-        Path.managedObjectContext = mocWrapper.context
+        //Path.managedObjectContext = mocWrapper.context
 
         describe("Points") {
             describe("after initialized") {
@@ -26,7 +26,7 @@ class PointsTest: QuickSpec {
                 }
                 describe("a description for a point in limerick ireland"){
                     beforeEach {
-                        subject.append(Point(insertInto: self.mocWrapper.context!, from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012)))
+                        subject.append(Point(from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012)))
                     }
                     it("contains 'limerick'"){
                         var location : String?
@@ -47,7 +47,7 @@ class PointsTest: QuickSpec {
                             expectedDistance = self.getDistance(locations)
                             
                             for var location in locations {
-                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
+                                subject.append(Point(from: location))
                             }
                         }
                         
@@ -77,7 +77,7 @@ class PointsTest: QuickSpec {
                             let locations = [CLLocation(latitude: 32.9697, longitude: -96.80322)]
                             
                             for var location in locations {
-                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
+                                subject.append(Point(from: location))
                             }
                         }
                         
@@ -102,7 +102,7 @@ class PointsTest: QuickSpec {
                             ]
                             
                             for var location in locations {
-                                subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
+                                subject.append(Point(from: location))
                             }
                         }
                         it("returns 0"){
@@ -131,7 +131,7 @@ class PointsTest: QuickSpec {
                                 expected = self.getDistance(locations)
                                 
                                 for var location in locations {
-                                    subject.append(Point(insertInto:self.mocWrapper.context!, from: location))
+                                    subject.append(Point(from: location))
                                 }
                             }
                             

@@ -20,6 +20,7 @@ target 'paths' do
     pod 'RxTest',     '~> 4.0'
     pod 'Quick'
     pod 'Nimble'
+    pod 'RandomKit', '~> 5.2.3'
   end
 
   target 'pathsUITests' do

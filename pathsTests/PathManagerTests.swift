@@ -6,149 +6,160 @@
 //  Copyright © 2018 Kevin Finn. All rights reserved.
 //
 
-
 import XCTest
 import Quick
 import Nimble
 import RxSwift
 import CoreData
 import Photos
+import RandomKit
 
 @testable import paths
 
 class PathManagerTests: QuickSpec {
     var mockcontext = ContextWrapper()
     override func spec(){
-        var subject: PathManager!
+        var expectedPath : Path!
+        var actualPath : Path?
+        var pathManager: PathManager!
+        var disposeBag : DisposeBag!
+        var initialPathCount : Int!
+        var closureRan : Bool!
+        var onNextCalled : Bool!
         
         describe("PathManager"){
             beforeEach {
-                subject = PathManager()
+                AppDelegate.managedObjectContext = self.mockcontext.context
+                pathManager = PathManager(context: self.mockcontext.context)
+                disposeBag = DisposeBag()
+                initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
             }
-            
-            describe("Initial PathManager") {
+ 
+            context("initally") {
                 it("has no current path"){
-                    expect(subject.currentPath).to(beNil())
+                    expect(pathManager.currentPath).to(beNil())
                 }
                 
                 it("has no current album"){
-                    expect(subject.currentAlbumId).to(beNil())
+                    expect(pathManager.currentAlbumId).to(beNil())
                 }
             }
             
-            describe("subscribing to currentPathObservable"){
-                let disposeBag : DisposeBag!
+            describe("currentPathObservable"){
                 
-                var onNextPath : Path?
-                //var onNextAlbum : PHAssetCollection?
-                
-                var onNextWasCalled : Bool!
                 beforeEach {
-                    disposeBag = DisposeBag()
-                    onNextWasCalled = false
-                    subject.currentPath = nil
+                    onNextCalled = false
+                    actualPath = nil
                     
-                    subject.currentPathObservable?.subscribe(onNext: {
-                        path in
-                        onNextWasCalled = true
-                        onNextPath = path
-                        
-                    }).disposed(by: disposeBag)
                 }
                 
-                it("calls the closure immediately with currentPath"){
-                    expect(onNextWasCalled).to(equal(true))
-                    expect(onNextPath).to(beNil())
-                }
-                
-                describe("when the currentPath is updated"){
-                    var path0 : Path!
-                    var expectedAlbumId : String!
-                    var expectedTitle: String!
-                    var expectedNotes: String!
-                    
-                    beforeEach{
+                context("on subscribing to onNext"){
+                    context("currentPath is nil"){
+                        beforeEach{
+                            expectedPath = nil
+                            pathManager.setCurrentPath(expectedPath)
+                            waitUntil(action: {done in
+                                pathManager.currentPathObservable?.subscribe(onNext: {
+                                    path in
+                                    onNextCalled = true
+                                    actualPath = path
+                                    done()
+                                }).disposed(by: disposeBag)
+                            })
+                        }
                         
-                        expectedAlbumId = "Expected album id"
-                        expectedTitle = "title1"
-                        expectedNotes = "notes1"
-                        
-                        path0 = Path(mockcontext, expectedTitle, expectedNotes)
-                        path0.albumId = expectedAlbumId
-                        
-                        //action
-                        subject.setCurrentPath(path0)
+                        it("sends nil"){
+                            expect(onNextCalled).to(equal(true))
+                            expect(actualPath).to(beNil())
+                        }
                     }
-                    it("sends new path to subscribers"){
-                        //expect onNext was called w/ new path
-                        expect(onNextWasCalled).to(equal(true))
-                        expect(onNextPath!).to(equal(path0))
+                    context("currentPath is not nil"){
+                        beforeEach{
+                            expectedPath = PathTools.generateRandomPath()
+                            pathManager.setCurrentPath(expectedPath)
+                            waitUntil(action: {done in
+                                pathManager.currentPathObservable?.subscribe(onNext: {
+                                    path in
+                                    onNextCalled = true
+                                    actualPath = path
+                                    done()
+                                }).disposed(by: disposeBag)
+                            })
+                        }
+                        
+                        it("sends the path"){
+                            expect(onNextCalled).to(equal(true))
+                            expect(actualPath).to(equal(expectedPath))
+                        }
+                    }
+                }
+                
+                context("current path was updated"){
+                    beforeEach{
+                        expectedPath = PathTools.generateRandomPath()
+                        pathManager.currentPathObservable?.subscribe(onNext: {
+                            path in
+                            onNextCalled = true
+                            actualPath = path
+                            
+                        }).disposed(by: disposeBag)
+                        pathManager.setCurrentPath(expectedPath)
+                        
+                    }
+                    it("sends the new current path"){
+                        expect(onNextCalled).to(equal(true))
+                        expect(actualPath).to(equal(expectedPath))
+                    }
+                    
+                    afterEach{
+                        expectedPath = nil
                     }
                 }
                 
                 afterEach {
+                    onNextCalled = false
                     self.mockcontext.flushPathData()
                 }
             }
             
-            describe("saving a new path"){
-                var path0 : Path!
-                let disposeBag = DisposeBag()
-                var onNextPath : Path?
-                var initialPathCount : Int!
+            context("a new path is saved") {
+                var actualError : Error!
+                var expectedPathId : String!
                 
                 beforeEach {
+                    closureRan = false
+                    actualPath = nil
+                   
                     initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
                     //add new path to context
-                    path0 =  LocalPath(title:"0", albumId:"250")
-                    subject.currentPathDriver?.drive(onNext: {
-                        path in
-                        onNextPath = path
-                    }).disposed(by: disposeBag)
-                    
-                }
-                
-                it("adds the new path to managedObjectContext"){
-                    waitUntil { done in
-                        subject.savePath(start: path0!.startdate, end: path0!.enddate, callback: {(path,error) in
-                            expect(path!.title).to(equal(path0!.title))
+                    expectedPath = PathTools.generateRandomPath()
+
+                    waitUntil(action: {done in
+                        pathManager.save(path: expectedPath, callback: {(path,error) in
+                            actualPath = path
+                            expectedPathId = path?.identity
+                            closureRan = true
+                            actualError = error
                             done()
                         })
-                    }
-                    expect(self.mockcontext.numberOfPathsInPersistentStore()).to(equal(initialPathCount + 1))
-                    
-                    //expect to be able to fetch a path with this data
-                    do{
-                        let paths = try self.mockcontext.fetchPaths()
-                        expect(paths).toNot(beNil())
-                        expect(paths!.count).to(equal(1))
-                        if paths!.count > 1 {
-                            expect(paths![0].title).to(equal(path0!.title))
-                        } else{
-                            fail()
-                        }
-                    } catch{
-                        //error
-                    }
+                    })
                 }
                 
-                it("sends new current path to subscribers"){
-                    //expect onNext was called w/ updated path
-                    expect(path0).toNot(beNil())
-                    if onNextPath != nil {
-                        expect(onNextPath!.title).toEventually(equal(path0!.title))
-                    } else{
-                        fail("onNextPath was nil")
-                    }
+                it("sends new path to subscribers"){
+                    expect(actualPath).toNot(beNil())
+                    expect(actualPath).to(equal(expectedPath))
                 }
                 
-                it("sends current album to subscriber"){
-                    expect(path0).toNot(beNil())
-                    //expect(onNextAlbum?.localIdentifier).toEventually(equal(path0?.albumId))
+                it("adds the new path to the ManagedObjectContext"){
+                    let paths = pathManager.getAllPaths()
+                    expect(paths).toNot(beNil())
+                    let actualPath = paths?.filter() { $0.identity == expectedPathId }.first
+                    expect(actualPath).toNot(beNil())
+                    expect(actualPath).to(equal(expectedPath))
                 }
                 
                 it("sets the hasNewPath property to true"){
-                    expect(subject.hasNewPath).to(equal(true))
+                    expect(pathManager.hasNewPath).to(equal(true))
                 }
                 
                 afterEach {
@@ -157,59 +168,102 @@ class PathManagerTests: QuickSpec {
             }
             
             describe("Updating a path"){
-                var path0 : Path?
-                let disposeBag = DisposeBag()
-                var onNextPath : Path?
-                //var onNextAlbum : PHAssetCollection?
-                var initialPathCount = 0
+                //var currentPath : Path!
+                var callbackCount : Int = 0
+                var expAlbumId : String!
+                var expCoverImg : Data!
+                var expDistance : NSNumber!
+                var expDuration : NSNumber!
+                var expTitle : String!
+                var expectedId : String!
+                var actualId : String!
                 
                 beforeEach {
-                    initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
+                    
+                    expAlbumId = String.random(ofLength: 6, using: &Xoroshiro.default)
+                    expTitle = String.random(ofLength: 8, using: &Xoroshiro.default)
+                    expCoverImg = String.random(ofLength: 150, using: &Xoroshiro.default).data(using: String.Encoding.utf8)
+                    expDistance = NSNumber.random(using: &Xoroshiro.default)
+                    expDuration = NSNumber.random(using: &Xoroshiro.default)
+                    
+                    let expectedCount = 1
+                    callbackCount = 0
                     //add new path to context
-                    path0 = self.mockcontext.insertPath(local: LocalPath(title:"0", albumId:"250"))
-                    subject.currentPathDriver?.drive(onNext: {
-                        path in
-                        onNextPath = path
-                    }).disposed(by: disposeBag)
+                    expectedPath = PathTools.generateRandomPath()
+                    waitUntil(action: { (done) in
+                        pathManager.save(path: expectedPath, callback: { (path, error) in
+                            expectedId = path?.identity
+                            initialPathCount = pathManager.getAllPaths()?.count ?? 0
+                            pathManager.hasNewPath = false
+                            done()
+                        })
+                    })
+                    let callbackexpectation0 = self.expectation(description: "initalCallback")
+                    let callbackexpectation1 = self.expectation(description: "update callback")
+//                        pathManager.setCurrentPath(currentPath)
+                        pathManager.currentPathObservable?.subscribe(onNext: {
+                            path in
+                            onNextCalled = true
+                            callbackCount += 1
+                            if callbackCount == 1 {
+                                do{
+                                    //update current path with expected path values
+                                    expectedPath.albumId = expAlbumId
+                                    expectedPath.coverimg = expCoverImg
+                                    expectedPath.distance = expDistance
+                                    expectedPath.duration = expDuration
+                                    expectedPath.title = expTitle
+                                    
+                                    //action
+                                    try pathManager.updateCurrentPathInCoreData()
+                                    
+                                    callbackexpectation0.fulfill()
+                                }
+                                catch{
+                                    //error
+                                }
+                                
+                            } else if callbackCount == 2 {
+                                actualId = path?.identity
+                                callbackexpectation1.fulfill()
+                                actualPath = path
+                            }
+                        }).disposed(by: disposeBag)
                     
-                    do{
-                        path0?.title = "1"
-                        path0?.albumId = "newts"
-                        try subject.updateCurrentPathInCoreData()
-                    }
-                    catch{
-                        //error
-                    }
-                    
+                        self.wait(for: [callbackexpectation0,callbackexpectation1], timeout: 50.0)
                 }
                 
-                it("doesn't add a new path to context"){
-                    expect(self.mockcontext.numberOfPathsInPersistentStore()).to(equal(initialPathCount))
-                    
-                    //expect to be able to fetch a path with this data
-                    do{
-                        let paths = try self.mockcontext.fetchPaths()
-                        expect(paths).toNot(beNil())
-                        expect(paths!.count).to(equal(1))
-                        expect(paths![0]).to(equal(path0))
-                    } catch{
-                        //error
-                    }
+                it("doesn't add a path to the ManagedObjectContext"){
+                    expect(actualId).to(equal(expectedId))
+                    expect(initialPathCount).to(equal(pathManager.getAllPaths()?.count ?? 0))
                 }
                 
-                it("sends new current path to subscribers"){
+                it("updates the values of the path in the MOC"){
+                    let paths = pathManager.getAllPaths()
+                    expect(paths).toNot(beNil())
+                    expect(expectedPath?.albumId).toNot(beNil())
+                    if let actualPath = paths!.filter({ $0.identity == expectedId}).first {
+                        expect(actualPath.albumId).to(equal(expectedPath.albumId))
+                        expect(actualPath.coverimg).to(equal(expectedPath.coverimg))
+                        expect(actualPath.distance).to(equal(expectedPath.distance))
+                        expect(actualPath.duration).to(equal(expectedPath.duration))
+                        expect(actualPath.title).to(equal(expectedPath.title))
+                    } else{
+                        fail("path w/ localid not found")
+                    }
+                }
+                it("sends the update onNext"){
                     //expect onNext was called w/ updated path
-                    expect(path0).toNot(beNil())
-                    expect(onNextPath).toEventually(equal(path0))
-                }
-                
-                it("sends current album to subscriber"){
-                    expect(path0).toNot(beNil())
-                    //expect(onNextAlbum?.localIdentifier).toEventually(equal(path0?.albumId))
+                    expect(actualPath).toNot(beNil())
+                    expect(expectedPath.albumId).to(equal(expectedPath.albumId))
+                    expect(expectedPath.coverimg).to(equal(expectedPath.coverimg))
+                    expect(expectedPath.distance).to(equal(expectedPath.distance))
+                    expect(expectedPath.duration).to(equal(expectedPath.duration))
+                    expect(expectedPath.title).to(equal(expectedPath.title))
                 }
                 
                 it("sets hasNewPath to false"){
-                    expect(subject.hasNewPath).to(equal(false))
+                    expect(pathManager.hasNewPath).to(equal(false))
                 }
                 
                 afterEach {
@@ -217,110 +271,5 @@ class PathManagerTests: QuickSpec {
                 }
             }
         }
-    }
-}
-
-class ContextWrapper {
-    var context : NSManagedObjectContext?
-    
-    init(){
-        context = setUpInMemoryManagedObjectContext()
-    }
-    
-    func setUpInMemoryManagedObjectContext() -> NSManagedObjectContext {
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
-        
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
-        do {
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
-        } catch {
-            print("Adding in-memory persistent store failed")
-        }
-        
-        let managedObjectContext = NSManagedObjectContext.init(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        
-        return managedObjectContext
-    }
-    
-    func saveData(){
-        do {
-            try context!.save()
-        }  catch {
-            print("create fakes error \(error)")
-        }
-    }
-    
-    //MARK:- Paths
-    
-    func insertPath(local: LocalPath) -> Path? {
-        guard let obj = NSEntityDescription.insertNewObject(forEntityName: "Path", into: context!) as? Path else {
-            return nil
-        }
-        
-        obj.title = local.title
-        obj.notes = local.notes
-        return obj
-    }
-    
-    func flushPathData() {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Path")
-        let objs = try! context!.fetch(fetchRequest)
-        for case let obj as NSManagedObject in objs {
-            context!.delete(obj)
-        }
-        try! context!.save()
-    }
-    
-    func fetchPaths() throws -> [Path]? {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Path")
-        let objs = try! context!.fetch(fetchRequest) as? [Path]
-        
-        return objs
-    }
-    
-    
-    func numberOfPathsInPersistentStore() -> Int {
-        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Path")
-        let results = try! context!.fetch(request)
-        return results.count
-    }
-    
-    //MARK:= Points
-    
-    func insertPoint(local: LocalPoint) -> Point? {
-        guard let obj = NSEntityDescription.insertNewObject(forEntityName: "Point", into: context!) as? Point else {
-            return nil
-        }
-        
-        obj.latitude = local.latitude
-        obj.longitude = local.longitude
-        obj.timestamp = local.timestamp as! Date
-        
-        return obj
-    }
-    
-    func flushPointData() {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Point")
-        let objs = try! context!.fetch(fetchRequest)
-        for case let obj as NSManagedObject in objs {
-            context!.delete(obj)
-        }
-        try! context!.save()
-    }
-    
-    func fetchPoints() throws -> [Point]? {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Point")
-        let objs = try! context!.fetch(fetchRequest) as? [Point]
-        
-        return objs
-    }
-    
-    
-    func numberOfPointsInPersistentStore() -> Int {
-        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Point")
-        let results = try! context!.fetch(request)
-        return results.count
     }
 }
