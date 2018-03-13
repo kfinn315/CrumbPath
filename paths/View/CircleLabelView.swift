@@ -14,7 +14,7 @@ import CoreGraphics
  View with a solid-colored circle and a top and bottom label that fit inside.
  */
 
- @IBDesignable class CircleLabelView : UIView {
+ class CircleLabelView : UIView {
     
     @IBOutlet weak var constraintCircleWidth: NSLayoutConstraint!
     @IBOutlet weak var constraintCircleHeight: NSLayoutConstraint!

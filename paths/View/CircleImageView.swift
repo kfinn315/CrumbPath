@@ -11,7 +11,7 @@ import UIKit
 /**
  Circular ImageView. It can also be used as a solid-colored circle.
  */
- @IBDesignable class CircleImageView: UIView {
+ class CircleImageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

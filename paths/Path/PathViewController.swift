@@ -29,8 +29,6 @@ class PathViewController : UIViewController {
     @IBOutlet weak var vwBottom: UIView!
     @IBOutlet weak var stackStats: UIStackView!
     
-    @IBOutlet weak var constraintTopBarHeight: NSLayoutConstraint!
-    
     private var disposeBag = DisposeBag()
     
     private weak var maps : MapViewController?
@@ -38,9 +36,6 @@ class PathViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //set the height of the top bar to 0
-        constraintTopBarHeight.constant = 0
         
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(showEdit)), animated: true)
         
