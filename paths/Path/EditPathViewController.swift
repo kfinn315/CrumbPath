@@ -52,7 +52,7 @@ class EditPathViewController : FormViewController {
             self.updateForm(with: self.path)
         }).disposed(by: disposeBag)
         
-        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(save)), animated: false)
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(saveButtonClicked)), animated: false)
         
         createForm()
     }
@@ -119,8 +119,16 @@ class EditPathViewController : FormViewController {
         form.rowBy(tag: "startdate")?.value = path?.startdate
         form.rowBy(tag: "enddate")?.value = path?.enddate
     }
-    
-    @objc func save() {
+    @objc func saveButtonClicked(){
+        save()
+
+        if pathManager?.hasNewPath ?? false {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else{
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    func save() {
         guard let path = path else {
             return
         }
@@ -137,12 +145,7 @@ class EditPathViewController : FormViewController {
         } catch {
             log.error(error.localizedDescription)
         }
-//
-//        if pathManager?.hasNewPath ?? false {
-//            self.navigationController?.popToRootViewController(animated: true)
-//        } else{
-//            self.navigationController?.popViewController(animated: true)
-//        }
+
     }
     func buttonCancelClicked() {
         log.debug("dismiss save alert")

@@ -26,21 +26,8 @@ class NavTableViewController: UITableViewController {
     let disposeBag = DisposeBag()
     
     weak var pathManager = PathManager.shared
-    weak var managedObjectContext : NSManagedObjectContext! = {
-        return AppDelegate.managedObjectContext!
-    }()
     
-    lazy var saveAlert : UIAlertController = {
-        let alert = UIAlertController(title: "Update?", message: "What would you like to do with your Path?", preferredStyle: UIAlertControllerStyle.alert)
-        let actionSave = UIAlertAction.init(title: "Save changes", style: UIAlertActionStyle.default) {[unowned self] _ in self.savePathChanges()}
-        let actionCancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.cancel) {[unowned self] _ in
-            
-        }
-        alert.addAction(actionSave)
-        alert.addAction(actionCancel)
-        
-        return alert
-    }()
+    public static weak var managedObjectContext : NSManagedObjectContext?
     
     lazy var pager : PageViewController? = {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Pager") as? PageViewController {
@@ -99,7 +86,7 @@ class NavTableViewController: UITableViewController {
             true
         }
         datasource.titleForHeaderInSection = { ds, index in return ds.sectionModels[index].identity }
-        managedObjectContext.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
+        NavTableViewController.managedObjectContext?.rx.entities(Path.self, sortDescriptors: [NSSortDescriptor(key: "startdate", ascending: false)])
             .map({ (paths) -> [AnimatableSectionModel<String, Path>] in
                 //group paths by date, sort by date descending
                 var dates : [Date : [Path]] = [:]
@@ -144,7 +131,7 @@ class NavTableViewController: UITableViewController {
                 log.info("delete \(path.localid ?? "nil")")
                 //add delete confirmation alert
                 do {
-                    try self.managedObjectContext!.rx.delete(path)
+                    try NavTableViewController.managedObjectContext?.rx.delete(path)
                 } catch {
                     log.error(error.localizedDescription)
                 }
@@ -154,13 +141,5 @@ class NavTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    @objc func savePathChanges(){
-        do{
-            try pathManager?.commitChanges()
-        } catch{
-            log.error(error.localizedDescription)
-        }
     }
 }

@@ -96,7 +96,7 @@ class RecordingViewControllerTests: QuickSpec {
                         }
                         describe("reset button is pressed"){
                             it("navigates back to the New Path view"){
-                                expect(window.rootViewController).toEventually(beAKindOf(NewPathViewController.self))
+                                expect(window.visibleViewController()).toEventually(beAKindOf(NewPathViewController.self))
                             }
                         }
                         describe("cancel button was pressed"){

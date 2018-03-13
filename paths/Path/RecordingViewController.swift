@@ -27,7 +27,7 @@ public class RecordingViewController : BaseRecordingController {
     
     var startTime : Date?
     var stopTime : Date?
-
+    
     public var recordingAccuracy : LocationAccuracy = LocationAccuracy.walking
     
     private var timePast : TimeInterval = 0.0
@@ -112,13 +112,13 @@ public class RecordingViewController : BaseRecordingController {
         timer?.invalidate()
         self.navigationController?.popViewController(animated: true)
     }
-
-    public func reset() {
-        pathManager?.clearPoints()
-    }
+//
+//    public func reset() {
+//        [pathManager]?.clearPoints()
+//    }
     
     func startUpdating(accuracy: LocationAccuracy) {
-        pathManager?.clearPoints()
+        pointsManager.clearPoints()
         
         locationManager?.startLocationUpdates(with: accuracy)
         
@@ -140,7 +140,6 @@ public class RecordingViewController : BaseRecordingController {
         path?.startdate = startTime
         path?.enddate = stopTime
         pathManager?.save(path: path, callback: callback)
-//        pathManager?.savePath(start: startTime, end: stopTime, callback: callback)
     }
     func onSaveComplete(path: Path?, error: Error?) {
         DispatchQueue.main.async { [weak self] in

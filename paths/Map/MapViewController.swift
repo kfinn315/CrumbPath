@@ -35,7 +35,7 @@ class MapViewController: UIViewController {
         pathManager?.currentPathObservable?.subscribe(onNext: { [unowned self] path in            
             DispatchQueue.main.async {
                 log.debug("mapview current path driver - on next")
-                self.mapView.loadPath(path: path)
+                self.mapView.load(path: path)
             }
         }).disposed(by: disposeBag)
         photosManager?.currentAlbum?.subscribe(onNext: {[weak self] collection in

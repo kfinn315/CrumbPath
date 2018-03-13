@@ -29,8 +29,9 @@ class PathManagerTests: QuickSpec {
         
         describe("PathManager"){
             beforeEach {
-                AppDelegate.managedObjectContext = self.mockcontext.context
-                pathManager = PathManager(context: self.mockcontext.context)
+                //AppDelegate.managedObjectContext = self.mockcontext.context
+                pathManager = PathManager()
+                
                 disposeBag = DisposeBag()
                 initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
             }
@@ -40,9 +41,9 @@ class PathManagerTests: QuickSpec {
                     expect(pathManager.currentPath).to(beNil())
                 }
                 
-                it("has no current album"){
-                    expect(pathManager.currentAlbumId).to(beNil())
-                }
+//                it("has no current album"){
+//                    expect(pathManager.currentAlbumId).to(beNil())
+//                }
             }
             
             describe("currentPathObservable"){
@@ -122,7 +123,7 @@ class PathManagerTests: QuickSpec {
                 }
             }
             
-            context("a new path is saved") {
+            describe("saving a path") {
                 var actualError : Error!
                 var expectedPathId : String!
                 
@@ -185,7 +186,7 @@ class PathManagerTests: QuickSpec {
                     expDistance = NSNumber.random(using: &Xoroshiro.default)
                     expDuration = NSNumber.random(using: &Xoroshiro.default)
                     
-                    let expectedCount = 1
+                    
                     callbackCount = 0
                     //add new path to context
                     expectedPath = PathTools.generateRandomPath()

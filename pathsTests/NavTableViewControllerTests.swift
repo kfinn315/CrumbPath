@@ -32,7 +32,7 @@ class NavTableViewControllerTests: QuickSpec {
                 window.rootViewController = subject
                 
                 contextWrapper = ContextWrapper()
-                subject.managedObjectContext = contextWrapper.context
+                NavTableViewController.managedObjectContext = contextWrapper.context
                 
                 tableview = subject.tableView
                 datasource = subject.tableView.dataSource

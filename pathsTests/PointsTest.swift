@@ -18,7 +18,7 @@ class PointsTest: QuickSpec {
     override func spec() {
         var subject : Points!
         //Path.managedObjectContext = mocWrapper.context
-
+        
         describe("Points") {
             describe("after initialized") {
                 beforeEach {
@@ -112,34 +112,34 @@ class PointsTest: QuickSpec {
                                 }
                             }
                         }
+                    }
+                    
+                    describe("20 random points") {
+                        var expected : CLLocationDistance!
                         
-                        describe("20 random points") {
-                            var expected : CLLocationDistance!
+                        beforeEach {
+                            var locations : [CLLocation] = []
                             
-                            beforeEach {
-                                var locations : [CLLocation] = []
-                                
-                                var i = 0
-                                let max = 20
-                                
-                                while(i < max) {
-                                    locations.append(CLLocation(self.generateRandomCoordinates(min: UInt32(0), max: UInt32(2))))
-                                    log.debug("coord \(locations[i])")
-                                    i += 1
-                                }
-                                
-                                expected = self.getDistance(locations)
-                                
-                                for var location in locations {
-                                    subject.append(Point(from: location))
-                                }
+                            var i = 0
+                            let max = 20
+                            
+                            while(i < max) {
+                                locations.append(CLLocation(self.generateRandomCoordinates(min: UInt32(0), max: UInt32(2))))
+                                log.debug("coord \(locations[i])")
+                                i += 1
                             }
                             
-                            it("returns the distance between the points") {
-                                waitUntil { done in
-                                    subject.getDistance() { (distance) in                            expect(distance).to(equal(expected))
-                                        done()
-                                    }
+                            expected = self.getDistance(locations)
+                            
+                            for var location in locations {
+                                subject.append(Point(from: location))
+                            }
+                        }
+                        
+                        it("returns the distance between the points") {
+                            waitUntil { done in
+                                subject.getDistance() { (distance) in                            expect(distance).to(equal(expected))
+                                    done()
                                 }
                             }
                         }
@@ -149,15 +149,23 @@ class PointsTest: QuickSpec {
         }
     }
     
+    
     //MARK:- Utility methods
     
     func getDistance(_ locations: [CLLocation]) -> CLLocationDistance {
         var distance : CLLocationDistance = 0.0
         
         var i = 0
-        while(i + 1 < locations.count ) {
-            log.debug("calc distance from index \(i) to \(i+1)")
-            distance += locations[i].distance(from: locations[i+1])
+        var start : CLLocation?
+        
+        while(i < locations.count ) {
+            if i == 0 {
+                start = locations[i]
+            } else{
+                distance += start!.distance(from: locations[i])
+                log.debug("\(i) \(distance)")
+                start = locations[i]
+            }
             i += 1
         }
         

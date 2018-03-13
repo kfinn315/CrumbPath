@@ -21,6 +21,7 @@ public class BaseRecordingController : UIViewController,CLLocationManagerDelegat
     weak var pathManager : IPathManager? = PathManager.shared
     var locationManager : ILocationManager?
     var disposeBag = DisposeBag()
+    var pointsManager = PointsManager()
     
     convenience init(nibName: String?, bundle: Bundle?, locationManager: ILocationManager, pathManager: IPathManager){
         self.init(nibName: nibName, bundle: bundle)
@@ -35,7 +36,7 @@ public class BaseRecordingController : UIViewController,CLLocationManagerDelegat
                 //this is called when there's a new location
                 log.debug("location manager didUpdateLocations")
                 
-                self.pathManager?.addPointToData(LocalPoint.from(cllocation))
+                self.pointsManager.savePoint(Point(from: cllocation))
             }).disposed(by: disposeBag)       
     }  
 }

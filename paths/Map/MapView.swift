@@ -55,18 +55,22 @@ class MapView : MKMapView {
         removeOverlays(overlays)
     }
     
-    public func loadPath(path: Path?) {
-        log.debug("PATH loadPath")
+    public func clear(){
         self.removePathAnnotations()
+        self.removeImageAnnotations()
         self.removeOverlays()
-        addPath(coordinates: path?.getSimplifiedCoordinates() ?? [])
     }
     
-    private func addPath(coordinates: [CLLocationCoordinate2D]) {
+    public func load(path: Path?) {
+        log.debug("PATH loadPath")
+        let coordinates = path?.getSimplifiedCoordinates() ?? []
+        
         DispatchQueue.global(qos: .userInitiated).sync {
             log.debug("PATH create polyline from coordinates")
-            
-            let coordinates = coordinates
+
+            self.removePathAnnotations()
+            self.removeOverlays()
+
             self.polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
             self.pathAnnotations = []
             
@@ -130,18 +134,6 @@ class MapView : MKMapView {
     }
     
     //MARK:Snapshot
-    private static func getZoomRect(from coords: [CLLocationCoordinate2D]) -> MKMapRect {
-        var zoomRect = MKMapRectNull
-        
-        for coord in coords {
-            let point = MKMapPointForCoordinate(coord)
-            let pointRect = MKMapRectMake(point.x, point.y, 0.1, 0.1)
-            zoomRect = MKMapRectUnion(zoomRect, pointRect)
-        }
-        
-        return MKMapRectInset(zoomRect, -5.0, -5.0)
-    }
-    
     public static func getSnapshot(from path: Path, _ callback: @escaping (UIImage?, Error?)->()) {
         let options = MKMapSnapshotOptions()
         options.mapRect = getZoomRect(from: path.getPoints())
@@ -162,7 +154,17 @@ class MapView : MKMapView {
             callback(image, nil)
         }
     }
-    
+    private static func getZoomRect(from coords: [CLLocationCoordinate2D]) -> MKMapRect {
+        var zoomRect = MKMapRectNull
+        
+        for coord in coords {
+            let point = MKMapPointForCoordinate(coord)
+            let pointRect = MKMapRectMake(point.x, point.y, 0.1, 0.1)
+            zoomRect = MKMapRectUnion(zoomRect, pointRect)
+        }
+        
+        return MKMapRectInset(zoomRect, -5.0, -5.0)
+    }
     private static func drawLineOnImage(size: CGSize, coords: [CLLocationCoordinate2D], snapshot: MKMapSnapshot) -> UIImage {
         let image = snapshot.image
         

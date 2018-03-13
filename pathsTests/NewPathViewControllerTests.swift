@@ -69,7 +69,7 @@ class NewPathViewControllerTests: QuickSpec {
                     subject.btnStart.sendActions(for: .touchUpInside)
                 }
                 it("shows the Recording view controller"){
-                    expect(window.rootViewController).toEventually(beAKindOf(RecordingViewController.self))
+                    expect(window.visibleViewController()).toEventually(beAKindOf(RecordingViewController.self))
                 }
             }
         }

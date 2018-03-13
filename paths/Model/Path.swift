@@ -24,7 +24,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     public static var entityName: String = "Path"
         
     var entitydescription : NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: "Path", in: AppDelegate.managedObjectContext!)!
+        return NSEntityDescription.entity(forEntityName: "Path", in: PathManager.managedObjectContext!)!
     }
     
     public var identity: Identity {
@@ -62,7 +62,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     }
     
     public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
-        super.init(entity: entitydescription, insertInto: AppDelegate.managedObjectContext!)
+        super.init(entity: entitydescription, insertInto: context)
 
         self.localid = UUID().uuidString
         self.title = title

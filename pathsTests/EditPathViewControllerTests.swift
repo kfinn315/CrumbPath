@@ -36,7 +36,7 @@ class EditPathViewControllerTests: QuickSpec {
                 disposeBag = DisposeBag()
                 contextWrapper = ContextWrapper()
                 
-                pathManager = PathManager.init(context: contextWrapper.context)
+                pathManager = PathManager()
                 //mockPathManager = MockPathManager()
                 
                 pathManager.currentPathObservable?.subscribe(onNext: {
