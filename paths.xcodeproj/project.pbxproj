@@ -35,12 +35,13 @@
 		67B911D9204E21830054E6FC /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67B911D8204E21830054E6FC /* Roboto-Medium.ttf */; };
 		67B911DD204F2D250054E6FC /* PathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911DC204F2D250054E6FC /* PathViewController.swift */; };
 		67B911DF204F3AF40054E6FC /* ImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911DE204F3AF40054E6FC /* ImagePageViewController.swift */; };
-		67B911E2204F71970054E6FC /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E1204F71970054E6FC /* CircleView.swift */; };
+		67B911E2204F71970054E6FC /* CircleLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E1204F71970054E6FC /* CircleLabelView.swift */; };
 		67B911E4204F7BE60054E6FC /* CircleLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B911E3204F7BE60054E6FC /* CircleLabelView.xib */; };
 		67B911E620502D720054E6FC /* BottomAlignedLable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E520502D720054E6FC /* BottomAlignedLable.swift */; };
 		67B911E820502D930054E6FC /* TopAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E720502D930054E6FC /* TopAlignedLabel.swift */; };
 		67F4B3682044C29900AA863E /* PointsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F4B3672044C29900AA863E /* PointsTest.swift */; };
 		67F8FFC6205748B2004AEC13 /* MapViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFC5205748B2004AEC13 /* MapViewTests.swift */; };
+		67F8FFC820580C99004AEC13 /* CircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67F8FFC720580C99004AEC13 /* CircleView.xib */; };
 		8F10A164387116AD30C7E1DF /* Pods_paths_pathsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5260AE7ECE2B301CD481BD01 /* Pods_paths_pathsUITests.framework */; };
 		ABCCB48690ED14D070FAC9C5 /* Pods_pathsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0F5BDB498E226A5759C5AD /* Pods_pathsUITests.framework */; };
 		DC31CFBF203B6ACB00F3807F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC31CFBE203B6ACB00F3807F /* CoreData.framework */; };
@@ -150,12 +151,13 @@
 		67B911D8204E21830054E6FC /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		67B911DC204F2D250054E6FC /* PathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathViewController.swift; sourceTree = "<group>"; };
 		67B911DE204F3AF40054E6FC /* ImagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageViewController.swift; sourceTree = "<group>"; };
-		67B911E1204F71970054E6FC /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		67B911E1204F71970054E6FC /* CircleLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLabelView.swift; sourceTree = "<group>"; };
 		67B911E3204F7BE60054E6FC /* CircleLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleLabelView.xib; sourceTree = "<group>"; };
 		67B911E520502D720054E6FC /* BottomAlignedLable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAlignedLable.swift; sourceTree = "<group>"; };
 		67B911E720502D930054E6FC /* TopAlignedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlignedLabel.swift; sourceTree = "<group>"; };
 		67F4B3672044C29900AA863E /* PointsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTest.swift; sourceTree = "<group>"; };
 		67F8FFC5205748B2004AEC13 /* MapViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewTests.swift; sourceTree = "<group>"; };
+		67F8FFC720580C99004AEC13 /* CircleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleView.xib; sourceTree = "<group>"; };
 		7B07D00E64177887F5C7C228 /* Pods_paths_pathsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_paths_pathsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0F5BDB498E226A5759C5AD /* Pods_pathsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pathsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		914783EEB4C16AB6C18663CF /* Pods_pathsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pathsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,8 +277,9 @@
 		67B911E0204F71660054E6FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				67F8FFC720580C99004AEC13 /* CircleView.xib */,
 				6712B2A92045DD5100B46A03 /* CircleImageView.swift */,
-				67B911E1204F71970054E6FC /* CircleView.swift */,
+				67B911E1204F71970054E6FC /* CircleLabelView.swift */,
 				67B911E3204F7BE60054E6FC /* CircleLabelView.xib */,
 				67B911E520502D720054E6FC /* BottomAlignedLable.swift */,
 				67B911E720502D930054E6FC /* TopAlignedLabel.swift */,
@@ -631,6 +634,7 @@
 				67B911D9204E21830054E6FC /* Roboto-Medium.ttf in Resources */,
 				67B911D5204E21760054E6FC /* Roboto-Thin.ttf in Resources */,
 				DC9CED32203B5E3B00A091BA /* LaunchScreen.storyboard in Resources */,
+				67F8FFC820580C99004AEC13 /* CircleView.xib in Resources */,
 				67B911E4204F7BE60054E6FC /* CircleLabelView.xib in Resources */,
 				67B911D3204E216F0054E6FC /* Roboto-Regular.ttf in Resources */,
 				DC9CED6F203B5F1C00A091BA /* Base.lproj in Resources */,
@@ -929,7 +933,7 @@
 				DC364144203C68070097EEC4 /* Path.swift in Sources */,
 				DC9CED28203B5E3B00A091BA /* AppDelegate.swift in Sources */,
 				DC36414D203C68070097EEC4 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
-				67B911E2204F71970054E6FC /* CircleView.swift in Sources */,
+				67B911E2204F71970054E6FC /* CircleLabelView.swift in Sources */,
 				DC36413C203C68070097EEC4 /* PointsManager.swift in Sources */,
 				6762F83F2052D70A00C94068 /* MapViewDelegate.swift in Sources */,
 				672616182043375D00C60B60 /* ImageAnnotation.swift in Sources */,

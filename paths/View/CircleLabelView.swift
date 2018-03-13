@@ -13,7 +13,11 @@ import CoreGraphics
 /**
  View with a solid-colored circle and a top and bottom label that fit inside.
  */
- class CircleLabelView : UIView {
+
+ @IBDesignable class CircleLabelView : UIView {
+    
+    @IBOutlet weak var constraintCircleWidth: NSLayoutConstraint!
+    @IBOutlet weak var constraintCircleHeight: NSLayoutConstraint!
     @IBInspectable var bottomText : String? {
         didSet{
             lblBottom.text = bottomText
@@ -49,6 +53,15 @@ import CoreGraphics
         super.layoutSubviews()
 
         DispatchQueue.main.async{
+            
+            if self.bounds.width < self.bounds.height {
+                self.constraintCircleHeight.priority = UILayoutPriority(1)
+                self.constraintCircleWidth.priority = UILayoutPriority(999)
+            } else {
+                self.constraintCircleWidth.priority = UILayoutPriority(1)
+                self.constraintCircleHeight.priority = UILayoutPriority(999)
+            }
+            
             self.setMarginConstraints()
         }
     }
