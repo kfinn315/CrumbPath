@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class SettingsViewController : UIViewController {
+class LocationSettingsViewController : UIViewController {
     // @IBOutlet weak var btnDone: UIBarButtonItem!
     @IBOutlet weak var segmentAccuracy: UISegmentedControl!    
     @IBOutlet weak var switchBGUpdates: UISwitch!

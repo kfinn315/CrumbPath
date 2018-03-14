@@ -20,7 +20,7 @@ public enum AssetFetchResult<T> {
 /**
  *  A set of methods to create albums, save and retrieve images using the Photos Framework.
  */
-public struct PhotosHelper {
+public struct PhotoAlbumHelper {
     
     /**
      *  Define order, amount of assets and - if set - a target size. When count is set to zero all assets will be fetched. When size is not set original assets will be fetched.
@@ -89,7 +89,7 @@ public struct PhotosHelper {
             if let album = collections.firstObject {
                 completion(album)
             } else {
-                PhotosHelper.createAlbum(named: named) { album in
+                PhotoAlbumHelper.createAlbum(named: named) { album in
                     completion(album)
                 }
             }
@@ -117,9 +117,9 @@ public struct PhotosHelper {
      - parameter completion: Called in the background when the image was saved or in case of any error.
      */
     public static func saveImage(image: UIImage, toAlbum named: String, completion: ((_ success: Bool, _ error: Error?) -> ())? = nil) {
-        PhotosHelper.getAlbum(named: named, completion: { album in
+        PhotoAlbumHelper.getAlbum(named: named, completion: { album in
             guard let album = album else { completion?(false, nil); return; }
-            PhotosHelper.saveImage(image: image, to: album, completion: completion)
+            PhotoAlbumHelper.saveImage(image: image, to: album, completion: completion)
         })
     }
     
@@ -190,7 +190,7 @@ public struct PhotosHelper {
             let albums = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: albumFetchOptions)
             guard let album = albums.firstObject else { return completion(.Error) }
             
-            PhotosHelper.getImagesFromAlbum(album: album, options: options, completion: completion)
+            PhotoAlbumHelper.getImagesFromAlbum(album: album, options: options, completion: completion)
         }
     }
     
@@ -203,7 +203,7 @@ public struct PhotosHelper {
      */
     public static func getImagesFromAlbum(album: PHAssetCollection, options: PHImageRequestOptions = defaultImageFetchOptions, fetchOptions: FetchOptions = FetchOptions(), completion: @escaping (_ result: AssetFetchResult<UIImage>) -> ()) {
         DispatchQueue.global(qos: .background).async {
-            PhotosHelper.getAssetsFromAlbum(album: album, fetchOptions: fetchOptions, completion: { result in
+            PhotoAlbumHelper.getAssetsFromAlbum(album: album, fetchOptions: fetchOptions, completion: { result in
                 switch result {
                 case .Asset: ()
                 case .Error: completion(.Error)

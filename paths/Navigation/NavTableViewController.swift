@@ -36,6 +36,10 @@ class NavTableViewController: UITableViewController {
         return nil
     }()
     
+    lazy var informationViewController : InformationViewController = {
+       return storyboard?.instantiateViewController(withIdentifier: "Information") as! InformationViewController
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Paths"
@@ -54,7 +58,9 @@ class NavTableViewController: UITableViewController {
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         } else {
             // Fallback on earlier versions
-        }        
+        }
+        
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .search, target: self, action: #selector(showSettings)), animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,6 +74,9 @@ class NavTableViewController: UITableViewController {
         } else {
             // Fallback on earlier versions
         }
+    }
+    @objc func showSettings(){
+        self.navigationController?.pushViewController(informationViewController, animated: true)
     }
     func configureTableView() {
         log.info("configure nav table")

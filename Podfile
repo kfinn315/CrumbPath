@@ -12,6 +12,7 @@ target 'paths' do
     pod 'SwiftyBeaver'
     pod 'SwiftSimplify'
     pod 'AssetsPickerViewController', '~> 2.0'
+    pod 'LicensesKit'
 
   target 'pathsTests' do
    inherit! :complete

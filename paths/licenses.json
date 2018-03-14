@@ -1,0 +1,52 @@
+{
+    "notices": [{
+                "name": "AssetsPickerViewController",
+                "url": "https://github.com/DragonCherry/AssetsPickerViewController",
+                "copyright": "Copyright (c) 2017 DragonCherry",
+                "license": "MIT License"
+                },
+                {
+                "name": "Eureka",
+                "url": "https://github.com/xmartlabs/Eureka",
+                "copyright": "Copyright (c) 2015 XMARTLABS",
+                "license": "MIT License"
+                },
+                {
+                "name": "LicensesKit",
+                "url": "https://github.com/mattwyskiel/LicensesKit",
+                "copyright": "Copyright (C) 2014 Matthew Wyskiel",
+                "license": "Apache Software License 2.0"
+                },
+                {
+                "name": "Swift Simplify",
+                "url": "https://github.com/malcommac/SwiftSimplify",
+                "copyright": "Copyright (c) 2015 daniele margutti <me@danielemargutti.com>",
+                "license": "MIT License"
+                },
+                {
+                "name": "RxSwift",
+                "url": "https://github.com/ReactiveX/RxSwift",
+                "copyright": "© 2015 Krunoslav Zaher",
+                "license": "MIT License"
+                },
+                {
+                "name": "RxCoreData",
+                "url": "https://github.com/RxSwiftCommunity/RxCoreData",
+                "copyright": "(c) 2016 Scott Gardner scott.gardner@mac.com",
+                "license": "MIT License"
+                },
+                {
+                "name": "RxDataSources",
+                "url": "https://github.com/RxSwiftCommunity/RxDataSources",
+                "copyright": "Copyright (c) 2017 RxSwift Community",
+                "license": "MIT License"
+                },
+                {
+                "name": "SwiftyBeaver",
+                "url": "https://github.com/SwiftyBeaver/SwiftyBeaver",
+                "copyright": "(c) 2015 Sebastian Kreutzberger",
+                "license": "MIT License"
+                }
+                ]
+}
+

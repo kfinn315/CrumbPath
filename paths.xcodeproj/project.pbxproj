@@ -28,7 +28,7 @@
 		6762F83F2052D70A00C94068 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6762F83E2052D70A00C94068 /* MapViewDelegate.swift */; };
 		6762F8412052DA2800C94068 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6762F8402052DA2800C94068 /* MapView.swift */; };
 		679CFBE92050E80C00322923 /* MapModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679CFBE82050E80C00322923 /* MapModalViewController.swift */; };
-		67B911CE20471C9C0054E6FC /* PhotosHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911CD20471C9C0054E6FC /* PhotosHelper.swift */; };
+		67B911CE20471C9C0054E6FC /* PhotoAlbumHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911CD20471C9C0054E6FC /* PhotoAlbumHelper.swift */; };
 		67B911D3204E216F0054E6FC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67B911D2204E216F0054E6FC /* Roboto-Regular.ttf */; };
 		67B911D5204E21760054E6FC /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67B911D4204E21760054E6FC /* Roboto-Thin.ttf */; };
 		67B911D7204E217B0054E6FC /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67B911D6204E217B0054E6FC /* Roboto-Light.ttf */; };
@@ -42,6 +42,9 @@
 		67F4B3682044C29900AA863E /* PointsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F4B3672044C29900AA863E /* PointsTest.swift */; };
 		67F8FFC6205748B2004AEC13 /* MapViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFC5205748B2004AEC13 /* MapViewTests.swift */; };
 		67F8FFC820580C99004AEC13 /* CircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67F8FFC720580C99004AEC13 /* CircleView.xib */; };
+		67F8FFCA20597B33004AEC13 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFC920597B33004AEC13 /* PhotoHelper.swift */; };
+		67F8FFCE20597DC3004AEC13 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFCD20597DC3004AEC13 /* InformationViewController.swift */; };
+		67F8FFD020597E6D004AEC13 /* licenses.json in Resources */ = {isa = PBXBuildFile; fileRef = 67F8FFCF20597E6D004AEC13 /* licenses.json */; };
 		8F10A164387116AD30C7E1DF /* Pods_paths_pathsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5260AE7ECE2B301CD481BD01 /* Pods_paths_pathsUITests.framework */; };
 		ABCCB48690ED14D070FAC9C5 /* Pods_pathsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0F5BDB498E226A5759C5AD /* Pods_pathsUITests.framework */; };
 		DC31CFBF203B6ACB00F3807F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC31CFBE203B6ACB00F3807F /* CoreData.framework */; };
@@ -67,7 +70,7 @@
 		DC364143203C68070097EEC4 /* BaseRecordingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364121203C68010097EEC4 /* BaseRecordingController.swift */; };
 		DC364144203C68070097EEC4 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364122203C68010097EEC4 /* Path.swift */; };
 		DC364146203C68070097EEC4 /* PathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364124203C68020097EEC4 /* PathManager.swift */; };
-		DC364147203C68070097EEC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364125203C68020097EEC4 /* SettingsViewController.swift */; };
+		DC364147203C68070097EEC4 /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364125203C68020097EEC4 /* LocationSettingsViewController.swift */; };
 		DC364148203C68070097EEC4 /* LocalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364126203C68020097EEC4 /* LocalError.swift */; };
 		DC364149203C68070097EEC4 /* LocalPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364127203C68030097EEC4 /* LocalPoint.swift */; };
 		DC36414A203C68070097EEC4 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC364128203C68040097EEC4 /* Point.swift */; };
@@ -144,7 +147,7 @@
 		6762F83E2052D70A00C94068 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		6762F8402052DA2800C94068 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		679CFBE82050E80C00322923 /* MapModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModalViewController.swift; sourceTree = "<group>"; };
-		67B911CD20471C9C0054E6FC /* PhotosHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosHelper.swift; sourceTree = "<group>"; };
+		67B911CD20471C9C0054E6FC /* PhotoAlbumHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumHelper.swift; sourceTree = "<group>"; };
 		67B911D2204E216F0054E6FC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		67B911D4204E21760054E6FC /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		67B911D6204E217B0054E6FC /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -158,6 +161,9 @@
 		67F4B3672044C29900AA863E /* PointsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTest.swift; sourceTree = "<group>"; };
 		67F8FFC5205748B2004AEC13 /* MapViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewTests.swift; sourceTree = "<group>"; };
 		67F8FFC720580C99004AEC13 /* CircleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleView.xib; sourceTree = "<group>"; };
+		67F8FFC920597B33004AEC13 /* PhotoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
+		67F8FFCD20597DC3004AEC13 /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		67F8FFCF20597E6D004AEC13 /* licenses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = licenses.json; sourceTree = "<group>"; };
 		7B07D00E64177887F5C7C228 /* Pods_paths_pathsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_paths_pathsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0F5BDB498E226A5759C5AD /* Pods_pathsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pathsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		914783EEB4C16AB6C18663CF /* Pods_pathsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pathsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,7 +195,7 @@
 		DC364121203C68010097EEC4 /* BaseRecordingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRecordingController.swift; sourceTree = "<group>"; };
 		DC364122203C68010097EEC4 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		DC364124203C68020097EEC4 /* PathManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathManager.swift; sourceTree = "<group>"; };
-		DC364125203C68020097EEC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DC364125203C68020097EEC4 /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
 		DC364126203C68020097EEC4 /* LocalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalError.swift; sourceTree = "<group>"; };
 		DC364127203C68030097EEC4 /* LocalPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPoint.swift; sourceTree = "<group>"; };
 		DC364128203C68040097EEC4 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
@@ -329,7 +335,7 @@
 			children = (
 				DC36411D203C68000097EEC4 /* CLLocationManager+Rx.swift */,
 				DC36412C203C68050097EEC4 /* RxCLLocationManagerDelegateProxy.swift */,
-				DC364125203C68020097EEC4 /* SettingsViewController.swift */,
+				DC364125203C68020097EEC4 /* LocationSettingsViewController.swift */,
 				DC364130203C68060097EEC4 /* LocationSettings.swift */,
 				DC36412B203C68040097EEC4 /* LocationManager.swift */,
 			);
@@ -394,7 +400,8 @@
 				DC364116203C67FE0097EEC4 /* PhotoManager.swift */,
 				DC36412D203C68050097EEC4 /* ImageViewController.swift */,
 				67B911DE204F3AF40054E6FC /* ImagePageViewController.swift */,
-				67B911CD20471C9C0054E6FC /* PhotosHelper.swift */,
+				67B911CD20471C9C0054E6FC /* PhotoAlbumHelper.swift */,
+				67F8FFC920597B33004AEC13 /* PhotoHelper.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -421,6 +428,7 @@
 				DC364132203C68060097EEC4 /* NavTableViewController.swift */,
 				DC364113203C67FD0097EEC4 /* PageViewController.swift */,
 				DC36411B203C67FF0097EEC4 /* SplitViewController.swift */,
+				67F8FFCD20597DC3004AEC13 /* InformationViewController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -470,6 +478,7 @@
 				DC364155203C69A20097EEC4 /* Location */,
 				DC9CED60203B5F1B00A091BA /* Base.lproj */,
 				DC9CED2E203B5E3B00A091BA /* Assets.xcassets */,
+				67F8FFCF20597E6D004AEC13 /* licenses.json */,
 			);
 			path = paths;
 			sourceTree = "<group>";
@@ -642,6 +651,7 @@
 				DC9CED6C203B5F1C00A091BA /* README.md in Resources */,
 				DC9CED2D203B5E3B00A091BA /* Main.storyboard in Resources */,
 				67B911D7204E217B0054E6FC /* Roboto-Light.ttf in Resources */,
+				67F8FFD020597E6D004AEC13 /* licenses.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,11 +721,13 @@
 				"${BUILT_PRODUCTS_DIR}/Dimmer/Dimmer.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FadeView/FadeView.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesKit/LicensesKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCoreData/RxCoreData.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/StringBuilder/StringBuilder.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftARGB/SwiftARGB.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSimplify/SwiftSimplify.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
@@ -737,11 +749,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dimmer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FadeView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCoreData.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StringBuilder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftARGB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSimplify.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
@@ -857,11 +871,13 @@
 				"${BUILT_PRODUCTS_DIR}/Dimmer/Dimmer.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FadeView/FadeView.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesKit/LicensesKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCoreData/RxCoreData.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/StringBuilder/StringBuilder.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftARGB/SwiftARGB.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSimplify/SwiftSimplify.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
@@ -876,11 +892,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dimmer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FadeView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCoreData.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StringBuilder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftARGB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSimplify.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
@@ -906,17 +924,18 @@
 				67B911DF204F3AF40054E6FC /* ImagePageViewController.swift in Sources */,
 				DC364146203C68070097EEC4 /* PathManager.swift in Sources */,
 				67B911E820502D930054E6FC /* TopAlignedLabel.swift in Sources */,
-				67B911CE20471C9C0054E6FC /* PhotosHelper.swift in Sources */,
+				67B911CE20471C9C0054E6FC /* PhotoAlbumHelper.swift in Sources */,
 				DC364110203C67DC0097EEC4 /* AddPhotoCell.swift in Sources */,
 				DC36413B203C68070097EEC4 /* ImageCollectionViewCell.swift in Sources */,
 				DC364135203C68070097EEC4 /* PageViewController.swift in Sources */,
-				DC364147203C68070097EEC4 /* SettingsViewController.swift in Sources */,
+				DC364147203C68070097EEC4 /* LocationSettingsViewController.swift in Sources */,
 				DC364143203C68070097EEC4 /* BaseRecordingController.swift in Sources */,
 				6726161C20445C6100C60B60 /* AllMapViewController.swift in Sources */,
 				DC364140203C68070097EEC4 /* DateExtensions.swift in Sources */,
 				DC364151203C68070097EEC4 /* LocationSettings.swift in Sources */,
 				6762F8412052DA2800C94068 /* MapView.swift in Sources */,
 				DC36413E203C68070097EEC4 /* RecordingViewController.swift in Sources */,
+				67F8FFCA20597B33004AEC13 /* PhotoHelper.swift in Sources */,
 				DC364134203C68070097EEC4 /* Extensions.swift in Sources */,
 				6712B2AA2045DD5100B46A03 /* CircleImageView.swift in Sources */,
 				679CFBE92050E80C00322923 /* MapModalViewController.swift in Sources */,
@@ -941,6 +960,7 @@
 				6726161A20444F1000C60B60 /* Points.swift in Sources */,
 				DC36413A203C68070097EEC4 /* EditPathViewController.swift in Sources */,
 				DC364149203C68070097EEC4 /* LocalPoint.swift in Sources */,
+				67F8FFCE20597DC3004AEC13 /* InformationViewController.swift in Sources */,
 				DC364154203C68070097EEC4 /* PathExtensions.swift in Sources */,
 				DC364137203C68070097EEC4 /* PathDetailViewController.swift in Sources */,
 				DC364136203C68070097EEC4 /* HeaderCell.swift in Sources */,

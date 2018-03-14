@@ -37,6 +37,10 @@ class LocationManager: NSObject, ILocationManager, CLLocationManagerDelegate {
     
     private let clLocationManager = CLLocationManager()
     
+    public static var authorizationStatus : CLAuthorizationStatus {
+        return CLLocationManager.authorizationStatus()
+    }
+    
     internal override init() {
         weak var weakLocationManager = clLocationManager
         

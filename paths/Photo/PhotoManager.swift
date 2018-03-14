@@ -52,7 +52,7 @@ class PhotoManager {
         self.pathManager?.currentPathObservable?.subscribe(onNext: { [weak self] path in
             //let collection = self?.getImageCollection(path?.albumId)
             guard let localid = path?.localid else {return}
-            PhotosHelper.getAlbum(named: localid, completion: { (collection) in
+            PhotoAlbumHelper.getAlbum(named: localid, completion: { (collection) in
                 self?.currentAlbumSubject.onNext(collection) //drive photoCollection for current path
             })
         }).disposed(by: self.disposeBag)
@@ -132,13 +132,13 @@ class PhotoManager {
     }()
     
     public func addToCurrent(_ assets: [PHAsset], completion: ((Bool, Error?) -> ())?){
-        PhotosHelper.getAlbum(named: (pathManager?.currentPath?.localid)!){ [weak self]
+        PhotoAlbumHelper.getAlbum(named: (pathManager?.currentPath?.localid)!){ [weak self]
             (album) in
             
             if album == nil {
-                PhotosHelper.createAlbum(named: (self?.pathManager?.currentPath?.localid)!) {assetCollection in
+                PhotoAlbumHelper.createAlbum(named: (self?.pathManager?.currentPath?.localid)!) {assetCollection in
                     if assetCollection != nil {
-                        PhotosHelper.save(assets: assets, to: assetCollection!) {
+                        PhotoAlbumHelper.save(assets: assets, to: assetCollection!) {
                             (success, error) in
                             self?.updateCurrentAlbum(collectionid: assetCollection!.localIdentifier)
                             
@@ -150,8 +150,8 @@ class PhotoManager {
                     }
                 }
             } else{
-                PhotosHelper.removeAll(from: album!, completion: { (success, error) in
-                    PhotosHelper.save(assets: assets, to: album!) {
+                PhotoAlbumHelper.removeAll(from: album!, completion: { (success, error) in
+                    PhotoAlbumHelper.save(assets: assets, to: album!) {
                         (success, error) in
                         self?.currentAlbumSubject.onNext(album)
                         completion?(success,error)
