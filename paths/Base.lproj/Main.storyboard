@@ -9,6 +9,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -336,14 +337,23 @@
                                 <segue destination="PxY-KB-FzT" kind="show" id="wsi-V3-fwi"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="h2D-hY-URG">
-                            <connections>
-                                <segue destination="fjo-9m-Xn3" kind="show" id="LAY-A8-X8f"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="h2D-hY-URG">
+                                <connections>
+                                    <segue destination="fjo-9m-Xn3" kind="show" id="LAY-A8-X8f"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="About" id="JfB-N3-XKV">
+                                <connections>
+                                    <segue destination="rDL-lv-d2C" kind="presentation" id="dpn-T3-wGo"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="aboutBarButton" destination="JfB-N3-XKV" id="ytd-xz-ifh"/>
                         <outlet property="addBarButton" destination="h2D-hY-URG" id="GXB-dA-A8e"/>
+                        <outlet property="allBarButton" destination="MyR-AD-XqW" id="Mn6-S4-T9K"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kOb-hT-2pC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -384,7 +394,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-8f-qD4" customClass="MapView" customModule="paths" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="236.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="271.5"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="0.0"/>

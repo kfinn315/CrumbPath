@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import RandomKit
 
 @testable import paths
 
@@ -43,7 +44,7 @@ class ContextWrapper {
     }
     
     //MARK:- Paths
-    
+ 
     func insertPath(local: LocalPath) -> Path? {
         guard let obj = NSEntityDescription.insertNewObject(forEntityName: "Path", into: context!) as? Path else {
             return nil
@@ -112,15 +113,16 @@ class ContextWrapper {
         let results = try! context!.fetch(request)
         return results.count
     }
-    //
-    //    func generateRandomPath() -> Path {
-    //        expectedAlbumId = String.random(ofLength: 6, using: &Xoroshiro.default)
-    //        expectedTitle = String.random(ofLength: 8, using: &Xoroshiro.default)
-    //        expectedNotes = String.random(ofLength: 8, using: &Xoroshiro.default)
-    //
-    //        let path = Path(mockcontext, expectedTitle, expectedNotes)
-    //        path.albumId = expectedAlbumId
-    //
-    //        return path
-    //    }
+    
+    func populatePathsRandomly(count: Int = 10) -> [Path]{
+        var i = 0;
+        var paths : [Path] = []
+        while(i < count){
+            let path = PathTools.generateRandomPath(context: context!)
+            paths.append(path)
+            i += 1;
+        }
+        return paths
+      }
+    
 }

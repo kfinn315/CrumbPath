@@ -20,12 +20,7 @@ let dateFormatter = DateComponentsFormatter()
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-//
-//    weak var managedObjectContext : NSManagedObjectContext? = {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        return appDelegate.managedObjectContext
-//    }()
-//
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
@@ -41,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupSwiftyBeaver()
         
-        NavTableViewController.managedObjectContext = managedObjectContext
+        //NavTableViewController.managedObjectContext = managedObjectContext
         PathManager.managedObjectContext = managedObjectContext
         
         NSSetUncaughtExceptionHandler { exception in

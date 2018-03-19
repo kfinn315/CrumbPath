@@ -37,8 +37,6 @@ class EditPathViewControllerTests: QuickSpec {
                 contextWrapper = ContextWrapper()
                 
                 pathManager = PathManager()
-                //mockPathManager = MockPathManager()
-                
                 pathManager.currentPathObservable?.subscribe(onNext: {
                     path in
                     onNextCalled = true

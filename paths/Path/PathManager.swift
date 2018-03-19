@@ -72,15 +72,6 @@ class PathManager : IPathManager {
     public func getNewPath() -> Path {
         return Path()
     }
-//    public func commitChanges() throws {
-//        try PathManager.managedObjectContext?.save()
-//    }
-//    public var hasChanges : Bool {
-//        return PathManager.managedObjectContext?.hasChanges ?? false
-//    }
-//    public var currentAlbumId : String? {
-//        return _currentPath.value?.albumId
-//    }
     
     public func updateCurrentAlbum(collectionid: String) {
         guard _currentPath.value != nil else {
@@ -153,5 +144,19 @@ class PathManager : IPathManager {
         }
         
         return nil
+    }
+    
+    public var pathCount : Int {
+        var count : Int? = 0
+
+        do{
+            
+            let request: NSFetchRequest<Path> = Path.fetchRequest()
+            count = try PathManager.managedObjectContext?.count(for: request)
+        } catch{
+            log.error(error.localizedDescription)
+        }
+        
+        return count ?? 0
     }
 }

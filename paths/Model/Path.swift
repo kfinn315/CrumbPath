@@ -61,12 +61,10 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         locations = entity.value(forKey: "locations") as? String
     }
     
-    public required init(_ context: NSManagedObjectContext, title: String?, notes: String?) {
+    public required init(_ context: NSManagedObjectContext) {
         super.init(entity: entitydescription, insertInto: context)
 
         self.localid = UUID().uuidString
-        self.title = title
-        self.notes = notes
     }
     
     public func setTimes(start: Date, end: Date){

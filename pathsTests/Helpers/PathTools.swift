@@ -13,14 +13,18 @@ import Nimble
 
 class PathTools {
     
-    public static func generateRandomPath() -> Path {
+    public static func generateRandomPath(context: NSManagedObjectContext? = nil) -> Path {
         var path : Path!
         
-        path = Path()
+        if context == nil {
+            path = Path()
+        } else {
+            path = Path(context!)
+        }
 
-        path.albumId = String.random(ofLength: 6, using: &Xoroshiro.default)
         path.title = String.random(ofLength: 8, using: &Xoroshiro.default)
         path.notes = String.random(ofLength: 8, using: &Xoroshiro.default)
+        path.albumId = String.random(ofLength: 6, using: &Xoroshiro.default)
         path.startdate = Date.random(in: Date.distantPast...Date(), using: &Xoroshiro.default)
         path.enddate = Date.random(in: path.startdate!...Date(), using: &Xoroshiro.default)
         path.locations = String.random(ofLength: 10, using: &Xoroshiro.default)
@@ -71,9 +75,7 @@ extension UIWindow {
         } else {
             
             if let presentedViewController = vc.presentedViewController {
-                
-                return UIWindow.getVisibleViewControllerFrom(vc: presentedViewController.presentedViewController!)
-                
+                return UIWindow.getVisibleViewControllerFrom(vc: presentedViewController)
             } else {
                 
                 return vc;

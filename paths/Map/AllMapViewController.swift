@@ -53,9 +53,9 @@ class AllMapViewController : UIViewController {
             self.mapView.addOverlays(overlays)
         }).disposed(by: disposeBag)
     }
-    deinit {
-        mapView.delegate = nil
-    }
+//    deinit {
+//        mapView.delegate = nil
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         
