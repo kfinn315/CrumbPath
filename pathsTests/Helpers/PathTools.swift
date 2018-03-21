@@ -8,6 +8,7 @@
 import RandomKit
 import CoreData
 import Nimble
+import CoreLocation
 
 @testable import paths
 
@@ -28,7 +29,15 @@ class PathTools {
         path.startdate = Date.random(in: Date.distantPast...Date(), using: &Xoroshiro.default)
         path.enddate = Date.random(in: path.startdate!...Date(), using: &Xoroshiro.default)
         path.locations = String.random(ofLength: 10, using: &Xoroshiro.default)
-        path.pointsJSON = String.random(ofLength: 150, using: &Xoroshiro.default)
+        
+        var points : Points = Points()
+ 
+        for _ in 1...15 {
+            points.append(Point(location: CLLocation(latitude: CLLocationDegrees.random(using: &Xorshift.default), longitude: CLLocationDegrees.random(using: &Xorshift.default))))
+        }
+        
+        path.setPoints(points)
+        //path.pointsJSON = String.random(ofLength: 150, using: &Xoroshiro.default)
         path.coverimg = String.random(ofLength: 150, using: &Xoroshiro.default).data(using: String.Encoding.utf8)
         path.distance = NSNumber.random(using: &Xoroshiro.default)
         path.duration = NSNumber.random(using: &Xoroshiro.default)

@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 import LicensesKit
 import CoreMotion
+import MessageUI
 
-class InformationViewController : UITableViewController {
-    
+class InformationViewController : UITableViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var labelPhotosPermission: UILabel!
     @IBOutlet weak var labelMotionPermission: UILabel!
     @IBOutlet weak var labelLocationPermission: UILabel!
+    
+    @IBOutlet weak var cellLibraries: UITableViewCell!
+    @IBOutlet weak var cellGitHub: UITableViewCell!
+    @IBOutlet weak var cellEmail: UITableViewCell!
+    static let storyboardID = "Information"
     
     lazy var licensesViewController : LicensesViewController = {
         let licensesVC = LicensesViewController()
@@ -108,12 +113,33 @@ class InformationViewController : UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = self.tableView(tableView, cellForRowAt: indexPath)
         
-        switch cell.tag {
-        case 3:
+        if cell == cellLibraries {
             showThirdPartyLicenses()
-            break
-        default:
-            break
+        } else if cell == cellEmail {
+            sendEmail()
+        } else if cell == cellGitHub {
+            launchGitHub()
+        }
+    }
+    @objc func sendEmail(){
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["kfinn315@gmail.com"])
+            mail.setSubject("About your app!")
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+            log.error("unable to compose mail message")
+        }
+    }
+    @objc func launchGitHub(){
+        if let url = URL(string: "https://www.github.com/kfinn315/") {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                let success = UIApplication.shared.openURL(url)
+            }
         }
     }
     

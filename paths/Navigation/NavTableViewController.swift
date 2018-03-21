@@ -13,13 +13,11 @@ import RxCocoa
 import RxSwift
 import RxCoreData
 import RxDataSources
-import SwiftyBeaver
 
 /**
  UITableView showing the Paths in CoreData
  */
 class NavTableViewController: UITableViewController {
-    //public static weak var managedObjectContext : NSManagedObjectContext?
     public static let storyboardID = "table view"
     @IBOutlet weak var aboutBarButton: UIBarButtonItem!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
@@ -59,11 +57,11 @@ class NavTableViewController: UITableViewController {
             if let coverimg = item.coverimg {
                 cell.imageViewCircle?.image = UIImage.init(data: coverimg)
             }
-
+            
             if let indexPathsForVisibleRows = self.tableView.indexPathsForVisibleRows, let lastIndexPath = indexPathsForVisibleRows.last, lastIndexPath.row == indexPath.row {
-                    self.onEndUpdates?()
-                }
- 
+                self.onEndUpdates?()
+            }
+            
             return cell
         })
         datasource.canEditRowAtIndexPath = {_,_ in
@@ -74,18 +72,14 @@ class NavTableViewController: UITableViewController {
         return datasource
     }()
     
-    lazy var pager : PageViewController? = {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Pager") as? PageViewController {
-            return vc
-        }
-        return nil
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Paths"
         
+//        navigationItem.leftBarButtonItems?.append(UIBarButtonItem.init(title: "Routes", style: .done, target: self, action: #selector(showRoutes)))
+        
         tableView.dataSource = nil
+        
         configureTableView()
     }
     
@@ -100,11 +94,13 @@ class NavTableViewController: UITableViewController {
         } else {
             // Fallback on earlier versions
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)        
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -114,7 +110,7 @@ class NavTableViewController: UITableViewController {
             // Fallback on earlier versions
         }
     }
-    
+ 
     func configureTableView() {
         log.info("configure nav table")
         
@@ -123,15 +119,7 @@ class NavTableViewController: UITableViewController {
         
         tableView.rx.itemSelected.map { [unowned self] indexPath -> Path in
             return try self.tableView.rx.model(at: indexPath)
-            }.subscribe(onNext: { [unowned self] (path) in
-                do {
-                    self.pathManager?.setCurrentPath(path)
-
-                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: PageViewController.storyboardID) {
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                }
-            }).disposed(by: disposeBag)
+            }.subscribe(onNext: self.onPathSelected).disposed(by: disposeBag)
         
         self.tableView.rx.itemDeleted.map { [unowned self] indexPath -> Path in
             return try self.tableView.rx.model(at: indexPath)
@@ -149,5 +137,17 @@ class NavTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    @objc func showRoutes(){
+        if let vc = storyboard?.instantiateViewController(withIdentifier: RouteTableViewController.storyboardID) {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    func onPathSelected(_ path: Path){
+        self.pathManager?.setCurrentPath(path)
+        
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: PageViewController.storyboardID) {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

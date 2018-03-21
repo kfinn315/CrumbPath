@@ -54,25 +54,23 @@ class PhotosViewController: BasePhotoViewController, UICollectionViewDataSource,
         self.collectionView?.dataSource = self
         doneButton.action = #selector(closeModal)
         editButton.action = #selector(editPhotos)
-        photosManager?.currentAlbum?.subscribe(onNext: { [unowned self] assetcollection in
-            guard self.photosManager?.isAuthorized ?? false else{
-                return
-            }
-            
-            if assetcollection == nil {
-                self.fetchResult = nil
-            } else {
-                self.fetchResult = self.photosManager?.fetchAssets(in: assetcollection!, options: nil)
-            }
-            
-            DispatchQueue.main.async {
-                if self.fetchResult?.count ?? 0 == 0{
-                    self.showEmptyMessage()
-                } else{
-                    self.hideEmptyMessage()
+        photosManager?.currentStatusAndAlbum?.drive(onNext: { [unowned self] (authStatus, assetCollection) in
+            if authStatus == .authorized {
+                if assetCollection == nil {
+                    self.fetchResult = nil
+                } else {
+                    self.fetchResult = self.photosManager?.fetchAssets(in: assetCollection!, options: nil)
                 }
                 
-                self.collectionView?.reloadData()
+                DispatchQueue.main.async {
+                    if self.fetchResult?.count ?? 0 == 0{
+                        self.showEmptyMessage()
+                    } else{
+                        self.hideEmptyMessage()
+                    }
+                    
+                    self.collectionView?.reloadData()
+                }
             }
             
         }).disposed(by: disposeBag)

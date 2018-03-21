@@ -41,8 +41,9 @@ public class BasePhotoViewController : UIViewController {
         
         resetCachedAssets()
        
-        photosManager?.permissionStatus?.drive(onNext: { [weak self] auth in
+        photosManager?.currentStatusAndAlbum?.drive(onNext: { [weak self] (auth, album) in
             self?.onPermissionChanged(to: auth)
+            
         }).disposed(by: disposeBag)
         
         baseCollectionView.collectionViewLayout = collectionViewLayout
@@ -70,7 +71,7 @@ public class BasePhotoViewController : UIViewController {
     }
     func onPermissionChanged(to auth: PHAuthorizationStatus){
         if auth == .authorized || auth == .restricted {
-            self.imageManager = PHCachingImageManager()
+            self.imageManager = photosManager?.cachingImageManager
             self.hidePermissionMessage()
         } else {
             self.showPermissionMessage()

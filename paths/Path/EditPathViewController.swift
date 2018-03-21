@@ -59,13 +59,9 @@ class EditPathViewController : FormViewController {
     
     func createForm() {
         form +++ Section("Main") <<< TextRow { row in
-            row.title = "Title"
-            row.value = path?.title
-            row.tag = "title"
-            } <<< TextRow { row in
-                row.title = "Notes"
-                row.value = path?.notes
-                row.tag = "notes"
+                row.title = "Title"
+                row.value = path?.title
+                row.tag = "title"
             } <<< TextRow { row in
                 row.title = "Locations"
                 row.value = path?.locations
@@ -82,7 +78,7 @@ class EditPathViewController : FormViewController {
                         enddate.minimumDate = row.value
                     }
                 })
-                row.disabled = Condition(booleanLiteral: isNewPath)
+                row.hidden = Condition(booleanLiteral: !isNewPath)
             } <<< DateTimeRow { row in
                 row.title = "End Date and Time"
                 row.value = path?.enddate as Date!
@@ -94,17 +90,19 @@ class EditPathViewController : FormViewController {
                         startdate.maximumDate = row.value
                     }
                 })
-                row.disabled = Condition(booleanLiteral: isNewPath)
-        }        
+                row.hidden = Condition(booleanLiteral: !isNewPath)
+        }
+        
+            +++ Section("Notes") <<< TextAreaRow { row in
+                row.title = "Notes"
+                row.value = path?.notes
+                row.tag = "notes"
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //show save? alert
-//        if pathManager?.hasChanges ?? false {
-//            self.present(saveAlert, animated: true, completion: nil)
-//        }
         save()
     }
     
@@ -121,7 +119,7 @@ class EditPathViewController : FormViewController {
     }
     @objc func saveButtonClicked(){
         save()
-
+        
         if pathManager?.hasNewPath ?? false {
             self.navigationController?.popToRootViewController(animated: true)
         } else{
@@ -145,7 +143,7 @@ class EditPathViewController : FormViewController {
         } catch {
             log.error(error.localizedDescription)
         }
-
+        
     }
     func buttonCancelClicked() {
         log.debug("dismiss save alert")

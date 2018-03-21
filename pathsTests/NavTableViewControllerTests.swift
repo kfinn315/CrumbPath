@@ -42,7 +42,7 @@ class NavTableViewControllerTests: QuickSpec {
                 window.set(root: navTable)
                 tableView = navTable.tableView
                 pathManager = PathManager.shared
-                currentPathObservable = pathManager.currentPathObservable
+                //currentPathObservable = pathManager.currentPathObservable
             }
             
             describe("datasource"){

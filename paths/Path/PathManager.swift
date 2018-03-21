@@ -14,19 +14,16 @@ import CoreMotion
 import RxCocoa
 import RxSwift
 import RxCoreData
-import Photos
 
 protocol IPathManager : AnyObject {
     var currentPathObservable : Observable<Path?>? {get}
     var hasNewPath : Bool {get set}
- //   var currentAlbumId : String? {get}
     func updateCurrentAlbum(collectionid: String)
     func setCurrentPath(_ path: Path?)
     func getNewPath() -> Path
     func save(path: Path?, callback: @escaping (Path?,Error?) -> Void)
     func updateCurrentPathInCoreData(notify: Bool) throws 
     func getAllPaths() -> [Path]?
-   // var hasChanges : Bool {get}
 }
 
 /**
@@ -57,10 +54,10 @@ class PathManager : IPathManager {
         setup()
     }
     
-    convenience init(_ pointsManager: PointsManagerInterface, _ photoManager: PhotoManagerInterface) {
+    convenience init(_ pointsManager: PointsManagerInterface, _ photoManager: IPhotoManager) {
         self.init()
-        
         self.pointsManager = pointsManager
+        setup()
     }
     
     private func setup(){
@@ -109,7 +106,6 @@ class PathManager : IPathManager {
         
         PathManager.managedObjectContext?.insert(path)
         
-        //            try self.context!.rx.update(path)
         self.setCurrentPath(path)
         self.hasNewPath = true
         callback(path, nil)
@@ -150,7 +146,6 @@ class PathManager : IPathManager {
         var count : Int? = 0
 
         do{
-            
             let request: NSFetchRequest<Path> = Path.fetchRequest()
             count = try PathManager.managedObjectContext?.count(for: request)
         } catch{

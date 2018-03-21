@@ -39,6 +39,11 @@
 		67B911E4204F7BE60054E6FC /* CircleLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B911E3204F7BE60054E6FC /* CircleLabelView.xib */; };
 		67B911E620502D720054E6FC /* BottomAlignedLable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E520502D720054E6FC /* BottomAlignedLable.swift */; };
 		67B911E820502D930054E6FC /* TopAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B911E720502D930054E6FC /* TopAlignedLabel.swift */; };
+		67D1FF332061360300A0518C /* ImagePageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF322061360300A0518C /* ImagePageViewControllerTests.swift */; };
+		67D1FF352061841400A0518C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF342061841400A0518C /* Route.swift */; };
+		67D1FF372061866900A0518C /* MockPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF362061866900A0518C /* MockPhotoManager.swift */; };
+		67D1FF3B2061A18A00A0518C /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF3A2061A18A00A0518C /* RoutesTableViewController.swift */; };
+		67D1FF3D206288BD00A0518C /* AddRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF3C206288BD00A0518C /* AddRouteViewController.swift */; };
 		67F4B3682044C29900AA863E /* PointsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F4B3672044C29900AA863E /* PointsTest.swift */; };
 		67F8FFC6205748B2004AEC13 /* MapViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFC5205748B2004AEC13 /* MapViewTests.swift */; };
 		67F8FFC820580C99004AEC13 /* CircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67F8FFC720580C99004AEC13 /* CircleView.xib */; };
@@ -159,6 +164,11 @@
 		67B911E3204F7BE60054E6FC /* CircleLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleLabelView.xib; sourceTree = "<group>"; };
 		67B911E520502D720054E6FC /* BottomAlignedLable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAlignedLable.swift; sourceTree = "<group>"; };
 		67B911E720502D930054E6FC /* TopAlignedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlignedLabel.swift; sourceTree = "<group>"; };
+		67D1FF322061360300A0518C /* ImagePageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageViewControllerTests.swift; sourceTree = "<group>"; };
+		67D1FF342061841400A0518C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		67D1FF362061866900A0518C /* MockPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoManager.swift; sourceTree = "<group>"; };
+		67D1FF3A2061A18A00A0518C /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
+		67D1FF3C206288BD00A0518C /* AddRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRouteViewController.swift; sourceTree = "<group>"; };
 		67F4B3672044C29900AA863E /* PointsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTest.swift; sourceTree = "<group>"; };
 		67F8FFC5205748B2004AEC13 /* MapViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewTests.swift; sourceTree = "<group>"; };
 		67F8FFC720580C99004AEC13 /* CircleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleView.xib; sourceTree = "<group>"; };
@@ -295,6 +305,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		67D1FF3E206288E300A0518C /* Route */ = {
+			isa = PBXGroup;
+			children = (
+				67D1FF3A2061A18A00A0518C /* RoutesTableViewController.swift */,
+				67D1FF3C206288BD00A0518C /* AddRouteViewController.swift */,
+			);
+			path = Route;
+			sourceTree = "<group>";
+		};
 		67F8FFD12059DEAA004AEC13 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +321,7 @@
 				6700B3B72054B5B600FD4F05 /* PathTools.swift */,
 				6700B3B92054BDD800FD4F05 /* ContextWrapper.swift */,
 				67F8FFD22059DEDA004AEC13 /* ViewControllerHelpers.swift */,
+				67D1FF362061866900A0518C /* MockPhotoManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -388,6 +408,7 @@
 				DC364128203C68040097EEC4 /* Point.swift */,
 				DC364122203C68010097EEC4 /* Path.swift */,
 				DC364169203D087E0097EEC4 /* LocalPath.swift */,
+				67D1FF342061841400A0518C /* Route.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -472,6 +493,7 @@
 		DC9CED26203B5E3B00A091BA /* paths */ = {
 			isa = PBXGroup;
 			children = (
+				67D1FF3E206288E300A0518C /* Route */,
 				DC9CED33203B5E3B00A091BA /* Info.plist */,
 				DC9CED5D203B5F1A00A091BA /* README.md */,
 				DC36416D203F09980097EEC4 /* paths.entitlements */,
@@ -513,6 +535,7 @@
 				67F4B3672044C29900AA863E /* PointsTest.swift */,
 				6712B2A12045041000B46A03 /* RecordingViewControllerTests.swift */,
 				6712B2A3204598CF00B46A03 /* EditPathViewControllerTests.swift */,
+				67D1FF322061360300A0518C /* ImagePageViewControllerTests.swift */,
 			);
 			path = pathsTests;
 			sourceTree = "<group>";
@@ -934,6 +957,7 @@
 				DC36414A203C68070097EEC4 /* Point.swift in Sources */,
 				67B911DF204F3AF40054E6FC /* ImagePageViewController.swift in Sources */,
 				DC364146203C68070097EEC4 /* PathManager.swift in Sources */,
+				67D1FF3D206288BD00A0518C /* AddRouteViewController.swift in Sources */,
 				67B911E820502D930054E6FC /* TopAlignedLabel.swift in Sources */,
 				67B911CE20471C9C0054E6FC /* PhotoAlbumHelper.swift in Sources */,
 				DC364110203C67DC0097EEC4 /* AddPhotoCell.swift in Sources */,
@@ -952,6 +976,7 @@
 				679CFBE92050E80C00322923 /* MapModalViewController.swift in Sources */,
 				DC364142203C68070097EEC4 /* PhotosViewController.swift in Sources */,
 				67B911E620502D720054E6FC /* BottomAlignedLable.swift in Sources */,
+				67D1FF3B2061A18A00A0518C /* RoutesTableViewController.swift in Sources */,
 				67B911DD204F2D250054E6FC /* PathViewController.swift in Sources */,
 				DC36415E203C73C20097EEC4 /* AlbumCell.swift in Sources */,
 				6762F83B2051AC2400C94068 /* CrumbCell.swift in Sources */,
@@ -973,6 +998,7 @@
 				DC364149203C68070097EEC4 /* LocalPoint.swift in Sources */,
 				67F8FFCE20597DC3004AEC13 /* InformationViewController.swift in Sources */,
 				DC364154203C68070097EEC4 /* PathExtensions.swift in Sources */,
+				67D1FF352061841400A0518C /* Route.swift in Sources */,
 				DC364137203C68070097EEC4 /* PathDetailViewController.swift in Sources */,
 				DC364136203C68070097EEC4 /* HeaderCell.swift in Sources */,
 				DC36414B203C68070097EEC4 /* paths.xcdatamodeld in Sources */,
@@ -990,6 +1016,8 @@
 			files = (
 				67F4B3682044C29900AA863E /* PointsTest.swift in Sources */,
 				DC364162203CC6150097EEC4 /* LocationManagerTests.swift in Sources */,
+				67D1FF332061360300A0518C /* ImagePageViewControllerTests.swift in Sources */,
+				67D1FF372061866900A0518C /* MockPhotoManager.swift in Sources */,
 				DC364166203CE0320097EEC4 /* PagesViewControllerTests.swift in Sources */,
 				6726161E2044790600C60B60 /* PathTests.swift in Sources */,
 				DC364168203CE1B50097EEC4 /* NewPathViewControllerTests.swift in Sources */,

@@ -8,19 +8,15 @@
 
 import MapKit
 import UIKit
-import Photos
+//import Photos
 
 /**
  MKMapView subclass that adds functions for displaying Paths
  */
 class MapView : MKMapView {
-    private var polyline : MKPolyline?
-    private var pathAnnotations : [MKPointAnnotation] = []
-    private var imageAnnotations : [MKAnnotation] = []
-
-    public func setPathAnnotations(_ annotations : [MKAnnotation]) {
-        self.imageAnnotations = annotations
-        
+    var polyline : MKPolyline?
+    
+    public func setImageAnnotations(_ annotations : [MKAnnotation]) {
         let group = DispatchGroup()
         DispatchQueue.main.async {
             group.enter()
@@ -32,15 +28,8 @@ class MapView : MKMapView {
         
         DispatchQueue.main.async {
             log.debug("add image annotations to map")
-            self.addAnnotations(self.imageAnnotations)
+            self.addAnnotations(annotations)
         }
-    }
-    
-    public func removePathAnnotations(){
-        log.debug("PATH remove annotations")
-        removeAnnotations((annotations.filter() {
-            !($0 is ImageAnnotation)
-        }))
     }
     
     public func removeImageAnnotations(){
@@ -50,6 +39,17 @@ class MapView : MKMapView {
         }))
     }
     
+    public func removePathAnnotations(){
+        log.debug("PATH remove annotations")
+        removeAnnotations((annotations.filter() {
+            !($0 is ImageAnnotation)
+        }))
+    }
+    
+    public var pathAnnotations : [MKAnnotation] {
+        return annotations.filter { !($0 is ImageAnnotation)}
+    }
+        
     public func removeOverlays(){
         log.debug("PATH remove overlays")
         removeOverlays(overlays)
@@ -72,25 +72,24 @@ class MapView : MKMapView {
             self.removeOverlays()
 
             self.polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-            self.pathAnnotations = []
+            removePathAnnotations()
             
             //add annotation to first and last coords
             if let firstcoord = coordinates.first {
                 let firstpin = MKPointAnnotation()
                 firstpin.coordinate = firstcoord
-                self.pathAnnotations.append(firstpin)
+                self.addAnnotation(firstpin)
             }
             if coordinates.count > 1, let lastcoord = coordinates.last {
                 let lastpin = MKPointAnnotation()
                 lastpin.coordinate = lastcoord
-                self.pathAnnotations.append(lastpin)
+                self.addAnnotation(lastpin)
             }
         }
         if let polyline = self.polyline {
             DispatchQueue.main.async {
                 log.debug("PATH draw polyline on map")
                 self.add(polyline)
-                self.addAnnotations(self.pathAnnotations)
                 self.zoomToContent()
             }
         }

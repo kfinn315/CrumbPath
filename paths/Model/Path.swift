@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 import RxDataSources
 import RxCoreData
-import Photos
 import CoreLocation
 
 @objc(Path)
@@ -94,15 +93,18 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         do{
             self.pointsJSON = try points.getJSON()
         } catch{
-            
+            log.error(error.localizedDescription)
         }
+        
         points.getDistance() { distance in
             self.distance = distance as NSNumber
         }
         points.getLocationDescription() { locality in
             self.locations = locality
         }
-        
+        getSteps { (stepcount) in
+            self.stepcount = stepcount
+        }
         getSnapshot() { coverimage in
             if let coverImg = coverimage {
                 log.info("Set cover image")

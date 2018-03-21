@@ -38,23 +38,21 @@ class MapViewController: UIViewController {
                 self.mapView.load(path: path)
             }
         }).disposed(by: disposeBag)
-        photosManager?.currentAlbum?.subscribe(onNext: {[weak self] collection in
-            log.debug("mapview current album observer - on next")
-            if collection == nil {
-                self?.fetchResults = nil
-            } else{
-                self?.fetchResults = PHAsset.fetchAssets(in: collection!, options: nil)
-            }
-            self?.reloadImageAnnotations()
-        }).disposed(by: disposeBag)
         
-        photosManager?.permissionStatus?.drive(onNext: { [weak self] auth in
-            if self?.photosManager?.isAuthorized ?? false {
-                //self?.imageManager = PHCachingImageManager()
-                self?.reloadImageAnnotations()
+        photosManager?.currentStatusAndAlbum?.drive(onNext: { [weak self] (authStatus,assetCollection) in
+                log.debug("mapview current album observer - on next")
+                
+                if authStatus == .authorized {
+                    if assetCollection == nil {
+                        self?.fetchResults = nil
+                    } else{
+                        self?.fetchResults = PHAsset.fetchAssets(in: assetCollection!, options: nil)
+                    }
+                } else{
+                    self?.photosManager?.requestPermission()
             }
         }).disposed(by: disposeBag)
-    }    
+    }
     override func viewWillAppear(_ animated: Bool) {
         log.debug("mapview will appear")
         photosManager?.requestPermission()
@@ -66,27 +64,7 @@ class MapViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
         log.debug("mapview received memory warning")
-    }
-    func reloadImageAnnotations() {
-        log.debug("IMG reload")
-        
-        if fetchResults != nil {
-            var imageAnnotations : [ImageAnnotation] = []
-            
-            fetchResults!.enumerateObjects({ (asset, startindex, end) in
-                if let loc = asset.location {
-                    let annotation = ImageAnnotation()
-                    annotation.coordinate = loc.coordinate
-                    annotation.asset = asset
-                    annotation.title = "!"
-                    imageAnnotations.append(annotation)
-                }
-            })
-            
-            mapView.setPathAnnotations(imageAnnotations)
-        }
-    }
-    
+    }    
     public var isUserInteractionEnabled : Bool {
         set {
             mapView.isUserInteractionEnabled = newValue

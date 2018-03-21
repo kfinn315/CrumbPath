@@ -13,6 +13,7 @@
         <attribute name="startdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="stepcount" optional="YES" attributeType="Integer 64" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="route" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Route" inverseName="paths" inverseEntity="Route" syncable="YES"/>
     </entity>
     <entity name="Point" representedClassName="Point" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,8 +21,14 @@
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
+    <entity name="Route" representedClassName="Route" syncable="YES" codeGenerationType="category">
+        <attribute name="localid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="paths" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Path" inverseName="route" inverseEntity="Path" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Path" positionX="-297" positionY="-639" width="128" height="225"/>
+        <element name="Path" positionX="-297" positionY="-639" width="128" height="238"/>
         <element name="Point" positionX="-477" positionY="-702" width="128" height="105"/>
+        <element name="Route" positionX="-630" positionY="-552" width="108" height="88"/>
     </elements>
 </model>

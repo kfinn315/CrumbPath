@@ -1,11 +1,4 @@
 //
-//  MockPathManager.swift
-//  pathsTests
-//
-//  Created by Kevin Finn on 2/27/18.
-//  Copyright © 2018 Kevin Finn. All rights reserved.
-//
-
 import RxSwift
 import RxCocoa
 @testable import paths

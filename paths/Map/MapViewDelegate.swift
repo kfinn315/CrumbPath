@@ -22,8 +22,6 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
     static let lineWidth = CGFloat(2.0)
     static let pinAnnotationImageView = UIImage.circle(diameter: CGFloat(10), color: UIColor.orange)
     static let thumbnailSize = CGSize(width: 50, height: 50)
-    
-    fileprivate var imageManager : PHCachingImageManager = PHCachingImageManager()
     private weak var photosManager = PhotoManager.shared
     
     // MARK: - MapViewDelegate implementation
@@ -47,7 +45,7 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
                 annotationView!.annotation = annotation
             }
             if photosManager?.isAuthorized ?? false, let imgAsset = imgAnnotation.asset {
-                annotationView!.assetId = imageManager.requestImage(for: imgAsset, targetSize: MapViewDelegate.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
+                annotationView!.assetId = photosManager?.cachingImageManager?.requestImage(for: imgAsset, targetSize: MapViewDelegate.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {
                     image, data in
                     if annotationView!.assetId == data?[PHImageResultRequestIDKey] as? Int32 {
                         annotationView!.image = image
@@ -55,17 +53,31 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
                 })
             }
             return annotationView
-        } else {
-            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "normalAnnotation")
+        } else if annotation is PathAnnotation {
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "pathAnnotation")
             
             if view == nil {
-                view = MKAnnotationView.init(annotation: annotation, reuseIdentifier: "normalAnnotation")
+                view = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "pathAnnotation")
             } else {
                 view!.annotation = annotation
             }
             
             view!.image = MapViewDelegate.pinAnnotationImageView
+            view!.canShowCallout = true
+            let label = UILabel()
+            label.text = "\(annotation.title): \(annotation.subtitle)"
+            view!.rightCalloutAccessoryView = label
+            return view
+        } else{ //mkpointAnnotation
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "normalAnnotation")
             
+            if view == nil {
+                  view = MKAnnotationView.init(annotation: annotation, reuseIdentifier: "normalAnnotation")
+            } else {
+                view!.annotation = annotation
+            }
+            
+            view!.image = MapViewDelegate.pinAnnotationImageView
             return view
         }
     }

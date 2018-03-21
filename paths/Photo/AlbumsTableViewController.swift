@@ -59,7 +59,6 @@ public class AlbumsTableViewController : BasePhotoViewController,  UICollectionV
         let album = self.data[indexPath.row]
         DispatchQueue.global(qos: .userInitiated).async {
             self.photosManager?.updateCurrentAlbum(collectionid: album.localid)
-//            _ = self.pathManager?.updateCurrentAlbum(collectionid: album.localid)
         }
         self.navigationController?.popViewController(animated: true)
     }

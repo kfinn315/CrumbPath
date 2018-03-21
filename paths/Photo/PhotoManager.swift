@@ -11,31 +11,55 @@ import Photos
 import RxSwift
 import RxCocoa
 
-protocol PhotoManagerInterface {
-    func getImageCollection(_ localid: String?) -> PHAssetCollection?
+protocol IPhotoManager : class {
+    //var currentAlbum : Observable<PHAssetCollection?>? {get}
+    //var permissionStatus : Driver<PHAuthorizationStatus>? {get}
+    var isAuthorized : Bool {get}
     var photoCollections : [PhotoCollection] {get}
+    var authorizationStatus : PHAuthorizationStatus {get}
+    var currentStatusAndAlbum : Driver<(PHAuthorizationStatus,PHAssetCollection?)>? {get}
+    var cachingImageManager : PHCachingImageManager? {get}
+    
+    func updateCurrentAlbum(collectionid : String)
+    func requestPermission()
+    func getImageCollection(_ localid: String?) -> PHAssetCollection?
+    func fetchAssets(in collection: PHAssetCollection, options: PHFetchOptions?) -> PHFetchResult<PHAsset>
+    func addToCurrent(_ assets: [PHAsset], completion: ((Bool, Error?) -> ())?)
 }
 /**
  Manages the current path's photo album and Photo permission
  */
-class PhotoManager {
+class PhotoManager : IPhotoManager{
     private static var _shared : PhotoManager?
     
-    //public var currentAlbumId : String?
-    public var currentAlbum : Observable<PHAssetCollection?>?
-    public var permissionStatus : Driver<PHAuthorizationStatus>?
-    public var authorizationStatus = PHPhotoLibrary.authorizationStatus()
-    public var isAuthorized : Bool {
-        return authorizationStatus == .authorized || authorizationStatus == .restricted
+    private var _cachingImageManager : PHCachingImageManager?    
+    public var cachingImageManager : PHCachingImageManager? {
+        if isAuthorized {
+            if _cachingImageManager == nil {
+                _cachingImageManager = PHCachingImageManager()
+            }
+            
+            return _cachingImageManager
+        } else {
+            return nil
+        }
     }
     
+    public var currentStatusAndAlbum : Driver<(PHAuthorizationStatus,PHAssetCollection?)>?
+    public var authorizationStatus = PHPhotoLibrary.authorizationStatus()
+    public var isAuthorized : Bool {
+        return authorizationStatus == .authorized
+    }
+    
+    private var currentAlbum : Observable<PHAssetCollection?>?
+    private var permissionStatus : Driver<PHAuthorizationStatus>?
     private weak var pathManager = PathManager.shared
     private var fetchOptions = PHFetchOptions()
     private let currentAlbumSubject : BehaviorSubject<PHAssetCollection?>
     private var permissionStatusSubject : BehaviorSubject<PHAuthorizationStatus>
     private var disposeBag = DisposeBag()
     
-    public static var shared : PhotoManager {
+    public static var shared : IPhotoManager {
         if _shared == nil {
             _shared = PhotoManager()
         }
@@ -50,6 +74,7 @@ class PhotoManager {
         
         //when currentPathDriver sends a 'path', get image collection of 'path' and send it to subscribers of currentAlbumDriver
         self.pathManager?.currentPathObservable?.subscribe(onNext: { [weak self] path in
+            guard self?.isAuthorized ?? false else{ return }
             //let collection = self?.getImageCollection(path?.albumId)
             guard let localid = path?.localid else {return}
             PhotoAlbumHelper.getAlbum(named: localid, completion: { (collection) in
@@ -58,6 +83,8 @@ class PhotoManager {
         }).disposed(by: self.disposeBag)
         
         permissionStatus = self.permissionStatusSubject.asDriver(onErrorJustReturn: PHAuthorizationStatus.denied)
+        
+        currentStatusAndAlbum = Observable.combineLatest(permissionStatus!.asObservable(), currentAlbum!).asDriver(onErrorJustReturn: (.denied, nil))
     }
     
     public func updateCurrentAlbum(collectionid: String) {
@@ -136,7 +163,7 @@ class PhotoManager {
             (album) in
             
             if album == nil {
-                PhotoAlbumHelper.createAlbum(named: (self?.pathManager?.currentPath?.localid)!) {assetCollection in
+                PhotoAlbumHelper.createAlbum(named: (self?.pathManager?.currentPath?.localid)!) { assetCollection in
                     if assetCollection != nil {
                         PhotoAlbumHelper.save(assets: assets, to: assetCollection!) {
                             (success, error) in

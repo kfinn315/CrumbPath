@@ -33,12 +33,13 @@ class AllMapViewController : UIViewController {
         
         let fetchRequest : NSFetchRequest<Path> = Path.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "title", ascending: false)]
-        PathManager.managedObjectContext.rx.entities(fetchRequest: fetchRequest).asObservable().subscribe(onNext: { (paths) in
+        PathManager.managedObjectContext.rx.entities(fetchRequest: fetchRequest).asObservable().observeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInteractive)).subscribe(onNext: { (paths) in
             
             self.mapView.clear()
             //self.overlays = []
             self.mapView.removeOverlays()
             var overlays : [MKOverlay] = []
+            var annotations : [PathAnnotation] = []
             paths.forEach({ (path) in
                 let coords = path.getSimplifiedCoordinates()
                 let polyline = MKPolyline(coordinates: coords, count: coords.count)
@@ -48,14 +49,21 @@ class AllMapViewController : UIViewController {
                     self.boundingRect = MKMapRectUnion(self.boundingRect!, polyline.boundingMapRect)
                 }
                 overlays.append(polyline)
+                
+                if let startCoord = coords.first {
+                    let annotation = PathAnnotation()
+                    annotation.coordinate = startCoord
+                    annotation.title = path.displayTitle
+                    annotation.subtitle = path.displayDistance
+                    annotations.append(annotation)
+                }
             })
-            
-            self.mapView.addOverlays(overlays)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotations(annotations)
+                self.mapView.addOverlays(overlays)
+            }
         }).disposed(by: disposeBag)
     }
-//    deinit {
-//        mapView.delegate = nil
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -79,12 +87,8 @@ class AllMapViewController : UIViewController {
         mapView.removeOverlays()
         mapView.delegate = nil
     }
- 
-//    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        let renderer = MKPolylineRenderer(overlay: overlay)
-//        renderer.strokeColor = MapViewController.strokeColor
-//        renderer.lineWidth = MapViewController.lineWidth
-//
-//        return renderer
-//    }
+}
+
+class PathAnnotation : MKPointAnnotation {
+    
 }
