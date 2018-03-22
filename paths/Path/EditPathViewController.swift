@@ -36,7 +36,7 @@ class EditPathViewController : FormViewController {
     public var isNewPath : Bool = false
     
     private weak var pathManager : IPathManager? = PathManager.shared
-    fileprivate weak var path : Path?
+    fileprivate weak var path : IPath?
     private var disposeBag = DisposeBag()
     
     convenience init(pathManager: IPathManager?) {
@@ -110,7 +110,7 @@ class EditPathViewController : FormViewController {
         super.viewDidDisappear(animated)
     }
     
-    func updateForm(with path: Path?) {
+    func updateForm(with path: IPath?) {
         form.rowBy(tag: "title")?.value = path?.title
         form.rowBy(tag: "notes")?.value = path?.notes
         form.rowBy(tag: "locations")?.value = path?.locations

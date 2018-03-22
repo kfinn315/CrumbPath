@@ -13,22 +13,6 @@ import Photos
 @testable import paths
 
 class MockPhotoManager : IPhotoManager {
-    var invokedCurrentAlbumGetter = false
-    var invokedCurrentAlbumGetterCount = 0
-    var stubbedCurrentAlbum: Observable<PHAssetCollection?>!
-    var currentAlbum : Observable<PHAssetCollection?>? {
-        invokedCurrentAlbumGetter = true
-        invokedCurrentAlbumGetterCount += 1
-        return stubbedCurrentAlbum
-    }
-    var invokedPermissionStatusGetter = false
-    var invokedPermissionStatusGetterCount = 0
-    var stubbedPermissionStatus: Driver<PHAuthorizationStatus>!
-    var permissionStatus : Driver<PHAuthorizationStatus>? {
-        invokedPermissionStatusGetter = true
-        invokedPermissionStatusGetterCount += 1
-        return stubbedPermissionStatus
-    }
     var invokedIsAuthorizedGetter = false
     var invokedIsAuthorizedGetterCount = 0
     var stubbedIsAuthorized: Bool! = false
@@ -52,6 +36,22 @@ class MockPhotoManager : IPhotoManager {
         invokedAuthorizationStatusGetter = true
         invokedAuthorizationStatusGetterCount += 1
         return stubbedAuthorizationStatus
+    }
+    var invokedCurrentStatusAndAlbumGetter = false
+    var invokedCurrentStatusAndAlbumGetterCount = 0
+    var stubbedCurrentStatusAndAlbum: Driver<(PHAuthorizationStatus,PHAssetCollection?)>!
+    var currentStatusAndAlbum : Driver<(PHAuthorizationStatus,PHAssetCollection?)>? {
+        invokedCurrentStatusAndAlbumGetter = true
+        invokedCurrentStatusAndAlbumGetterCount += 1
+        return stubbedCurrentStatusAndAlbum
+    }
+    var invokedCachingImageManagerGetter = false
+    var invokedCachingImageManagerGetterCount = 0
+    var stubbedCachingImageManager: PHCachingImageManager!
+    var cachingImageManager : PHCachingImageManager? {
+        invokedCachingImageManagerGetter = true
+        invokedCachingImageManagerGetterCount += 1
+        return stubbedCachingImageManager
     }
     var invokedUpdateCurrentAlbum = false
     var invokedUpdateCurrentAlbumCount = 0

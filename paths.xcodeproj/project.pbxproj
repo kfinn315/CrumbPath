@@ -44,6 +44,8 @@
 		67D1FF372061866900A0518C /* MockPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF362061866900A0518C /* MockPhotoManager.swift */; };
 		67D1FF3B2061A18A00A0518C /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF3A2061A18A00A0518C /* RoutesTableViewController.swift */; };
 		67D1FF3D206288BD00A0518C /* AddRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF3C206288BD00A0518C /* AddRouteViewController.swift */; };
+		67D1FF4020630F3800A0518C /* MockPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF3F20630F3800A0518C /* MockPath.swift */; };
+		67D1FF422063DB0600A0518C /* MockPointsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D1FF412063DB0600A0518C /* MockPointsManager.swift */; };
 		67F4B3682044C29900AA863E /* PointsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F4B3672044C29900AA863E /* PointsTest.swift */; };
 		67F8FFC6205748B2004AEC13 /* MapViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8FFC5205748B2004AEC13 /* MapViewTests.swift */; };
 		67F8FFC820580C99004AEC13 /* CircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67F8FFC720580C99004AEC13 /* CircleView.xib */; };
@@ -169,6 +171,8 @@
 		67D1FF362061866900A0518C /* MockPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoManager.swift; sourceTree = "<group>"; };
 		67D1FF3A2061A18A00A0518C /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
 		67D1FF3C206288BD00A0518C /* AddRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRouteViewController.swift; sourceTree = "<group>"; };
+		67D1FF3F20630F3800A0518C /* MockPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPath.swift; sourceTree = "<group>"; };
+		67D1FF412063DB0600A0518C /* MockPointsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPointsManager.swift; sourceTree = "<group>"; };
 		67F4B3672044C29900AA863E /* PointsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTest.swift; sourceTree = "<group>"; };
 		67F8FFC5205748B2004AEC13 /* MapViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewTests.swift; sourceTree = "<group>"; };
 		67F8FFC720580C99004AEC13 /* CircleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleView.xib; sourceTree = "<group>"; };
@@ -322,6 +326,8 @@
 				6700B3B92054BDD800FD4F05 /* ContextWrapper.swift */,
 				67F8FFD22059DEDA004AEC13 /* ViewControllerHelpers.swift */,
 				67D1FF362061866900A0518C /* MockPhotoManager.swift */,
+				67D1FF3F20630F3800A0518C /* MockPath.swift */,
+				67D1FF412063DB0600A0518C /* MockPointsManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1021,6 +1027,7 @@
 				DC364166203CE0320097EEC4 /* PagesViewControllerTests.swift in Sources */,
 				6726161E2044790600C60B60 /* PathTests.swift in Sources */,
 				DC364168203CE1B50097EEC4 /* NewPathViewControllerTests.swift in Sources */,
+				67D1FF4020630F3800A0518C /* MockPath.swift in Sources */,
 				6712B2A02044FB9200B46A03 /* PathDetailViewControllerTests.swift in Sources */,
 				67F8FFC6205748B2004AEC13 /* MapViewTests.swift in Sources */,
 				6712B2A62045A42000B46A03 /* MockPathManager.swift in Sources */,
@@ -1029,6 +1036,7 @@
 				DCA9F74B203B923F00BA28D4 /* PathManagerTests.swift in Sources */,
 				DC364160203CC4ED0097EEC4 /* PointManagerTests.swift in Sources */,
 				6700B3B82054B5B600FD4F05 /* PathTools.swift in Sources */,
+				67D1FF422063DB0600A0518C /* MockPointsManager.swift in Sources */,
 				6712B2A22045041000B46A03 /* RecordingViewControllerTests.swift in Sources */,
 				DC364164203CDE100097EEC4 /* NavTableViewControllerTests.swift in Sources */,
 				6700B3BA2054BDD800FD4F05 /* ContextWrapper.swift in Sources */,

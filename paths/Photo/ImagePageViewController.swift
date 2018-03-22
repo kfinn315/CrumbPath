@@ -71,13 +71,12 @@
             } else if authStatus == .notDetermined {
                 //ask
                 log.verbose("ImagePage vc should ask for photo permission")
-                
             } else{
                 //has permission
                 self.fetchResult = self.getFetchResultFrom(assetCollection)
             }
         }).disposed(by: disposeBag)
-
+        
         //add a tap gesture recognizer
         view.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showFullScreen)))
     }
@@ -136,16 +135,21 @@
             
             DispatchQueue.main.async {
                 //disable scrolling and paging controller if there is 1 or 0 images
-                if fetchResult.count <= 1 {
+                if fetchResult.count == 0 {
                     self.dataSource = nil
+                    firstPage.setAsset(asset: nil, assetIndex: 0)
+                    firstPage.showEmptyMessage()
+                } else {
+                    if fetchResult.count == 1 {
+                        self.dataSource = nil
+                    } else {
+                        self.dataSource = self
+                    }
+                    firstPage.hideEmptyMessage()
+                    firstPage.setAsset(asset: fetchResult.firstObject, assetIndex: 0)
+                    
                 }
-                else {
-                    self.dataSource = self
-                }
-                
-                firstPage.setAsset(asset: fetchResult.firstObject, assetIndex: 0)
             }
-            
         }
     }
     
@@ -167,7 +171,6 @@
             log.info("load previous asset index \(prevAssetIndex)")
             prevVC.asset = prevAsset
             prevVC.assetIndex = prevAssetIndex
-            //            orderedViewControllers[nextIndex] = prevVC
             return prevVC
         }
         
@@ -191,7 +194,6 @@
             log.info("load nexgt asset index \(nextAssetIndex)")
             nextVC.asset = nextAsset
             nextVC.assetIndex = nextAssetIndex
-            //orderedViewControllers[nextIndex] = nextVC
             return nextVC
         }
         

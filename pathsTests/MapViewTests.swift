@@ -71,7 +71,7 @@ class MapViewTests : QuickSpec {
                     mapView.setImageAnnotations(annotations)
                 }
                 it("adds path annotations to the map"){
-                    expect(mapView.imageAnnotations as NSArray).to(contain(annotations as NSArray))
+                    expect(mapView.annotations as NSArray).to(contain(annotations as NSArray))
                 }
             }
             

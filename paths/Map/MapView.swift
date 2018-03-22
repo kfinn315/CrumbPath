@@ -61,7 +61,7 @@ class MapView : MKMapView {
         self.removeOverlays()
     }
     
-    public func load(path: Path?) {
+    public func load(path: IPath?) {
         log.debug("PATH loadPath")
         let coordinates = path?.getSimplifiedCoordinates() ?? []
         

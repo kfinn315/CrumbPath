@@ -35,15 +35,15 @@ class PathManagerTests: QuickSpec {
                 disposeBag = DisposeBag()
                 initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
             }
- 
+            
             context("initally") {
                 it("has no current path"){
                     expect(pathManager.currentPath).to(beNil())
                 }
                 
-//                it("has no current album"){
-//                    expect(pathManager.currentAlbumId).to(beNil())
-//                }
+                //                it("has no current album"){
+                //                    expect(pathManager.currentAlbumId).to(beNil())
+                //                }
             }
             
             describe("currentPathObservable"){
@@ -63,7 +63,7 @@ class PathManagerTests: QuickSpec {
                                 pathManager.currentPathObservable?.subscribe(onNext: {
                                     path in
                                     onNextCalled = true
-                                    actualPath = path
+                                    actualPath = path as? Path
                                     done()
                                 }).disposed(by: disposeBag)
                             })
@@ -82,7 +82,7 @@ class PathManagerTests: QuickSpec {
                                 pathManager.currentPathObservable?.subscribe(onNext: {
                                     path in
                                     onNextCalled = true
-                                    actualPath = path
+                                    actualPath = path as! Path
                                     done()
                                 }).disposed(by: disposeBag)
                             })
@@ -101,7 +101,7 @@ class PathManagerTests: QuickSpec {
                         pathManager.currentPathObservable?.subscribe(onNext: {
                             path in
                             onNextCalled = true
-                            actualPath = path
+                            actualPath = path as! Path
                             
                         }).disposed(by: disposeBag)
                         pathManager.setCurrentPath(expectedPath)
@@ -122,7 +122,33 @@ class PathManagerTests: QuickSpec {
                     self.mockcontext.flushPathData()
                 }
             }
-            
+            describe("saving a mockpath"){
+                var actualError : Error!
+                var expectedPathId : String!
+                var mockPath : MockPath!
+                var actualPath : IPath!
+                
+                beforeEach {
+                    closureRan = false
+                    actualPath = nil
+                    
+                    mockPath = MockPath()
+                    
+                    waitUntil(action: {done in
+                        pathManager.save(path: mockPath as? IPath, callback: {(path,error) in
+                            actualPath = path
+                            expectedPathId = path?.identity
+                            closureRan = true
+                            actualError = error
+                            done()
+                        })
+                    })
+                }
+            }
+            describe("mock test"){
+                var mockPtsMgr = MockPointsManager(context: mockcontext.context)
+                var pathmgr = PathManager.init(mockPtsMgr, PhotoManager.shared)
+            }
             describe("saving a path") {
                 var actualError : Error!
                 var expectedPathId : String!
@@ -130,14 +156,14 @@ class PathManagerTests: QuickSpec {
                 beforeEach {
                     closureRan = false
                     actualPath = nil
-                   
+                    
                     initialPathCount = self.mockcontext.numberOfPathsInPersistentStore()
                     //add new path to context
                     expectedPath = PathTools.generateRandomPath()
-
+                    
                     waitUntil(action: {done in
                         pathManager.save(path: expectedPath, callback: {(path,error) in
-                            actualPath = path
+                            actualPath = path as? Path
                             expectedPathId = path?.identity
                             closureRan = true
                             actualError = error
@@ -200,37 +226,36 @@ class PathManagerTests: QuickSpec {
                     })
                     let callbackexpectation0 = self.expectation(description: "initalCallback")
                     let callbackexpectation1 = self.expectation(description: "update callback")
-//                        pathManager.setCurrentPath(currentPath)
-                        pathManager.currentPathObservable?.subscribe(onNext: {
-                            path in
-                            onNextCalled = true
-                            callbackCount += 1
-                            if callbackCount == 1 {
-                                do{
-                                    //update current path with expected path values
-                                    expectedPath.albumId = expAlbumId
-                                    expectedPath.coverimg = expCoverImg
-                                    expectedPath.distance = expDistance
-                                    expectedPath.duration = expDuration
-                                    expectedPath.title = expTitle
-                                    
-                                    //action
-                                    try pathManager.updateCurrentPathInCoreData()
-                                    
-                                    callbackexpectation0.fulfill()
-                                }
-                                catch{
-                                    //error
-                                }
+                    pathManager.currentPathObservable?.subscribe(onNext: {
+                        path in
+                        onNextCalled = true
+                        callbackCount += 1
+                        if callbackCount == 1 {
+                            do{
+                                //update current path with expected path values
+                                expectedPath.albumId = expAlbumId
+                                expectedPath.coverimg = expCoverImg
+                                expectedPath.distance = expDistance
+                                expectedPath.duration = expDuration
+                                expectedPath.title = expTitle
                                 
-                            } else if callbackCount == 2 {
-                                actualId = path?.identity
-                                callbackexpectation1.fulfill()
-                                actualPath = path
+                                //action
+                                try pathManager.updateCurrentPathInCoreData()
+                                
+                                callbackexpectation0.fulfill()
                             }
-                        }).disposed(by: disposeBag)
+                            catch{
+                                //error
+                            }
+                            
+                        } else if callbackCount == 2 {
+                            actualId = path?.identity
+                            callbackexpectation1.fulfill()
+                            actualPath = path
+                        }
+                    }).disposed(by: disposeBag)
                     
-                        self.wait(for: [callbackexpectation0,callbackexpectation1], timeout: 50.0)
+                    self.wait(for: [callbackexpectation0,callbackexpectation1], timeout: 50.0)
                 }
                 
                 it("doesn't add a path to the ManagedObjectContext"){

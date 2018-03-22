@@ -64,7 +64,7 @@ class ImagePageViewControllerTests : QuickSpec {
                 
                 beforeEach {
                     
-                    mockPhotoManager.stubbedPermissionStatus = statusDriver
+                    mockPhotoManager.stubbedPermissionStatus = statusSubject.asObserver()
                 }
                 context("permission status is undetermined"){
                     beforeEach {

@@ -138,7 +138,7 @@ class InformationViewController : UITableViewController, MFMailComposeViewContro
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
-                let success = UIApplication.shared.openURL(url)
+                _ = UIApplication.shared.openURL(url)
             }
         }
     }
@@ -146,4 +146,16 @@ class InformationViewController : UITableViewController, MFMailComposeViewContro
     func showThirdPartyLicenses(){
         self.navigationController?.pushViewController(licensesViewController, animated: true)
     }
+    
+    //MARK:- MFMailComposeViewControllerDelegate implementation
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        dismiss(animated: true, completion: nil)
+        
+        if let error = error {
+            log.error(error.localizedDescription)
+        }
+    }
+    
 }

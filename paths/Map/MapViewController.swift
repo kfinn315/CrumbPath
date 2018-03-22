@@ -23,7 +23,6 @@ class MapViewController: UIViewController {
     private weak var pathManager = PathManager.shared
     private weak var photosManager = PhotoManager.shared
     
-    //fileprivate var imageManager : PHCachingImageManager?
     var fetchResults : PHFetchResult<PHAsset>?
     private var disposeBag = DisposeBag()
     let delegate : MapViewDelegate = MapViewDelegate()

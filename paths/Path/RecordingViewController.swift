@@ -130,7 +130,7 @@ public class RecordingViewController : BaseRecordingController {
         stopTime = Date()
         locationManager?.stopLocationUpdates()
     }
-    func save(callback: @escaping (Path?,Error?) -> Void) {
+    func save(callback: @escaping (IPath?, Error?) -> Void) {
         guard let startTime = startTime, let stopTime = stopTime else {
             callback(nil, LocalError.failed(message: "start or stop times were not set"))
             return
@@ -141,7 +141,7 @@ public class RecordingViewController : BaseRecordingController {
         path?.enddate = stopTime
         pathManager?.save(path: path, callback: callback)
     }
-    func onSaveComplete(path: Path?, error: Error?) {
+    func onSaveComplete(path: IPath?, error: Error?) {
         DispatchQueue.main.async { [weak self] in
             self?.dismiss(animated: false) { //hide spinner
                 if error == nil, path != nil {

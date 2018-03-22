@@ -35,8 +35,7 @@ public class BaseRecordingController : UIViewController,CLLocationManagerDelegat
             .drive(onNext: { [unowned self] (cllocation : CLLocation) in
                 //this is called when there's a new location
                 log.debug("location manager didUpdateLocations")
-                
                 self.pointsManager.savePoint(Point(from: cllocation))
             }).disposed(by: disposeBag)       
-    }  
+    }
 }

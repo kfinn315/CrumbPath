@@ -11,17 +11,17 @@ import CoreData
 import CoreLocation
 import UIKit
 
-protocol PointsManagerInterface {
+protocol IPointsManager {
     init(context: NSManagedObjectContext?)
     func savePoint(_ point: Point)
     func clearPoints()
-    func fetchPoints() -> Points
+    func fetchPoints() -> IPoints?
 }
 
 /**
  Retrieves and updates the Point objects in CoreData
  */
-class PointsManager : PointsManagerInterface {
+class PointsManager : IPointsManager {
     weak var context : NSManagedObjectContext?
     
     convenience init() {
@@ -41,6 +41,11 @@ class PointsManager : PointsManagerInterface {
         }
         
         context!.insert(point)
+        do{
+            try context!.save()
+        } catch{
+            log.error(error.localizedDescription)
+        }
     }
     
     func clearPoints() {
@@ -65,12 +70,13 @@ class PointsManager : PointsManagerInterface {
         }
     }
     
-    public func fetchPoints() -> Points{
-        var points : [Point] = []
+    public func fetchPoints() -> IPoints?{
+        var points : IPoints?
         let fetchRequest : NSFetchRequest<Point> = Point.fetchRequest()
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "timestamp", ascending: true)]
         do {
-            points = try PathManager.managedObjectContext!.fetch(fetchRequest)
+            let pointsData = try PathManager.managedObjectContext!.fetch(fetchRequest)
+            points = Points(data: pointsData)
         } catch {
             log.error("error \(error)")
         }

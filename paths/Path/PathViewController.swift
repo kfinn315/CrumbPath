@@ -87,7 +87,7 @@ class PathViewController : UIViewController {
             self.present(mapModalViewController, animated: true, completion: nil)
         }
     }
-    func updateUI(_ path: Path?){
+    func updateUI(_ path: IPath?){
         self.lblTitle.text = path?.displayTitle
         self.lblLocation.text = path?.locations
         

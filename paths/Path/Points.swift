@@ -8,25 +8,34 @@
 
 import CoreLocation
 
-public typealias Points = [Point]
+public protocol IPoints {
+    init(data: Array<Point>)
+    
+    func getDistance(_ callback: @escaping (CLLocationDistance) -> Void)
+    func getLocationDescription(_ callback: @escaping (String?) -> Void )
+    func getJSON() throws -> String?
+}
 
-/**
- Extension methods for a Point array which format or perform calculations
- */
-extension Array where Element:Point {
+public class Points : IPoints {
+    var data : Array<Point>!
+    
+    public required init(data: Array<Point>) {
+        self.data = data
+    }
+    
     public func getDistance(_ callback: @escaping (CLLocationDistance) -> Void){
         var distance : CLLocationDistance = 0.0
         
         var i = 0
         var start : CLLocation?
         
-        while(i < self.count ) {
+        while(i < data.count ) {
             if i == 0 {
-                start = self[i].location
+                start = data[i].location
             } else{
-                distance += start!.distance(from: self[i].location)
+                distance += start!.distance(from: data[i].location)
                 log.verbose("\(i) \(distance)")
-                start = self[i].location
+                start = data[i].location
             }
             i += 1
         }
@@ -36,7 +45,7 @@ extension Array where Element:Point {
 
     public func getLocationDescription(_ callback: @escaping (String?) -> Void ) {
         //get location names
-        if let point1 = self.first {
+        if let point1 = data.first {
             CLGeocoder().reverseGeocodeLocation(CLLocation(point1.coordinates), completionHandler: { (placemarks, error) in
                 var locationData : [String] = []
                 
@@ -54,7 +63,7 @@ extension Array where Element:Point {
     }
     
     public func getJSON() throws -> String? {
-        let pointsJSON = String(data: try JSONEncoder().encode(self), encoding: .utf8)
+        let pointsJSON = String(data: try JSONEncoder().encode(data), encoding: .utf8)
         log.verbose("points: \(pointsJSON ?? "nil")")
         return pointsJSON
     }

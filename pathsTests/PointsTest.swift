@@ -21,12 +21,9 @@ class PointsTest: QuickSpec {
         
         describe("Points") {
             describe("after initialized") {
-                beforeEach {
-                    subject = Points()
-                }
                 describe("a description for a point in limerick ireland"){
                     beforeEach {
-                        subject.append(Point(from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012)))
+                        subject = Points(data: [Point(from: CLLocation(latitude: 52.6680204, longitude: -8.630497600000012))])
                     }
                     it("contains 'limerick'"){
                         var location : String?
@@ -46,9 +43,12 @@ class PointsTest: QuickSpec {
                             
                             expectedDistance = self.getDistance(locations)
                             
+                            var pointsdata : [Point] = []
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                pointsdata.append(Point(from: location))
                             }
+                            
+                            subject = Points(data: pointsdata)
                         }
                         
                         it("returns the distance"){
@@ -61,7 +61,7 @@ class PointsTest: QuickSpec {
                     }
                     
                     describe("0 points") {
-                        subject = []
+                        subject = Points(data: [])
                         
                         it("returns 0") {
                             waitUntil { done in
@@ -74,11 +74,14 @@ class PointsTest: QuickSpec {
                     
                     describe("1 point") {
                         beforeEach {
+                            var pointsdata : [Point] = []
                             let locations = [CLLocation(latitude: 32.9697, longitude: -96.80322)]
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                pointsdata.append(Point(from: location))
                             }
+                            
+                            subject = Points(data: pointsdata)
                         }
                         
                         it("returns 0"){
@@ -92,6 +95,7 @@ class PointsTest: QuickSpec {
                     
                     describe("identical points") {
                         beforeEach {
+                            var pointsdata : [Point] = []
                             let locations = [CLLocation(latitude: 32.9697, longitude: -96.80322),
                                              CLLocation(latitude: 32.9697, longitude: -96.80322),
                                              CLLocation(latitude: 32.9697, longitude: -96.80322),
@@ -102,8 +106,10 @@ class PointsTest: QuickSpec {
                             ]
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                pointsdata.append(Point(from: location))
                             }
+                            
+                            subject = Points(data: pointsdata)
                         }
                         it("returns 0"){
                             waitUntil { done in
@@ -118,6 +124,7 @@ class PointsTest: QuickSpec {
                         var expected : CLLocationDistance!
                         
                         beforeEach {
+                            var pointsdata : [Point] = []
                             var locations : [CLLocation] = []
                             
                             var i = 0
@@ -132,8 +139,10 @@ class PointsTest: QuickSpec {
                             expected = self.getDistance(locations)
                             
                             for var location in locations {
-                                subject.append(Point(from: location))
+                                pointsdata.append(Point(from: location))
                             }
+                            
+                            subject = Points(data: pointsdata)
                         }
                         
                         it("returns the distance between the points") {

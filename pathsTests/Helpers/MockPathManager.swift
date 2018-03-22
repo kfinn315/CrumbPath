@@ -6,8 +6,8 @@ import RxCocoa
 class MockPathManager : IPathManager {
     var invokedCurrentPathObservableGetter = false
     var invokedCurrentPathObservableGetterCount = 0
-    var stubbedCurrentPathObservable: Observable<Path?>!
-    var currentPathObservable : Observable<Path?>? {
+    var stubbedCurrentPathObservable: Observable<IPath?>!
+    var currentPathObservable : Observable<IPath?>? {
         invokedCurrentPathObservableGetter = true
         invokedCurrentPathObservableGetterCount += 1
         return stubbedCurrentPathObservable
@@ -32,22 +32,6 @@ class MockPathManager : IPathManager {
             return stubbedHasNewPath
         }
     }
-    var invokedCurrentAlbumIdGetter = false
-    var invokedCurrentAlbumIdGetterCount = 0
-    var stubbedCurrentAlbumId: String!
-    var currentAlbumId : String? {
-        invokedCurrentAlbumIdGetter = true
-        invokedCurrentAlbumIdGetterCount += 1
-        return stubbedCurrentAlbumId
-    }
-    var invokedHasChangesGetter = false
-    var invokedHasChangesGetterCount = 0
-    var stubbedHasChanges: Bool! = false
-    var hasChanges : Bool {
-        invokedHasChangesGetter = true
-        invokedHasChangesGetterCount += 1
-        return stubbedHasChanges
-    }
     var invokedUpdateCurrentAlbum = false
     var invokedUpdateCurrentAlbumCount = 0
     var invokedUpdateCurrentAlbumParameters: (collectionid: String, Void)?
@@ -60,9 +44,9 @@ class MockPathManager : IPathManager {
     }
     var invokedSetCurrentPath = false
     var invokedSetCurrentPathCount = 0
-    var invokedSetCurrentPathParameters: (path: Path?, Void)?
-    var invokedSetCurrentPathParametersList = [(path: Path?, Void)]()
-    func setCurrentPath(_ path: Path?) {
+    var invokedSetCurrentPathParameters: (path: IPath?, Void)?
+    var invokedSetCurrentPathParametersList = [(path: IPath?, Void)]()
+    func setCurrentPath(_ path: IPath?) {
         invokedSetCurrentPath = true
         invokedSetCurrentPathCount += 1
         invokedSetCurrentPathParameters = (path, ())
@@ -78,10 +62,10 @@ class MockPathManager : IPathManager {
     }
     var invokedSave = false
     var invokedSaveCount = 0
-    var invokedSaveParameters: (path: Path?, Void)?
-    var invokedSaveParametersList = [(path: Path?, Void)]()
-    var stubbedSaveCallbackResult: (Path?, Error?)?
-    func save(path: Path?, callback: @escaping (Path?,Error?) -> Void) {
+    var invokedSaveParameters: (path: IPath?, Void)?
+    var invokedSaveParametersList = [(path: IPath?, Void)]()
+    var stubbedSaveCallbackResult: (IPath?, Error?)?
+    func save(path: IPath?, callback: @escaping (IPath?,Error?) -> Void) {
         invokedSave = true
         invokedSaveCount += 1
         invokedSaveParameters = (path, ())
@@ -99,22 +83,6 @@ class MockPathManager : IPathManager {
         invokedUpdateCurrentPathInCoreDataCount += 1
         invokedUpdateCurrentPathInCoreDataParameters = (notify, ())
         invokedUpdateCurrentPathInCoreDataParametersList.append((notify, ()))
-    }
-    var invokedAddPointToData = false
-    var invokedAddPointToDataCount = 0
-    var invokedAddPointToDataParameters: (point: LocalPoint, Void)?
-    var invokedAddPointToDataParametersList = [(point: LocalPoint, Void)]()
-    func addPointToData(_ point: LocalPoint) {
-        invokedAddPointToData = true
-        invokedAddPointToDataCount += 1
-        invokedAddPointToDataParameters = (point, ())
-        invokedAddPointToDataParametersList.append((point, ()))
-    }
-    var invokedClearPoints = false
-    var invokedClearPointsCount = 0
-    func clearPoints() {
-        invokedClearPoints = true
-        invokedClearPointsCount += 1
     }
     var invokedGetAllPaths = false
     var invokedGetAllPathsCount = 0

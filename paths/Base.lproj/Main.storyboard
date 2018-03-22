@@ -417,7 +417,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLi-lS-Ypd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3034" y="-2291"/>
+            <point key="canvasLocation" x="-3174" y="-2292"/>
         </scene>
         <!--Photos View Controller-->
         <scene sceneID="zp5-SV-RYC">
@@ -858,7 +858,7 @@
                 <pageViewController storyboardIdentifier="ImagePage" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Maj-T6-jfC" customClass="ImagePageViewController" customModule="paths" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZu-95-k6A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2934" y="-1806"/>
+            <point key="canvasLocation" x="-2740" y="-1962"/>
         </scene>
         <!--Page-->
         <scene sceneID="w1N-qc-8TI">
@@ -1108,8 +1108,8 @@
                                     <segue destination="Maj-T6-jfC" kind="embed" id="GO0-rH-5xx"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhM-CO-PSr" userLabel="Center View">
-                                <rect key="frame" x="-375" y="291.5" width="375" height="127.5"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhM-CO-PSr" userLabel="Center View">
+                                <rect key="frame" x="0.0" y="292" width="0.0" height="128"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xNQ-xL-HyE">
                                         <rect key="frame" x="50" y="25" width="180" height="52"/>
@@ -1344,7 +1344,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjp-ba-XdX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2980.434782608696" y="-3121.739130434783"/>
+            <point key="canvasLocation" x="-2981.5999999999999" y="-3121.8890554722643"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

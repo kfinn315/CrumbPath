@@ -12,8 +12,43 @@ import RxDataSources
 import RxCoreData
 import CoreLocation
 
+protocol IPath : class {
+    init()
+    init(entity: NSManagedObject)
+    init(_ context: NSManagedObjectContext)
+    func setPoints(_ points: IPoints)
+    func setTimes(start: Date, end: Date)
+    //func save()
+    func update(_ entity: NSManagedObject) 
+    func getSimplifiedCoordinates() -> [CLLocationCoordinate2D]
+    func getSteps(_ callback: @escaping (NSNumber?) -> Void)
+    func getSnapshot(_ callback: @escaping (UIImage?) -> Void)
+    func updatePhotoAlbum(collectionid: String)
+    func getPoints() -> [CLLocationCoordinate2D]
+    
+    var entitydescription : NSEntityDescription {get}
+    var identity : String {get}
+    
+    var displayTitle : String {get}
+    var displayDuration : String {get}
+    var displayDistance : String? {get}
+    var localid : String? {get set}
+    var title : String? {get set}
+    var notes : String? {get set}
+    var startdate : Date? {get set}
+    var enddate : Date? {get set}
+    var duration : NSNumber? {get set}
+    var distance : NSNumber? {get set}
+    var stepcount : NSNumber? {get set}
+    var pointsJSON : String? {get set}
+    var albumId : String? {get set}
+    var coverimg : Data? {get set}
+    var locations : String? {get set}
+    
+}
+
 @objc(Path)
-public class Path: NSManagedObject, Persistable, IdentifiableType {
+public class Path: NSManagedObject, Persistable, IdentifiableType, IPath {
     let decoder = JSONDecoder()
     
     public typealias Identity = String
@@ -21,7 +56,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     public typealias T = NSManagedObject
     
     public static var entityName: String = "Path"
-        
+    
     var entitydescription : NSEntityDescription {
         return NSEntityDescription.entity(forEntityName: "Path", in: PathManager.managedObjectContext!)!
     }
@@ -33,14 +68,12 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         return self.localid!
     }
     
-    //insert the object into AppDelegate.managedObjectContext
     public required init() {
         super.init(entity: entitydescription, insertInto: nil)
     }
     
     @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
         super.init(entity: entity, insertInto: context)
-      //  self.localid = UUID().uuidString
     }
     
     public required init(entity: T) {
@@ -62,7 +95,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
     
     public required init(_ context: NSManagedObjectContext) {
         super.init(entity: entitydescription, insertInto: context)
-
+        
         self.localid = UUID().uuidString
     }
     
@@ -89,13 +122,13 @@ public class Path: NSManagedObject, Persistable, IdentifiableType {
         }
     }
     
-    public func setPoints(_ points: Points){
+    public func setPoints(_ points: IPoints){
         do{
             self.pointsJSON = try points.getJSON()
         } catch{
             log.error(error.localizedDescription)
         }
-        
+
         points.getDistance() { distance in
             self.distance = distance as NSNumber
         }
