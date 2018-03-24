@@ -36,7 +36,11 @@ class PathManager : IPathManager {
     private var pointsManager : IPointsManager = PointsManager()
     public static var pedometer = CMPedometer()
     private var disposeBag = DisposeBag()
-    fileprivate var _currentPath : Variable<IPath?> = Variable(nil)
+    fileprivate var _currentPath : IPath? {
+        didSet{
+           currentPathSubject.onNext(_currentPath)
+        }
+    }
     private let currentPathSubject = BehaviorSubject<IPath?>(value: nil)
     
     private static var _shared : PathManager?
@@ -61,9 +65,7 @@ class PathManager : IPathManager {
     }
     
     private func setup(){
-        currentPathObservable = currentPathSubject.flatMap{ _ in
-            self._currentPath.asObservable()
-            }.observeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
+        currentPathObservable = currentPathSubject.observeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
     }
     
     public func getNewPath() -> Path {
@@ -71,11 +73,11 @@ class PathManager : IPathManager {
     }
     
     public func updateCurrentAlbum(collectionid: String) {
-        guard _currentPath.value != nil else {
+        guard let currentPath = _currentPath else {
             return
         }
 
-        self._currentPath.value?.updatePhotoAlbum(collectionid: collectionid)
+        currentPath.updatePhotoAlbum(collectionid: collectionid)
 
         do{
             try updateCurrentPathInCoreData(notify: false)
@@ -85,13 +87,12 @@ class PathManager : IPathManager {
     }
     
     public var currentPath: IPath? {
-        return _currentPath.value
+        return _currentPath
     }
     
     public func setCurrentPath(_ path: IPath?) {
-        hasNewPath = false
-        if( _currentPath.value?.identity != path?.identity){
-            _currentPath.value = path
+        if _currentPath?.identity != path?.identity {
+            _currentPath = path
         }
     }
     
@@ -104,8 +105,8 @@ class PathManager : IPathManager {
         if let points = pointsManager.fetchPoints(), let path = path as? Path {
             path.setPoints(points)
             PathManager.managedObjectContext?.insert(path)
-            
         }
+        
         self.setCurrentPath(path)
         self.hasNewPath = true
         
@@ -115,7 +116,7 @@ class PathManager : IPathManager {
     public func updateCurrentPathInCoreData(notify: Bool = true) throws {
         log.info("call to update current path")
         
-        guard let currentpath = _currentPath.value as? Path else {
+        guard let currentpath = _currentPath as? Path else {
             log.error("currentpath value is nil or not Path type")
             return
         }
@@ -126,6 +127,8 @@ class PathManager : IPathManager {
         if(notify){
             currentPathSubject.onNext(currentpath) //necessary?
         }
+        
+        hasNewPath = false
     }
     
     public func getAllPaths() -> [Path]?{

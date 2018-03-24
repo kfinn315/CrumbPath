@@ -531,7 +531,7 @@
                             <rect key="frame" x="0.0" y="392" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2018 Kevin Finn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hn3-0m-Owt">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2018 Kevin Finn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hn3-0m-Owt">
                                     <rect key="frame" x="15" y="12" width="345" height="20"/>
                                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -649,7 +649,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Third Party Libraries" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="obx-ZJ-ypB">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Third Party Libraries" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="obx-ZJ-ypB">
                                                     <rect key="frame" x="16" y="0.0" width="324" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -726,7 +726,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpw-4g-mfF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4914.3999999999996" y="-2888.0059970014995"/>
+            <point key="canvasLocation" x="772" y="-2321"/>
         </scene>
         <!--Route Table View Controller-->
         <scene sceneID="l4t-5o-s7o">
@@ -754,7 +754,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egt-Rv-P66" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5229" y="-1745"/>
+            <point key="canvasLocation" x="-3175" y="-1726"/>
         </scene>
         <!--Map Modal View Controller-->
         <scene sceneID="KKs-mL-EeB">
@@ -925,7 +925,7 @@
                                         <rect key="frame" x="20" y="273.5" width="295" height="45"/>
                                         <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="999" constant="500" id="mXy-2L-zK1"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="44" id="mXy-2L-zK1"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="qYd-w9-Qun"/>
                                         </constraints>
                                         <state key="normal" title="STOP"/>

@@ -50,6 +50,8 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
             // Fallback on earlier versions
         }
         
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(editPath)), animated: true)
+        
         pageControl.transform = pageControl.transform.rotated(by: .pi/2)
         self.view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +88,7 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
     }
     
     public func resetNavigationItems() {
-        self.navigationItem.setRightBarButton(UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(editPath)), animated: true)
+        
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -125,7 +127,7 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
     }
     func goToPage(index: Int) {
         if index < orderedViewControllers.count {
-            self.setViewControllers([orderedViewControllers[index]], direction: .forward, animated: false, completion: nil)
+            self.setViewControllers([orderedViewControllers[index]], direction: .forward, animated: true, completion: nil)
             self.pageControl.currentPage = index
         }
     }
@@ -136,6 +138,6 @@ class PageViewController : UIPageViewController, UIPageViewControllerDataSource,
     }
     
     @objc func editPath() {
-        self.navigationController?.pushViewController(EditPathViewController(), animated: true)
+        goToPage(index: 1)
     }
 }

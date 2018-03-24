@@ -145,7 +145,7 @@ public class RecordingViewController : BaseRecordingController {
         DispatchQueue.main.async { [weak self] in
             self?.dismiss(animated: false) { //hide spinner
                 if error == nil, path != nil {
-                    self?.pathManager?.hasNewPath = true
+                    //self?.pathManager?.hasNewPath = true
                     
                     var newvcs : [UIViewController] = []
                     if let first = self?.navigationController?.viewControllers.first {
