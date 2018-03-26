@@ -18,7 +18,6 @@ The app is available on the iTunes store as 'PathCrumbs' at: https://itunes.appl
 ## Screenshots
 
 ![](./Screenshots/ss0.png)
-
 ![](./Screenshots/ss1.png)
 ![](./Screenshots/ss2.png)
 ![](./Screenshots/ss3.png)
