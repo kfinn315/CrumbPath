@@ -6,13 +6,14 @@ The app is available on the iTunes store as 'PathCrumbs' at: https://itunes.appl
 
 ## Built With these Libraries
 
+* [RxSwift](https://github.com/ReactiveX/RxSwift) - Reactive library for Swift
 * [RxCoreData](https://github.com/RxSwiftCommunity/RxCoreData) - Reactive extensions for CoreData
 * [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) - Reactive extensions for UITableView
-* [RxSwift](https://github.com/ReactiveX/RxSwift) - Reactive library for Swift
 * [AssetsPicker](https://github.com/DragonCherry/AssetsPickerViewController)  - Handy photo picker library
 * [Eureka](https://github.com/xmartlabs/Eureka) - Handy form building library
 * [LicensesKit](https://github.com/mattwyskiel/LicensesKit) - Handy way to add 3rd party library attributions in your app
 * [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) - Handy logging tool
+* [Swift Simplify](https://github.com/malcommac/SwiftSimplify) - Library for simplifying paths
 
 ## Author
 
