@@ -15,6 +15,15 @@ The app is available on the iTunes store as 'PathCrumbs' at: https://itunes.appl
 * [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) - Handy logging tool
 * [Swift Simplify](https://github.com/malcommac/SwiftSimplify) - Library for simplifying paths
 
+## Screenshots
+
+![](./Screenshots/ss0.png)
+
+![](./Screenshots/ss1.png)
+![](./Screenshots/ss2.png)
+![](./Screenshots/ss3.png)
+![](./Screenshots/ss4.png)
+
 ## Author
 
 * **Kevin Finn** - [kfinn315@gmail.com]
