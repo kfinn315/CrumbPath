@@ -1,7 +1,0 @@
-module: paths
-author: Kevin Finn
-sdk: iphone
-
-
-xcodebuild_arguments: [-workspace, paths.xcworkspace, -scheme, paths]
-
