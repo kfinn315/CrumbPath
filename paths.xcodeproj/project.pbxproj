@@ -17,8 +17,8 @@
 		6712B2A22045041000B46A03 /* RecordingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6712B2A12045041000B46A03 /* RecordingViewControllerTests.swift */; };
 		6712B2A4204598CF00B46A03 /* EditPathViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6712B2A3204598CF00B46A03 /* EditPathViewControllerTests.swift */; };
 		6712B2A62045A42000B46A03 /* MockPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6712B2A52045A42000B46A03 /* MockPathManager.swift */; };
-		6712B2A82045B21F00B46A03 /* .jazzy.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 6712B2A72045B21F00B46A03 /* .jazzy.yaml */; };
 		6712B2AA2045DD5100B46A03 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6712B2A92045DD5100B46A03 /* CircleImageView.swift */; };
+		67217217206C842E00EDF7AB /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67217216206C842E00EDF7AB /* MapStoryboard.storyboard */; };
 		672616182043375D00C60B60 /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672616172043375D00C60B60 /* ImageAnnotation.swift */; };
 		6726161A20444F1000C60B60 /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6726161920444F1000C60B60 /* Points.swift */; };
 		6726161C20445C6100C60B60 /* AllMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6726161B20445C6100C60B60 /* AllMapViewController.swift */; };
@@ -144,8 +144,8 @@
 		6712B2A12045041000B46A03 /* RecordingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewControllerTests.swift; sourceTree = "<group>"; };
 		6712B2A3204598CF00B46A03 /* EditPathViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPathViewControllerTests.swift; sourceTree = "<group>"; };
 		6712B2A52045A42000B46A03 /* MockPathManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPathManager.swift; sourceTree = "<group>"; };
-		6712B2A72045B21F00B46A03 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .jazzy.yaml; sourceTree = "<group>"; };
 		6712B2A92045DD5100B46A03 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		67217216206C842E00EDF7AB /* MapStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
 		672616172043375D00C60B60 /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
 		6726161920444F1000C60B60 /* Points.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Points.swift; sourceTree = "<group>"; };
 		6726161B20445C6100C60B60 /* AllMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMapViewController.swift; sourceTree = "<group>"; };
@@ -476,7 +476,6 @@
 		DC9CED1B203B5E3B00A091BA = {
 			isa = PBXGroup;
 			children = (
-				6712B2A72045B21F00B46A03 /* .jazzy.yaml */,
 				DC9CED26203B5E3B00A091BA /* paths */,
 				DC9CED3B203B5E3B00A091BA /* pathsTests */,
 				DC9CED46203B5E3C00A091BA /* pathsUITests */,
@@ -505,6 +504,7 @@
 				DC36416D203F09980097EEC4 /* paths.entitlements */,
 				DC364129203C68040097EEC4 /* paths.xcdatamodeld */,
 				DC9CED2B203B5E3B00A091BA /* Main.storyboard */,
+				67217216206C842E00EDF7AB /* MapStoryboard.storyboard */,
 				DC9CED30203B5E3B00A091BA /* LaunchScreen.storyboard */,
 				DC9CED27203B5E3B00A091BA /* AppDelegate.swift */,
 				67B911E0204F71660054E6FC /* View */,
@@ -689,6 +689,7 @@
 				DC9CED6F203B5F1C00A091BA /* Base.lproj in Resources */,
 				DC9CED2F203B5E3B00A091BA /* Assets.xcassets in Resources */,
 				DC9CED6C203B5F1C00A091BA /* README.md in Resources */,
+				67217217206C842E00EDF7AB /* MapStoryboard.storyboard in Resources */,
 				DC9CED2D203B5E3B00A091BA /* Main.storyboard in Resources */,
 				67B911D7204E217B0054E6FC /* Roboto-Light.ttf in Resources */,
 				67F8FFD020597E6D004AEC13 /* licenses.json in Resources */,
@@ -699,7 +700,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6712B2A82045B21F00B46A03 /* .jazzy.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

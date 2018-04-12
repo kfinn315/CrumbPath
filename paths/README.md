@@ -1,4 +1,4 @@
-# BreadcrumbsSwift
+# PathCrumbs
 Maps and Tracks App for iOS
 
 This project's purpose is to create a basic route tracking application for iOS, using Swift.  I am using it as an exercise to improve my skills with Swift and iOS native libraries like CoreData, CloudKit, MapKit, CoreLocation, ALAssetsLibrary and third-party libraries like RxSwift, Eureka.

@@ -21,7 +21,7 @@ public class Route: NSManagedObject, Persistable, IdentifiableType {
     
     public static var entityName: String = "Route"
     
-    var entitydescription : NSEntityDescription {
+    static var entitydescription : NSEntityDescription {
         return NSEntityDescription.entity(forEntityName: "Route", in: PathManager.managedObjectContext!)!
     }
     
@@ -34,7 +34,7 @@ public class Route: NSManagedObject, Persistable, IdentifiableType {
     
     //insert the object into AppDelegate.managedObjectContext
     public required init() {
-        super.init(entity: entitydescription, insertInto: nil)
+        super.init(entity: Route.entitydescription, insertInto: nil)
     }
     
     @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
@@ -43,14 +43,14 @@ public class Route: NSManagedObject, Persistable, IdentifiableType {
     }
     
     public required init(entity: T) {
-        super.init(entity: entitydescription, insertInto: nil)
+        super.init(entity: Route.entitydescription, insertInto: nil)
         
         localid = entity.value(forKey: "localid") as? String
         title = entity.value(forKey: "title") as? String
     }
     
     public required init(_ context: NSManagedObjectContext) {
-        super.init(entity: entitydescription, insertInto: context)
+        super.init(entity: Route.entitydescription, insertInto: context)
         
         self.localid = UUID().uuidString
     }

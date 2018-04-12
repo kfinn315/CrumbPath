@@ -69,9 +69,9 @@ class EditPathViewController : FormViewController {
                 row.disabled = Condition(booleanLiteral: isNewPath)
             } <<< DateTimeRow { row in
                 row.title = "Start Date and Time"
-                row.value = path?.startdate as Date!
+                row.value = path?.startdate as Date?
                 row.dateFormatter = EditPathViewController.dateformatter
-                row.maximumDate = path?.enddate as Date!
+                row.maximumDate = path?.enddate as Date?
                 row.tag = "startdate"
                 row.cellUpdate({ (_, row) in
                     if let enddate = self.form.rowBy(tag: "enddate") as? DateTimeRow {
@@ -83,7 +83,7 @@ class EditPathViewController : FormViewController {
                 row.title = "End Date and Time"
                 row.value = path?.enddate as Date!
                 row.dateFormatter = EditPathViewController.dateformatter
-                row.minimumDate = path?.startdate as Date!
+                row.minimumDate = path?.startdate as Date?
                 row.tag = "enddate"
                 row.cellUpdate({ (_, row) in
                     if let startdate = self.form.rowBy(tag: "startdate") as? DateTimeRow {
@@ -131,11 +131,11 @@ class EditPathViewController : FormViewController {
             return
         }
         
-        path.title = form.rowBy(tag: "title")!.value
-        path.locations = form.rowBy(tag: "locations")!.value
-        path.startdate = form.rowBy(tag: "startdate")!.value
-        path.enddate = form.rowBy(tag: "enddate")!.value
-        path.notes = form.rowBy(tag: "notes")!.value
+        path.title = form.rowBy(tag: "title")?.value
+        path.locations = form.rowBy(tag: "locations")?.value
+        path.startdate = form.rowBy(tag: "startdate")?.value
+        path.enddate = form.rowBy(tag: "enddate")?.value
+        path.notes = form.rowBy(tag: "notes")?.value
         
         //save
         do {

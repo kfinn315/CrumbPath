@@ -77,7 +77,7 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
                 
                 // check thumbnail
                 if isThumbnailChanged(changeDetails: assetsChangeDetails) || isCountChanged(changeDetails: assetsChangeDetails) {
-                    if section < fetchedAlbumsArray.count , let updatedRow = fetchedAlbumsArray[section].index(of: album) {
+                    if let updatedRow = fetchedAlbumsArray[section].index(of: album) {
                         updatedIndexSet.insert(updatedRow)
                     }
                 }
@@ -135,46 +135,40 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
             }
             
             // update final changes in albums
-            var oldSortedAlbums : [PHAssetCollection] = []
-            if section < sortedAlbumsArray.count {
-                oldSortedAlbums = sortedAlbumsArray[section]
+            var oldSortedAlbums = sortedAlbumsArray[section]
+            let newSortedAlbums = sortedAlbums(fromAlbums: fetchedAlbumsArray[section])
+
+            /* 1. find & notify removed albums. */
+            let removedInfo = removedIndexPaths(from: newSortedAlbums, oldAlbums: oldSortedAlbums, section: section)
+            for (i, removedIndexPath) in removedInfo.indexPaths.enumerated() {
+                oldSortedAlbums.remove(at: removedIndexPath.row)
+                if let fetchedIndexPath = indexPath(forAlbum: removedInfo.albums[i], inAlbumsArray: fetchedAlbumsArray) {
+                    updatedIndexSet.remove(fetchedIndexPath.row)
+                }
             }
-            print("section \(section) of fetchedalbumsarray size \(fetchedAlbumsArray.count)")
-            if section < fetchedAlbumsArray.count {
-                let newSortedAlbums = sortedAlbums(fromAlbums: fetchedAlbumsArray[section])
-                
-                /* 1. find & notify removed albums. */
-                let removedInfo = removedIndexPaths(from: newSortedAlbums, oldAlbums: oldSortedAlbums, section: section)
-                for (i, removedIndexPath) in removedInfo.indexPaths.enumerated() {
-                    oldSortedAlbums.remove(at: removedIndexPath.row)
-                    if let fetchedIndexPath = indexPath(forAlbum: removedInfo.albums[i], inAlbumsArray: fetchedAlbumsArray) {
-                        updatedIndexSet.remove(fetchedIndexPath.row)
+            sortedAlbumsArray[section] = oldSortedAlbums
+            notifySubscribers({ $0.assetsManager(manager: self, removedAlbums: removedInfo.albums, at: removedInfo.indexPaths) }, condition: removedInfo.indexPaths.count > 0)
+            
+            /* 2. find & notify inserted albums. */
+            let insertedInfo = insertedIndexPaths(from: newSortedAlbums, oldAlbums: oldSortedAlbums, section: section)
+            for (i, insertedIndexPath) in insertedInfo.indexPaths.enumerated() {
+                oldSortedAlbums.insert(insertedInfo.albums[i], at: insertedIndexPath.row)
+                if let fetchedIndexPath = indexPath(forAlbum: insertedInfo.albums[i], inAlbumsArray: fetchedAlbumsArray) {
+                    updatedIndexSet.insert(fetchedIndexPath.row)
+                }
+            }
+            sortedAlbumsArray[section] = newSortedAlbums
+            notifySubscribers({ $0.assetsManager(manager: self, insertedAlbums: insertedInfo.albums, at: insertedInfo.indexPaths) }, condition: insertedInfo.indexPaths.count > 0)
+            
+            // check logic
+            if oldSortedAlbums.count == newSortedAlbums.count {
+                for i in 0..<oldSortedAlbums.count {
+                    if oldSortedAlbums[i].localIdentifier != newSortedAlbums[i].localIdentifier {
+                        updatedIndexSet.insert(i)
                     }
                 }
-                sortedAlbumsArray[section] = oldSortedAlbums
-                notifySubscribers({ $0.assetsManager(manager: self, removedAlbums: removedInfo.albums, at: removedInfo.indexPaths) }, condition: removedInfo.indexPaths.count > 0)
-                
-                /* 2. find & notify inserted albums. */
-                let insertedInfo = insertedIndexPaths(from: newSortedAlbums, oldAlbums: oldSortedAlbums, section: section)
-                for (i, insertedIndexPath) in insertedInfo.indexPaths.enumerated() {
-                    oldSortedAlbums.insert(insertedInfo.albums[i], at: insertedIndexPath.row)
-                    if let fetchedIndexPath = indexPath(forAlbum: insertedInfo.albums[i], inAlbumsArray: fetchedAlbumsArray) {
-                        updatedIndexSet.insert(fetchedIndexPath.row)
-                    }
-                }
-                sortedAlbumsArray[section] = newSortedAlbums
-                notifySubscribers({ $0.assetsManager(manager: self, insertedAlbums: insertedInfo.albums, at: insertedInfo.indexPaths) }, condition: insertedInfo.indexPaths.count > 0)
-                
-                // check logic
-                if oldSortedAlbums.count == newSortedAlbums.count {
-                    for i in 0..<oldSortedAlbums.count {
-                        if oldSortedAlbums[i].localIdentifier != newSortedAlbums[i].localIdentifier {
-                            updatedIndexSet.insert(i)
-                        }
-                    }
-                } else {
-                    logc("oldSortedAlbums and newSortedAlbums is not same!")
-                }
+            } else {
+                logc("oldSortedAlbums and newSortedAlbums is not same!")
             }
             
             /* 3. notify updated albums. */
@@ -183,18 +177,16 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
             var sortedUpdatedAlbums = [PHAssetCollection]()
             
             for updatedIndex in updatedIndexes {
-                if section < fetchedAlbumsArray.count, updatedIndex.row < fetchedAlbumsArray[section].count {
                 let updatedAlbum = fetchedAlbumsArray[section][updatedIndex.row]
                 if let sortedIndexPath = indexPath(forAlbum: updatedAlbum, inAlbumsArray: sortedAlbumsArray) {
                     sortedUpdatedIndexPaths.append(sortedIndexPath)
                     sortedUpdatedAlbums.append(updatedAlbum)
                 }
-                }
             }
             notifySubscribers({ $0.assetsManager(manager: self, updatedAlbums: sortedUpdatedAlbums, at: sortedUpdatedIndexPaths) }, condition: sortedUpdatedAlbums.count > 0)
         }
     }
-    
+
     public func photoLibraryDidChange(_ changeInstance: PHChange) {
         guard notifyIfAuthorizationStatusChanged() else {
             logw("Does not have access to photo library.")

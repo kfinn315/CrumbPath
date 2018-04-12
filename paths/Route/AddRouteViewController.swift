@@ -59,7 +59,7 @@ class AddRouteViewController : FormViewController {
         
         //save
         do {
-            if try PathManager.managedObjectContext.updatedObjects.count > 0 {
+            if PathManager.managedObjectContext.updatedObjects.count > 0 {
                 try PathManager.managedObjectContext.save()
             }
             PathManager.managedObjectContext.refreshAllObjects()

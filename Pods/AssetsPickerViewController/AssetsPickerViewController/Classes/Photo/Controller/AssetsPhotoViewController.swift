@@ -248,18 +248,7 @@ extension AssetsPhotoViewController {
     func setupBarButtonItems() {
         navigationItem.leftBarButtonItem = cancelButtonItem
         navigationItem.rightBarButtonItem = doneButtonItem
-        navigationItem.rightBarButtonItems = [doneButtonItem, UIBarButtonItem.init(title: "Clear", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onClear))]
         doneButtonItem.isEnabled = false
-    }
-    @objc func onClear(){
-        let selected = selectedAssets
-        for var indexpath in collectionView.indexPathsForSelectedItems! {
-            collectionView.deselectItem(at: indexpath, animated: false)
-        }
-        for var asset in selected {
-            deselect(asset: asset, at: IndexPath(row:0, section:0))
-        }
-        updateNavigationStatus()
     }
     
     func setupAssets() {
@@ -422,7 +411,8 @@ extension AssetsPhotoViewController {
     }
     
     func updateNavigationStatus() {
-        doneButtonItem.isEnabled = selectedArray.count >= pickerConfig.assetsMinimumSelectionCount
+        
+        doneButtonItem.isEnabled = selectedArray.count >= (pickerConfig.assetsMinimumSelectionCount > 0 ? pickerConfig.assetsMinimumSelectionCount : 1)
         
         let counts: (imageCount: Int, videoCount: Int) = selectedArray.reduce((0, 0)) { (result, asset) -> (Int, Int) in
             let imageCount = asset.mediaType == .image ? 1 : 0

@@ -8,13 +8,13 @@ target 'paths' do
     pod 'RxCocoa',    '~> 4.0'
     pod 'RxDataSources', '~> 3.0'
     pod 'RxCoreData', '~> 0.4.0'
-    pod 'Eureka', '~> 4.0'
+    pod 'Eureka'
     pod 'SwiftyBeaver'
     pod 'SwiftSimplify'
     pod 'AssetsPickerViewController', '~> 2.0'
     pod 'LicensesKit'
-
-  target 'pathsTests' do
+        
+target 'pathsTests' do
    inherit! :complete
     # Pods for testing
     pod 'RxBlocking', '~> 4.0'

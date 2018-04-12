@@ -26,7 +26,7 @@ protocol IPath : class {
     func updatePhotoAlbum(collectionid: String)
     func getPoints() -> [CLLocationCoordinate2D]
     
-    var entitydescription : NSEntityDescription {get}
+    //var entitydescription : NSEntityDescription {get}
     var identity : String {get}
     
     var displayTitle : String {get}
@@ -57,7 +57,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType, IPath {
     
     public static var entityName: String = "Path"
     
-    var entitydescription : NSEntityDescription {
+    static var entitydescription : NSEntityDescription {
         return NSEntityDescription.entity(forEntityName: "Path", in: PathManager.managedObjectContext!)!
     }
     
@@ -69,7 +69,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType, IPath {
     }
     
     public required init() {
-        super.init(entity: entitydescription, insertInto: nil)
+        super.init(entity: Path.entitydescription, insertInto: nil)
     }
     
     @objc public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?){
@@ -77,7 +77,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType, IPath {
     }
     
     public required init(entity: T) {
-        super.init(entity: entitydescription, insertInto: nil)
+        super.init(entity: Path.entitydescription, insertInto: nil)
         
         localid = entity.value(forKey: "localid") as? String
         title = entity.value(forKey: "title") as? String
@@ -94,7 +94,7 @@ public class Path: NSManagedObject, Persistable, IdentifiableType, IPath {
     }
     
     public required init(_ context: NSManagedObjectContext) {
-        super.init(entity: entitydescription, insertInto: context)
+        super.init(entity: Path.entitydescription, insertInto: context)
         
         self.localid = UUID().uuidString
     }

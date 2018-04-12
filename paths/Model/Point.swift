@@ -13,9 +13,9 @@ import UIKit
 
 @objc(Point)
 public class Point: NSManagedObject, Codable {
-    var entitydescription : NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: "Point", in: PathManager.managedObjectContext!)!
-    }
+//    var entitydescription : NSEntityDescription {
+//        return NSEntityDescription.entity(forEntityName: "Point", in: PathManager.managedObjectContext!)!
+//    }
     
     @objc
     public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
@@ -23,7 +23,7 @@ public class Point: NSManagedObject, Codable {
     }
     
     public required init() {
-        super.init(entity: entitydescription, insertInto: nil)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Point", in: PathManager.managedObjectContext!)!, insertInto: nil)
     }
     
     public convenience init(location: CLLocation) {
@@ -62,7 +62,7 @@ public class Point: NSManagedObject, Codable {
         try container.encode(id, forKey: .id)
         try container.encode(latitude, forKey: .latitude)
         try container.encode(longitude, forKey: .longitude)
-        if timestamp != nil, let timeDate = timestamp as Date! {
+        if timestamp != nil, let timeDate = timestamp as Date? {
             try container.encode(timeDate, forKey: .timestamp)
         }
     }

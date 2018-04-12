@@ -1,5 +1,5 @@
 PODS:
-  - AssetsPickerViewController (2.4.0):
+  - AssetsPickerViewController (2.4.1):
     - Device (~> 3.0.3)
     - Dimmer (~> 2.0)
     - FadeView (~> 2.0)
@@ -13,11 +13,11 @@ PODS:
     - PureLayout
     - TinyLog (~> 2.0)
     - UIViewKVO (~> 2.0)
-  - Eureka (4.0.1)
+  - Eureka (4.1.1)
   - FadeView (2.0.0)
   - LicensesKit (1.2.3):
     - StringBuilder (= 1.1.2)
-  - Nimble (7.0.3)
+  - Nimble (7.1.0)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
   - RandomKit (5.2.3):
@@ -41,14 +41,14 @@ PODS:
   - StringBuilder (1.1.2)
   - SwiftARGB (2.0.0)
   - SwiftSimplify (0.2.0)
-  - SwiftyBeaver (1.5.1)
+  - SwiftyBeaver (1.5.2)
   - Threadly (1.2.0)
   - TinyLog (2.0.7)
   - UIViewKVO (2.0.0)
 
 DEPENDENCIES:
   - AssetsPickerViewController (~> 2.0)
-  - Eureka (~> 4.0)
+  - Eureka
   - LicensesKit
   - Nimble
   - Quick
@@ -63,14 +63,14 @@ DEPENDENCIES:
   - SwiftyBeaver
 
 SPEC CHECKSUMS:
-  AssetsPickerViewController: b1e397b5a0e2dc0bc6f82f3ca6bb74bc84ff388a
+  AssetsPickerViewController: 86c2e226ec60a3a40a28274e414da4469f4a3b9d
   Device: 9a5264ee4e0f392e7153d2c46b10c8df46b7aad2
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   Dimmer: 9908a0003f4882eca1b2e318e11f82d32280794e
-  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   FadeView: 80197da2fbee5382b178127e8c5f988a35eef018
   LicensesKit: 247eb6eea3f1a82ffd4d6b0550e4e84778496d12
-  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  Nimble: 9c6651c3021af6de54c3ed90a4a0a87d548f7359
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   RandomKit: 380745911c4f7989707489b2ce297194bfcf5031
@@ -84,11 +84,11 @@ SPEC CHECKSUMS:
   StringBuilder: 15abc8106929431ff7149dd94b47062699e962b7
   SwiftARGB: 8727cfcdcfe8709e707a2391f1d5802a7c40dcad
   SwiftSimplify: 374ead1c360c6e236539543d6ce5b3abda011080
-  SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
+  SwiftyBeaver: 85daaaa2b3ae6e31b7b55c99430e8b91dac088af
   Threadly: b772ed7c1ff4a3f03eb4600bbc5ef83b3be5cb29
   TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
   UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
 
-PODFILE CHECKSUM: 3204b036f3d6338146ea32e70d9dd306f777237f
+PODFILE CHECKSUM: e9829cfb22e2df1c9c164293bbb0765e0895d625
 
 COCOAPODS: 1.4.0

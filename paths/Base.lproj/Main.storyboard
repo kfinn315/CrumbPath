@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8P0-5b-Lr0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8P0-5b-Lr0">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -55,13 +55,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MaB-HZ-ADP">
-                                                    <rect key="frame" x="42" y="25" width="72" height="72"/>
+                                                    <rect key="frame" x="42" y="25" width="72.5" height="72.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="MaB-HZ-ADP" secondAttribute="height" id="pQ7-DY-fMh"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ia2-ON-e6d">
-                                                    <rect key="frame" x="0.0" y="105" width="156" height="21"/>
+                                                    <rect key="frame" x="0.0" y="105.5" width="156" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -390,11 +390,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wj3-eD-iKN"/>
                     </layoutGuides>
                     <view key="view" tag="1" contentMode="scaleToFill" id="bOb-0P-qpb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="271.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="573"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-8f-qD4" customClass="MapView" customModule="paths" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="271.5"/>
+                                <rect key="frame" x="0.0" y="20" width="335" height="553"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="0.0"/>
@@ -788,6 +788,7 @@
                                 <items>
                                     <navigationItem title="Map" id="aGR-Xs-oeL">
                                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="iBV-di-wex"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="MJM-d1-oqB"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -808,12 +809,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnAction" destination="MJM-d1-oqB" id="Tc9-F0-tdA"/>
                         <outlet property="doneButton" destination="iBV-di-wex" id="fAG-iO-c7J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3c1-vI-alp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3810" y="-2291"/>
+            <point key="canvasLocation" x="-3998" y="-2264"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="KPh-gp-fBh">
@@ -1097,13 +1099,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="62G-J6-5g6">
-                                <rect key="frame" x="0.0" y="20" width="375" height="271.5"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="271"/>
                                 <connections>
                                     <segue destination="2Sg-Pj-d2H" kind="embed" id="ZSe-fc-QGC"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-7Y-ibp">
-                                <rect key="frame" x="0.0" y="419" width="375" height="248"/>
+                                <rect key="frame" x="0.0" y="419.5" width="375" height="247.5"/>
                                 <connections>
                                     <segue destination="Maj-T6-jfC" kind="embed" id="GO0-rH-5xx"/>
                                 </connections>
@@ -1168,7 +1170,7 @@
                                 </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-ei-fiz" userLabel="Stats">
-                                <rect key="frame" x="20" y="369" width="335" height="88"/>
+                                <rect key="frame" x="20" y="369.5" width="335" height="88"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTA-TL-axQ" customClass="CircleLabelView" customModule="paths" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="91.5" height="88"/>
@@ -1255,6 +1257,9 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="mCo-BI-j31"/>
+                                <exclude reference="Gaf-DX-RRa"/>
+                                <exclude reference="N2B-Fm-xSR"/>
+                                <exclude reference="XHB-fI-tSM"/>
                                 <exclude reference="BfO-ZU-Ij7"/>
                                 <exclude reference="TRt-4f-97k"/>
                                 <exclude reference="5Cn-wm-hmf"/>
@@ -1263,19 +1268,16 @@
                                 <exclude reference="xCQ-Ub-95O"/>
                                 <exclude reference="y1a-Vi-UVk"/>
                                 <exclude reference="zQy-qH-yYY"/>
-                                <exclude reference="Gaf-DX-RRa"/>
-                                <exclude reference="N2B-Fm-xSR"/>
-                                <exclude reference="XHB-fI-tSM"/>
                                 <exclude reference="hfC-Ec-aN7"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <include reference="KmD-ii-Hnk"/>
-                                <include reference="BfO-ZU-Ij7"/>
-                                <include reference="hUd-gF-a4l"/>
                                 <include reference="N2B-Fm-xSR"/>
                                 <include reference="XHB-fI-tSM"/>
+                                <include reference="BfO-ZU-Ij7"/>
+                                <include reference="hUd-gF-a4l"/>
                                 <include reference="hfC-Ec-aN7"/>
                             </mask>
                         </variation>
@@ -1284,6 +1286,10 @@
                                 <exclude reference="SpK-71-DSh"/>
                                 <exclude reference="Te1-dT-VKZ"/>
                                 <include reference="mCo-BI-j31"/>
+                                <exclude reference="Bgn-V0-a89"/>
+                                <exclude reference="Ef9-Fz-ikw"/>
+                                <include reference="Gaf-DX-RRa"/>
+                                <exclude reference="gcN-w1-Cey"/>
                                 <exclude reference="0oa-ld-JHf"/>
                                 <include reference="TRt-4f-97k"/>
                                 <exclude reference="WcS-p0-LQ7"/>
@@ -1297,10 +1303,6 @@
                                 <include reference="y1a-Vi-UVk"/>
                                 <exclude reference="zGZ-r5-jOm"/>
                                 <include reference="zQy-qH-yYY"/>
-                                <exclude reference="Bgn-V0-a89"/>
-                                <exclude reference="Ef9-Fz-ikw"/>
-                                <include reference="Gaf-DX-RRa"/>
-                                <exclude reference="gcN-w1-Cey"/>
                                 <include reference="mcO-ns-lpA"/>
                             </mask>
                         </variation>
@@ -1309,6 +1311,10 @@
                                 <exclude reference="SpK-71-DSh"/>
                                 <exclude reference="Te1-dT-VKZ"/>
                                 <include reference="mCo-BI-j31"/>
+                                <exclude reference="Bgn-V0-a89"/>
+                                <exclude reference="Ef9-Fz-ikw"/>
+                                <include reference="Gaf-DX-RRa"/>
+                                <exclude reference="gcN-w1-Cey"/>
                                 <exclude reference="0oa-ld-JHf"/>
                                 <include reference="TRt-4f-97k"/>
                                 <exclude reference="WcS-p0-LQ7"/>
@@ -1322,10 +1328,6 @@
                                 <include reference="y1a-Vi-UVk"/>
                                 <exclude reference="zGZ-r5-jOm"/>
                                 <include reference="zQy-qH-yYY"/>
-                                <exclude reference="Bgn-V0-a89"/>
-                                <exclude reference="Ef9-Fz-ikw"/>
-                                <include reference="Gaf-DX-RRa"/>
-                                <exclude reference="gcN-w1-Cey"/>
                                 <include reference="mcO-ns-lpA"/>
                             </mask>
                         </variation>
@@ -1348,6 +1350,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZSe-fc-QGC"/>
+        <segue reference="GpG-o6-bdF"/>
     </inferredMetricsTieBreakers>
 </document>
